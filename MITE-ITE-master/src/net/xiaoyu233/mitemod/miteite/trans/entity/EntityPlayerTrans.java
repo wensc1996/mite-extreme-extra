@@ -12,6 +12,7 @@ import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.network.CPacketSyncItems;
 import net.xiaoyu233.mitemod.miteite.network.SPacketCraftingBoost;
 import net.xiaoyu233.mitemod.miteite.network.SPacketOverlayMessage;
+import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 import net.xiaoyu233.mitemod.miteite.util.BlockPos;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
@@ -171,9 +172,50 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       }
    }
 
+   public int getGemSumLevel(GemModifierTypes gemModifierTypes) {
+      int sum = 0;
+      ItemStack[] var3 = this.getWornItems();
+      // 初始加载有可能为null
+      if(var3 != null) {
+         for (ItemStack wornItem : var3) {
+            if (wornItem != null) {
+               // 在宝石里面寻找最大的
+               ItemStack[] gemList = wornItem.GemsList;
+               int max = 0;
+               for (ItemStack gemStack : gemList) {
+                  if(gemStack != null) {
+                     Item gem  = Item.getItem(gemStack.itemID);
+                     if(gem instanceof ItemEnhanceGem) {
+                        if(gemStack.getItemSubtype() == gemModifierTypes.ordinal()) {
+                           int level = ((ItemEnhanceGem) gem).gemLevel;
+                           if(level > max) {
+                              max = level;
+                           }
+                        }
+                     }
+                  }
+               }
+               sum += max;
+            }
+         }
+      }
+      return sum;
+   }
+
+
    @Overwrite
    public static int getHealthLimit(int level) {
       return Math.max(Math.min(6 + level / 5 * 2, Configs.wenscConfig.maxLevelLimit.ConfigValue / 5), 6);
+   }
+
+   @Shadow
+   public final int getExperienceLevel() {
+      return 0;
+   }
+
+   @Overwrite
+   public float getHealthLimit() {
+      return (float)getHealthLimit(this.getExperienceLevel()) + (float) this.getGemSumLevel(GemModifierTypes.health) * 2f;
    }
 
 
@@ -569,6 +611,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public void displayGUIForgingTable(int x, int y, int z, ForgingTableSlots slots) {
    }
 
+   public void displayGUIGemSetting(TileEntityGemSetting par1TileEntityFurnace) {}
+
    @Shadow
    protected abstract void fall(float par1);
    
@@ -772,9 +816,9 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       }
    }
 
-   @Shadow
+   @Overwrite
    public ItemStack[] getWornItems() {
-      return new ItemStack[0];
+      return this.inventory != null ? this.inventory.armorInventory : null;
    }
 
    @Shadow

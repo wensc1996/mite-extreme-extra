@@ -32,7 +32,11 @@ public class BlockWorkbenchTrans extends BlockTrans {
    @Override
    @SoftOverride
    public String getItemDisplayName(ItemStack itemStack) {
-      return Translator.get("tile.toolbench." + BlockWorkbench.getToolMaterial(itemStack.getItemSubtype()).getName() + ".name");
+      if(itemStack != null) {
+         return Translator.get("tile.toolbench." + BlockWorkbench.getToolMaterial(itemStack.getItemSubtype()).getName() + ".name");
+      } else {
+         return Translator.get("tile.toolbench." + "unknown" + ".name");
+      }
    }
 
    @Overwrite

@@ -2,10 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.item;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.item.IUpgradableItem;
-import net.xiaoyu233.mitemod.miteite.item.Materials;
-import net.xiaoyu233.mitemod.miteite.item.ModifierUtils;
-import net.xiaoyu233.mitemod.miteite.item.ToolModifierTypes;
+import net.xiaoyu233.mitemod.miteite.item.*;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
@@ -58,6 +55,26 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
       return (level, isWeapon) -> base + level * increase * (isWeapon ? 2 : 1 );
    }
 
+   public int getGemMaxLevel(ItemStack toolStack, GemModifierTypes gemModifierTypes) {
+      // 在宝石里面寻找最大的
+      ItemStack[] gemList = toolStack.GemsList;
+      int max = 0;
+      for (ItemStack gemStack : gemList) {
+         if(gemStack != null) {
+            Item gem  = Item.getItem(gemStack.itemID);
+            if(gem instanceof ItemEnhanceGem) {
+               if(gemStack.getItemSubtype() == gemModifierTypes.ordinal()) {
+                  int level = ((ItemEnhanceGem) gem).gemLevel;
+                  if(level > max) {
+                     max = level;
+                  }
+               }
+            }
+         }
+      }
+      return max;
+   }
+
    public void addInformation(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot) {
       super.addInformation(item_stack, player, info, extended_info, slot);
       if (item_stack.hasTagCompound()) {
@@ -86,6 +103,8 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
                }
             }
          }
+
+         info.add("§5宝石攻击增加:§6" + ItemStack.field_111284_a.format(this.getGemMaxLevel(item_stack, GemModifierTypes.damage)));
 
          if (extended_info) {
             NBTTagCompound compound = item_stack.stackTagCompound.getCompoundTag("modifiers");
@@ -120,7 +139,7 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
 
    public Multimap<String, AttributeModifier> getAttrModifiers(ItemStack stack) {
       Multimap<String, AttributeModifier> var1 = super.getAttrModifiers(stack);
-      var1.put(GenericAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(Item.field_111210_e, "Tool modifier", (double)this.damageVsEntity + (double)this.getAttackDamageBounce(stack) + (double)this.getEnhancedDamage(stack), 0));
+      var1.put(GenericAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(Item.field_111210_e, "Tool modifier", (double)this.damageVsEntity + (double)this.getAttackDamageBounce(stack), 0));
       return var1;
    }
 
@@ -196,7 +215,7 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
    }
 
    public float getMeleeDamageBonus(ItemStack stack) {
-      return this.getCombinedDamageVsEntity() + ToolModifierTypes.DAMAGE_MODIFIER.getModifierValue(stack.stackTagCompound) + this.getEnhancedDamage(stack);
+      return this.getCombinedDamageVsEntity() + ToolModifierTypes.DAMAGE_MODIFIER.getModifierValue(stack.stackTagCompound) + this.getEnhancedDamage(stack) + this.getGemMaxLevel(stack, GemModifierTypes.damage);
    }
 
    public final float getMultipliedHarvestEfficiency(Block block, ItemStack itemStack, EntityPlayer player) {

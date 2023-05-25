@@ -3,8 +3,10 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 import net.minecraft.*;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.gui.GuiForgingTable;
+import net.xiaoyu233.mitemod.miteite.gui.GuiGemSetting;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
 import net.xiaoyu233.mitemod.miteite.item.Materials;
+import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -42,6 +44,11 @@ public abstract class ClientPlayerTrans extends beu {
 
    public void displayGUIForgingTable(int x, int y, int z, ForgingTableSlots slots) {
       this.d.a(new GuiForgingTable(ReflectHelper.dyCast(this), x, y, z, slots));
+   }
+
+   public void displayGUIGemSetting(TileEntityGemSetting tileEntityGemSetting)
+   {
+      this.d.a(new GuiGemSetting(this, tileEntityGemSetting));
    }
 
    @Overwrite

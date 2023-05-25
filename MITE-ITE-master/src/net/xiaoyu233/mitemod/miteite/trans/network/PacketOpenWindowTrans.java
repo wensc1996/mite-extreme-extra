@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.network;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
+import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -132,20 +133,27 @@ public class PacketOpenWindowTrans {
          } else if (this.inventoryType == TYPE_FORGING_TABLE) {
             player.displayGUIForgingTable(this.x, this.y, this.z, new ForgingTableSlots(new InventorySubcontainer(this.windowTitle, this.useProvidedWindowTitle, this.slotsCount)));
             player.openContainer.windowId = this.windowId;
+         }  else if (this.inventoryType == 15) {
+            TileEntityGemSetting var3x = (TileEntityGemSetting)tile_entity;
+
+            if (this.useProvidedWindowTitle)
+            {
+               var3x.setCustomInvName(this.windowTitle);
+            }
+
+            player.displayGUIGemSetting(var3x);
+            player.openContainer.windowId = this.windowId;
          } else {
             Minecraft.setErrorMessage("handleOpenWindow: type not handled " + this.inventoryType);
          }
-//         else if (this.inventoryType == 15) {
-//            player.displayGUIForgingTable(this.x, this.y, this.z, new JewelrySlot(new InventorySubcontainer(this.windowTitle, this.useProvidedWindowTitle, this.slotsCount)));
-//            player.openContainer.windowId = this.windowId;
-//         }
       }
 
    }
 
-   @Shadow
-   public boolean hasCoords() {
-      return false;
+   @Overwrite
+   public boolean hasCoords()
+   {
+      return this.inventoryType == 0 || this.inventoryType == 1 || this.inventoryType == 2 || this.inventoryType == 3 || this.inventoryType == 4 || this.inventoryType == 5 || this.inventoryType == 7 || this.inventoryType == 8 || this.inventoryType == 9 || this.inventoryType == 10 || this.inventoryType == 15;
    }
 
    @Shadow

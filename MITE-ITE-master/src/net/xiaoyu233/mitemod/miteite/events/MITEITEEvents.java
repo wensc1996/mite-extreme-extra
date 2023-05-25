@@ -168,7 +168,6 @@ public class MITEITEEvents {
             String po;
 
             if (par2Str.startsWith("give")) {
-                System.out.println(par2Str);
                 sid = par2Str.substring(5);
                 pos = sid.split(" ");
                 int[] poses = new int[3];
@@ -236,7 +235,6 @@ public class MITEITEEvents {
             }
 
             if (par2Str.startsWith("buy")) {
-                System.out.println(par2Str);
                 String sid = par2Str.substring(4);
                 String[] pos = sid.split(" ");
                 int[] poses = new int[3];
@@ -407,8 +405,8 @@ public class MITEITEEvents {
         player.sendChatToPlayer(ChatMessage.createFromTranslationKey("[MITE-Extreme]:").setColor(EnumChatFormat.WHITE)
                 .appendComponent(ChatMessage.createFromTranslationKey("MITE-Extreme由 ")
                 .appendComponent(ChatMessage.createFromTranslationKey("wensc").setColor(EnumChatFormat.WHITE)))
-                .addText(" 重写,开放下载地址:").setColor(EnumChatFormat.DARK_AQUA)
-                .appendComponent(ChatMessage.createFromTranslationKey("https://www.wensc.cn").setColor(EnumChatFormat.DARK_GREEN)));
+                .appendComponent(ChatMessage.createFromTranslationKey(" 重写,「我对你好吗」特约赞助")).setColor(EnumChatFormat.DARK_AQUA));
+//                .appendComponent(ChatMessage.createFromTranslationKey("https://www.wensc.cn").setColor(EnumChatFormat.DARK_GREEN)));
         if (player.isFirstLogin == true) {
 
             player.isFirstLogin = false;

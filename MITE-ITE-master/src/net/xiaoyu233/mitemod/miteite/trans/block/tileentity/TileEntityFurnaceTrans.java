@@ -24,9 +24,9 @@ public class TileEntityFurnaceTrans extends TileEntity {
    public static int getHeatLevelRequired(int item_id) {
       if (item_id == Block.coalBlock.blockID) {
          return 5;
-      } else if (item_id == Block.oreAdamantium.blockID || item_id == Block.blockIron.blockID || item_id == Block.blockMithril.blockID || item_id == Blocks.netherAdamantiumOre.blockID) {
+      } else if (item_id == Block.oreAdamantium.blockID || item_id == Block.blockMithril.blockID || item_id == Blocks.netherAdamantiumOre.blockID) {
          return 4;
-      } else if (item_id == Block.oreMithril.blockID) {
+      } else if (item_id == Block.oreMithril.blockID || item_id == Block.blockIron.blockID) {
          return 3;
       } else if (item_id == Block.oreCopper.blockID || item_id == Block.oreSilver.blockID || item_id == Block.oreGold.blockID || item_id == Block.oreIron.blockID) {
          return 2;

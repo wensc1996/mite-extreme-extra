@@ -1,10 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.item;
 
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.item.ArmorModifierTypes;
-import net.xiaoyu233.mitemod.miteite.item.IUpgradableItem;
-import net.xiaoyu233.mitemod.miteite.item.Materials;
-import net.xiaoyu233.mitemod.miteite.item.ModifierUtils;
+import net.xiaoyu233.mitemod.miteite.item.*;
 import net.xiaoyu233.mitemod.miteite.util.ItemUtil;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.util.StringUtil;
@@ -94,6 +91,9 @@ public abstract class ItemArmorTrans extends Item implements IDamageableItem, IU
          }
 
          total_defense = MathHelper.tryFitToNearestInteger(total_defense, 1.0E-4F);
+         if(owner instanceof EntityPlayer) {
+            total_defense += ((EntityPlayer) owner).getGemSumLevel(GemModifierTypes.protection);
+         }
          return total_defense;
       }
    }

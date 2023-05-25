@@ -41,6 +41,8 @@ public class ItemStackTrans {
    private int subtype;
    private boolean toolNbtFixed;
 
+   public ItemStack[] GemsList = new ItemStack[8];
+
    public ItemStackTrans(int id, int stack_size, int subtype) {
       this.itemID = id;
       this.stackSize = stack_size;
@@ -54,6 +56,14 @@ public class ItemStackTrans {
          callbackInfoReturnable.setReturnValue(false);
          callbackInfoReturnable.cancel();
       }
+   }
+
+   @Inject(method = "splitStack", at = @At("RETURN"), cancellable = true)
+   public void splitStack(CallbackInfoReturnable<ItemStack>callbackInfoReturnable) {
+      ItemStack itemStack = callbackInfoReturnable.getReturnValue();
+      itemStack.GemsList = this.GemsList;
+      callbackInfoReturnable.setReturnValue(itemStack);
+      callbackInfoReturnable.cancel();
    }
 
    @Redirect(method = "getTooltip",at = @At(value = "INVOKE",target = "Lnet/minecraft/Translator;addToList(Lnet/minecraft/EnumChatFormat;Ljava/lang/String;Ljava/util/List;)V",ordinal = 0))
@@ -87,6 +97,7 @@ public class ItemStackTrans {
       var1.setItemDamage(this.damage);
       var1.setQuality(this.getQuality());
       var1.setIsArtifact(this.is_artifact);
+      var1.GemsList = this.GemsList;
       if (this.stackTagCompound != null) {
          var1.stackTagCompound = (NBTTagCompound)this.stackTagCompound.copy();
       }
@@ -325,6 +336,18 @@ public class ItemStackTrans {
       }
 
       this.is_artifact = par1NBTTagCompound.getBoolean("is_artifact");
+
+      if(par1NBTTagCompound.hasKey("Gems")) {
+         this.GemsList = new ItemStack[this.GemsList.length];
+         NBTTagList gemsNbt = par1NBTTagCompound.getTagList("Gems");
+
+         for (int var4 = 0; var4 < gemsNbt.tagCount(); ++var4)
+         {
+            NBTTagCompound var3 = (NBTTagCompound)gemsNbt.tagAt(var4);
+
+            this.GemsList[var3.getInteger("SlotIndex")] = new ItemStack(var3.getInteger("GemId"), 1, var3.getInteger("GemMeta"));
+         }
+      }
    }
 
    public double getPrice() {
@@ -427,6 +450,21 @@ public class ItemStackTrans {
       if (this.is_artifact) {
          par1NBTTagCompound.setBoolean("is_artifact", this.is_artifact);
       }
+
+
+      NBTTagList gemsNbt = new NBTTagList("Gems");
+
+      for(int i = 0; i < this.GemsList.length; i++) {
+         if(this.GemsList[i] != null) {
+            NBTTagCompound gemOne = new NBTTagCompound();
+            gemOne.setInteger("SlotIndex", i);
+            gemOne.setInteger("GemId", this.GemsList[i].itemID);
+            gemOne.setInteger("GemMeta", this.GemsList[i].getItemSubtype());
+            gemsNbt.appendTag(gemOne);
+         }
+      }
+
+      par1NBTTagCompound.setTag("Gems", gemsNbt);
 
       return par1NBTTagCompound;
    }

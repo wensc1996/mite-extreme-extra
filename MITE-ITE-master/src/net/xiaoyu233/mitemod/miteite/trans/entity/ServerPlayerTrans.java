@@ -5,7 +5,9 @@ import net.minecraft.server.MinecraftServer;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerChestMinecart;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerForgingTable;
+import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerGemSetting;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
+import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -84,6 +86,15 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
       this.openContainer.windowId = this.currentWindowId;
       ReflectHelper.dyCast(ServerPlayer.class, this).updateCraftingInventory(this.openContainer, ((ContainerForgingTable)this.openContainer).getInventory());
 //      this.openContainer.a(this);
+      this.openContainer.onCraftGuiOpened(this);
+   }
+
+   public void displayGUIGemSetting(TileEntityGemSetting tileEntityGemSetting)
+   {
+      this.getNextWindowId();
+      this.playerNetServerHandler.sendPacket((new Packet100OpenWindow(this.currentWindowId, 15, tileEntityGemSetting.getCustomNameOrUnlocalized(), tileEntityGemSetting.getSizeInventory(), tileEntityGemSetting.hasCustomName())).setCoords(tileEntityGemSetting));
+      this.openContainer = new ContainerGemSetting(this, tileEntityGemSetting);
+      this.openContainer.windowId = this.currentWindowId;
       this.openContainer.onCraftGuiOpened(this);
    }
 
