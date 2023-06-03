@@ -14,6 +14,20 @@ public class SlotGem extends Slot {
         this.slotIndex = slot_index;
     }
 
+    public void putStack(ItemStack par1ItemStack) {
+        super.putStack(par1ItemStack);
+        if(par1ItemStack != null) {
+            if(slotIndex == 0) {
+                this.initGems(par1ItemStack);
+            } else {
+                ItemStack source = containerGemSetting.getSlot(0).getStack();
+                if(source != null) {
+                    source.GemsList[slotIndex - 1] = par1ItemStack.copy();
+                }
+            }
+        }
+    }
+
     @Override
     public int getSlotStackLimit() {
         return 1;
@@ -22,35 +36,15 @@ public class SlotGem extends Slot {
     @Override
     public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack) {
         super.onPickupFromSlot(par1EntityPlayer, par2ItemStack);
-    }
-
-    @Override
-    public void onSlotClicked(EntityPlayer entity_player, int button, Container container) {
-        super.onSlotClicked(entity_player, button, container);
-        if (!entity_player.worldObj.isRemote) {
+        if(par2ItemStack != null) {
             if(slotIndex == 0) {
-                ItemStack itemStack = containerGemSetting.getSlot(0).getStack();
-                if(itemStack != null) {
-                    this.initGems(itemStack);
-                } else {
-                    this.containerGemSetting.getTileEntityFurnace().destroyInventory();
-                }
+                this.containerGemSetting.getTileEntityFurnace().destroyInventory();
             } else {
-                ItemStack addGem = containerGemSetting.getSlot(slotIndex).getStack();
                 ItemStack source = containerGemSetting.getSlot(0).getStack();
-                if(addGem != null) {
-                    if(source != null) {
-                        source.GemsList[slotIndex - 1] = addGem.copy();
-                    }
-                } else {
-                    if(source != null) {
-                        source.GemsList[slotIndex - 1] = null;
-                    }
+                if(source != null) {
+                    source.GemsList[slotIndex - 1] = null;
                 }
             }
-
-            containerGemSetting.updatePlayerInventory(entity_player);
-            ((ServerPlayer)entity_player).updateCraftingInventory(containerGemSetting, containerGemSetting.getInventory());
         }
     }
 

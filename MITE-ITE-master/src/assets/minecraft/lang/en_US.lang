@@ -116,8 +116,11 @@ item.stack_torch.name=一捆火把
 item.gem_blue.name=蓝宝石
 item.lava_in_pipes.name=管道岩浆
 
-tile.dynamic_light.name=动态光源
-item.dynamic_core.name=动态光源
+item.dynamic_core_iron.name=铁光源
+item.dynamic_core_ancient_metal.name=远古金属光源
+item.dynamic_core_mithril.name=秘银光源
+item.dynamic_core_adamantium.name=艾德曼光源
+item.dynamic_core_vibranium.name=振金光源
 
 item.voucher_core.name=振金核心
 item.voucher_witch.name=流浪女巫,末影人凭证
@@ -138,6 +141,39 @@ item.enhance_gem_phase1.damage.name=三角攻击宝石
 item.enhance_gem_phase1.protection.name=三角保护宝石
 item.enhance_gem_phase1.health.name=三角生命宝石
 item.enhance_gem_phase1.recover.name=三角恢复宝石
+
+item.enhance_gem_phase2.damage.name=四角攻击宝石
+item.enhance_gem_phase2.protection.name=四角保护宝石
+item.enhance_gem_phase2.health.name=四角生命宝石
+item.enhance_gem_phase2.recover.name=四角恢复宝石
+
+item.enhance_gem_phase3.damage.name=五角攻击宝石
+item.enhance_gem_phase3.protection.name=五角保护宝石
+item.enhance_gem_phase3.health.name=五角生命宝石
+item.enhance_gem_phase3.recover.name=五角恢复宝石
+
+item.enhance_gem_phase4.damage.name=六角攻击宝石
+item.enhance_gem_phase4.protection.name=六角保护宝石
+item.enhance_gem_phase4.health.name=六角生命宝石
+item.enhance_gem_phase4.recover.name=六角恢复宝石
+
+item.enhance_gem_phase5.damage.name=七角攻击宝石
+item.enhance_gem_phase5.protection.name=七角保护宝石
+item.enhance_gem_phase5.health.name=七角生命宝石
+item.enhance_gem_phase5.recover.name=七角恢复宝石
+
+item.enhance_gem_phase6.damage.name=八角攻击宝石
+item.enhance_gem_phase6.protection.name=八角保护宝石
+item.enhance_gem_phase6.health.name=八角生命宝石
+item.enhance_gem_phase6.recover.name=八角恢复宝石
+
+item.gem_shard_0.name=朴素四角宝石
+item.gem_shard_1.name=朴素五角宝石
+item.gem_shard_2.name=朴素六角宝石
+item.gem_shard_3.name=朴素七角宝石
+item.gem_shard_4.name=朴素八角宝石
+
+
 item.enhance_gem_box_phase1.name=三角宝石箱
 
 
@@ -145,6 +181,12 @@ item.tooltip.attributeGem.damage=基础攻击增加
 item.tooltip.attributeGem.protection=保护值增加
 item.tooltip.attributeGem.health=最大生命增加
 item.tooltip.attributeGem.recover=恢复速度增加
+
+item.tooltip.gem_shard_usage_0=用于合成四角宝石
+item.tooltip.gem_shard_usage_1=用于合成五宝石
+item.tooltip.gem_shard_usage_2=用于合成六角宝石
+item.tooltip.gem_shard_usage_3=用于合成七角宝石
+item.tooltip.gem_shard_usage_4=用于合成八角宝石
 
 tile.gem_setting.name=宝石镶嵌台
 

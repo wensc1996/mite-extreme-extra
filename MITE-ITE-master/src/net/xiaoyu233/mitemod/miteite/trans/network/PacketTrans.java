@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.stream.Stream;
 
 @Mixin(Packet.class)
 public abstract class PacketTrans{
@@ -44,6 +45,19 @@ public abstract class PacketTrans{
             byte var3 = par0DataInput.readByte();
             short var4 = par0DataInput.readShort();
             var1 = new ItemStack(var2, var3, var4);
+
+            int gemLength = par0DataInput.readByte();
+            for(int i = 0; i < gemLength; i++) {
+                int index = par0DataInput.readByte();
+                int id = par0DataInput.readShort();
+                int meta = par0DataInput.readByte();
+                if(id > 0 && meta >= 0) {
+                    var1.GemsList[index] = new ItemStack(id, 1, meta);
+                } else {
+                    var1.GemsList[index] = null;
+                }
+            }
+
             int quality_ordinal = par0DataInput.readByte();
             if (quality_ordinal >= 0) {
                 var1.setQuality(EnumQuality.values()[quality_ordinal]);
@@ -53,17 +67,7 @@ public abstract class PacketTrans{
             if (var1.isItemStackDamageable()) {
                 var1.setItemDamage(readItemStackDamage(var1, par0DataInput));
             }
-            int gemLength = par0DataInput.readByte();
-            for(int i = 0; i < gemLength; i++) {
-                int index = par0DataInput.readByte();
-                int id = par0DataInput.readShort();
-                int meta = par0DataInput.readByte();
-                if(id > 0 && meta > 0) {
-                    var1.GemsList[index] = new ItemStack(id, 1, meta);
-                } else {
-                    var1.GemsList[index] = null;
-                }
-            }
+
 
         }
 
@@ -72,12 +76,29 @@ public abstract class PacketTrans{
 
     @Overwrite
     public static void writeItemStack(ItemStack par0ItemStack, DataOutput par1DataOutput) throws IOException {
+        // 2.打印调用堆栈
+//        System.out.println("2.打印调用堆栈");
+//        Stream.of(Thread.currentThread().getStackTrace()).forEach(System.out::println);
         if (par0ItemStack == null) {
             par1DataOutput.writeShort(-1);
         } else {
             par1DataOutput.writeShort(par0ItemStack.itemID);
             par1DataOutput.writeByte(par0ItemStack.stackSize);
             par1DataOutput.writeShort(par0ItemStack.getItemSubtype());
+
+            par1DataOutput.writeByte(par0ItemStack.GemsList.length);
+            for(int i = 0; i < par0ItemStack.GemsList.length; i++) {
+                if(par0ItemStack.GemsList[i] != null) {
+                    par1DataOutput.writeByte(i);
+                    par1DataOutput.writeShort(par0ItemStack.GemsList[i].itemID);
+                    par1DataOutput.writeByte(par0ItemStack.GemsList[i].getItemSubtype());
+                } else {
+                    par1DataOutput.writeByte(i);
+                    par1DataOutput.writeShort(-1);
+                    par1DataOutput.writeByte(-1);
+                }
+            }
+
             par1DataOutput.writeByte(par0ItemStack.getQuality() == null ? -1 : par0ItemStack.getQuality().ordinal());
             NBTTagCompound var2 = null;
             if (par0ItemStack.getItem().isDamageable() || par0ItemStack.getItem().getShareTag()) {
@@ -89,19 +110,7 @@ public abstract class PacketTrans{
                 writeItemStackDamage(par0ItemStack, par1DataOutput);
             }
 
-            par1DataOutput.writeByte(par0ItemStack.GemsList.length);
-            for(int i = 0; i < par0ItemStack.GemsList.length; i++) {
-                if(par0ItemStack.GemsList[i] != null) {
-                    System.out.println("index:" + i+ " id:" + par0ItemStack.itemID +" meta:" +par0ItemStack.getItemSubtype());
-                    par1DataOutput.writeByte(i);
-                    par1DataOutput.writeShort(par0ItemStack.itemID);
-                    par1DataOutput.writeByte(par0ItemStack.getItemSubtype());
-                } else {
-                    par1DataOutput.writeByte(i);
-                    par1DataOutput.writeShort(-1);
-                    par1DataOutput.writeByte(-1);
-                }
-            }
+
         }
 
     }

@@ -246,7 +246,14 @@ public class Blocks extends Block{
         registerForgingTableUpgradeRecipes(register,ForgingTableLevel.ADAMANTIUM, VIBRANIUM_INGOT);
         RecipesFurnace.smelting().addSmelting(Blocks.netherAdamantiumOre.blockID, new ItemStack(Item.ingotAdamantium));
 
-        RecipesFurnace.smelting().addSmelting(Blocks.blockIron.blockID, new ItemStack(Items.itemEnhanceGemBox));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockCopper.blockID, new ItemStack(Items.itemEnhanceGemBox));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockSilver.blockID, new ItemStack(Items.itemEnhanceGemBox));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockGold.blockID, new ItemStack(Items.itemEnhanceGemBox));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockIron.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 0));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockAncientMetal.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 1));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockMithril.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 2));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockAdamantium.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 3));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockVibranium.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 4));
     }
 
     private static void registerForgingTableUpgradeRecipes(RecipeRegister register, ForgingTableLevel originalLevel, Item ingot){

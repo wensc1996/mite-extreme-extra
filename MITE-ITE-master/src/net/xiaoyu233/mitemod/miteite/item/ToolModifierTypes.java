@@ -29,10 +29,10 @@ import java.util.function.Predicate;
 public enum ToolModifierTypes implements ItemModifierTypes{
     //Tool Modifiers
     EFFICIENCY_MODIFIER(0.25F,"急速",EnumChatFormat.DARK_RED,20, (stack -> !ToolModifierTypes.isWeapon(stack)),10),
-    AQUADYNAMIC_MODIFIER(1.25F,"喜水",EnumChatFormats.LIGHT_YELLOW_GREEN,10, (stack -> !ToolModifierTypes.isWeapon(stack)),5),
+    AQUADYNAMIC_MODIFIER(1.25F,"喜水",EnumChatFormat.AQUA,10, (stack -> !ToolModifierTypes.isWeapon(stack)),5),
     DURABILITY_MODIFIER(0.1F,"耐久",EnumChatFormat.DARK_PURPLE,40,(stack -> true),5),
     DAMAGE_MODIFIER(1.0F,"锋利", EnumChatFormat.WHITE,20, (ToolModifierTypes::isWeapon),10),
-    SLOWDOWN_MODIFIER(1.0F,"织网",EnumChatFormats.LIGHT_BLUE,10, ToolModifierTypes::isWeapon,5),
+    SLOWDOWN_MODIFIER(1.0F,"织网",EnumChatFormat.GRAY,10, ToolModifierTypes::isWeapon,5),
     UNNATURAL_MODIFIER(0.1f,"超自然",EnumChatFormat.LIGHT_GRAY,6, itemStack -> !ToolModifierTypes.isWeapon(itemStack),5),
     DEMON_POWER(0.25f,"恶魔之力",EnumChatFormat.RED,4, ToolModifierTypes::isWeapon, 1),
     GEOLOGY(0.5f,"地质学",EnumChatFormat.LIGHT_PURPLE,2,itemStack -> itemStack.getItem() instanceof ItemPickaxe,1);

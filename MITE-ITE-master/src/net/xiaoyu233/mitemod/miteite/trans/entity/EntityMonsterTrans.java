@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
 import net.xiaoyu233.fml.util.ReflectHelper;
+import net.xiaoyu233.mitemod.miteite.item.GemModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.MathUtil;
@@ -36,7 +37,7 @@ public abstract class EntityMonsterTrans extends EntityInsentient implements IMo
             at = @At(value = "INVOKE",target = "Lnet/minecraft/AttributeInstance;getAttributeValue()D"))
    private double redirectEntityDamageGet(AttributeInstance caller){
       if (this.getHeldItem() instanceof ItemTool){
-         return caller.getAttributeValue() * this.getWeaponDamageBoost();
+         return (caller.getAttributeValue() + (double) this.getHeldItemStack().getGemMaxLevel(GemModifierTypes.damage)) * this.getWeaponDamageBoost();
       }
       return caller.getAttributeValue();
    }
@@ -45,7 +46,7 @@ public abstract class EntityMonsterTrans extends EntityInsentient implements IMo
            at = @At(value = "INVOKE",target = "Lnet/minecraft/AttributeInstance;getAttributeValue()D"))
    private static double redirectEntityDamageGetStatic(AttributeInstance caller,EntityInsentient attacker, Entity target){
       if (attacker != null && attacker.getHeldItem() instanceof ItemTool){
-         return caller.getAttributeValue() * attacker.getWeaponDamageBoost();
+         return (caller.getAttributeValue() + (double) attacker.getHeldItemStack().getGemMaxLevel(GemModifierTypes.damage)) * attacker.getWeaponDamageBoost();
       }
       return caller.getAttributeValue();
    }

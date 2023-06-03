@@ -148,11 +148,13 @@ public abstract class EntityLivingTrans extends Entity {
 
    @Redirect(method = "onEntityUpdate",at = @At(ordinal = 1,value = "INVOKE",target = "Lnet/minecraft/EntityLiving;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
    private EntityDamageResult injectModifyPlayerInWallDamage(EntityLiving caller,Damage damage){
-      if (ReflectHelper.dyCast(this) instanceof EntityPlayer) {
-        return this.attackEntityFrom(new Damage(DamageSource.inWall, Configs.wenscConfig.inWallDamageForPlayer.ConfigValue));
-      }else {
-        return this.attackEntityFrom(new Damage(DamageSource.inWall, 1.0f));
-      }
+      // 取消窒息伤害
+      return null;
+//      if (ReflectHelper.dyCast(this) instanceof EntityPlayer) {
+//        return this.attackEntityFrom(new Damage(DamageSource.inWall, Configs.wenscConfig.inWallDamageForPlayer.ConfigValue));
+//      }else {
+//        return this.attackEntityFrom(new Damage(DamageSource.inWall, 1.0f));
+//      }
    }
 
    @Shadow

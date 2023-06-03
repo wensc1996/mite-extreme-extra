@@ -3,10 +3,7 @@ package net.xiaoyu233.mitemod.miteite.trans.item;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.item.ArmorModifierTypes;
-import net.xiaoyu233.mitemod.miteite.item.ItemRingKiller;
-import net.xiaoyu233.mitemod.miteite.item.Items;
-import net.xiaoyu233.mitemod.miteite.item.ToolModifierTypes;
+import net.xiaoyu233.mitemod.miteite.item.*;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -226,9 +223,29 @@ public class ItemStackTrans {
       return 0;
    }
 
+   public int getGemMaxLevel(GemModifierTypes gemModifierTypes) {
+      // 在宝石里面寻找最大的
+      ItemStack[] gemList = this.GemsList;
+      int max = 0;
+      for (ItemStack gemStack : gemList) {
+         if(gemStack != null) {
+            Item gem  = Item.getItem(gemStack.itemID);
+            if(gem instanceof ItemEnhanceGem) {
+               if(gemStack.getItemSubtype() == gemModifierTypes.ordinal()) {
+                  int level = ((ItemEnhanceGem) gem).gemLevel;
+                  if(level > max) {
+                     max = level;
+                  }
+               }
+            }
+         }
+      }
+      return max;
+   }
+
    @Overwrite
    public float getMeleeDamageBonus() {
-      return this.getItem().getMeleeDamageBonus(ReflectHelper.dyCast(this));
+      return this.getItem().getMeleeDamageBonus(ReflectHelper.dyCast(this)) + this.getGemMaxLevel(GemModifierTypes.damage);
    }
 
    @Shadow

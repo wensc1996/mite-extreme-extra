@@ -24,7 +24,7 @@ public class EntityRenderTrans {
             int var4 = var3.getDuration();
             return var4 > 200 ? 1.0F :0.7F + MathHelper.sin(((float)var4 - par2) * 3.1415927F * 0.2F) * 0.3F;
         } else {
-            return par1EntityPlayer.hasDynamicCore ? 0.2F : 0;
+            return (float) par1EntityPlayer.dynamicCoreLevel * 0.2f;
         }
     }
 
@@ -32,6 +32,6 @@ public class EntityRenderTrans {
             at=@At(value = "INVOKE",
                     target = "Lnet/minecraft/ClientPlayer;isPotionActive(Lnet/minecraft/MobEffectList;)Z"))
     public boolean isPotionActiveOrDynamicCore(ClientPlayer caller, MobEffectList par1Potion) {
-        return (caller.isPotionActive(par1Potion) || caller.hasDynamicCore);
+        return (caller.isPotionActive(par1Potion) || caller.dynamicCoreLevel > 0);
     }
 }

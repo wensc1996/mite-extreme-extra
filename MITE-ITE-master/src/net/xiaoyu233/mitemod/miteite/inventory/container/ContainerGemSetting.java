@@ -52,22 +52,6 @@ public class ContainerGemSetting extends Container {
         return this.furnace.isUseableByPlayer(par1EntityPlayer);
     }
 
-//    @Override
-//    public void onContainerClosed(EntityPlayer par1EntityPlayer) {
-//        super.onContainerClosed(par1EntityPlayer);
-//        if (!this.world.isRemote)
-//        {
-//            ItemStack var2 = this.furnace.getStackInSlotOnClosing(0);
-//            this.updatePlayerInventory(par1EntityPlayer);
-//            if (var2 != null)
-//            {
-//                par1EntityPlayer.dropPlayerItem(var2);
-//            }
-//            furnace.destroyInventory();
-//            this.onUpdate();
-//        }
-//    }
-
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
@@ -88,14 +72,7 @@ public class ContainerGemSetting extends Container {
                     {
                         return null;
                     }
-                } else if (par2 >= 9 && par2 < 36)
-                {
-                    if (!this.mergeItemStack(var5, 0, 9, false))
-                    {
-                        return null;
-                    }
-                }
-                else if (par2 >= 36 && par2 < 45 && !this.mergeItemStack(var5, 0, 9, false))
+                } else if (par2 >= 9 && par2 < 45 && !this.mergeItemStack(var5, 0, 9, false))
                 {
                     return null;
                 }
@@ -104,11 +81,6 @@ public class ContainerGemSetting extends Container {
             {
                 return null;
             }
-
-            if(par2 == 0) {
-                furnace.destroyInventory();
-            }
-
             if (var5.stackSize == 0)
             {
                 var4.putStack((ItemStack)null);
@@ -127,9 +99,9 @@ public class ContainerGemSetting extends Container {
         }
         if (!this.player.worldObj.isRemote) {
             this.updatePlayerInventory(this.player);
+            // 同步玩家包裹
             ((ServerPlayer)this.player).updateCraftingInventory(this, this.getInventory());
         }
-
         return var3;
     }
 
@@ -138,7 +110,7 @@ public class ContainerGemSetting extends Container {
         return this.furnace;
     }
 
-
+    // 同步打开的容器包裹
     public void updatePlayerInventory(EntityPlayer player) {
         ArrayList<ItemStack> itemList = new ArrayList();
 

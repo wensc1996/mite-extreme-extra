@@ -55,26 +55,6 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
       return (level, isWeapon) -> base + level * increase * (isWeapon ? 2 : 1 );
    }
 
-   public int getGemMaxLevel(ItemStack toolStack, GemModifierTypes gemModifierTypes) {
-      // 在宝石里面寻找最大的
-      ItemStack[] gemList = toolStack.GemsList;
-      int max = 0;
-      for (ItemStack gemStack : gemList) {
-         if(gemStack != null) {
-            Item gem  = Item.getItem(gemStack.itemID);
-            if(gem instanceof ItemEnhanceGem) {
-               if(gemStack.getItemSubtype() == gemModifierTypes.ordinal()) {
-                  int level = ((ItemEnhanceGem) gem).gemLevel;
-                  if(level > max) {
-                     max = level;
-                  }
-               }
-            }
-         }
-      }
-      return max;
-   }
-
    public void addInformation(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot) {
       super.addInformation(item_stack, player, info, extended_info, slot);
       if (item_stack.hasTagCompound()) {
@@ -104,14 +84,12 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
             }
          }
 
-         info.add("§5宝石攻击增加:§6" + ItemStack.field_111284_a.format(this.getGemMaxLevel(item_stack, GemModifierTypes.damage)));
-
          if (extended_info) {
+            info.add("§5宝石攻击增加:§6" + ItemStack.field_111284_a.format(item_stack.getGemMaxLevel(GemModifierTypes.damage)));
             NBTTagCompound compound = item_stack.stackTagCompound.getCompoundTag("modifiers");
             if (!compound.hasNoTags()) {
                info.add("工具强化:");
                ToolModifierTypes[] var8 = ToolModifierTypes.values();
-
                for (ToolModifierTypes value : var8) {
                   if (compound.hasKey(value.nbtName)) {
                      info.add("  " + value.color.toString() + value.displayName + "§r " + StringUtil.intToRoman(compound.getInteger(value.nbtName)));
@@ -120,7 +98,6 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
             }
          }
       }
-
    }
 
    private int applyCalculateDurabilityModifier(int origin, ItemStack stack) {
@@ -215,7 +192,7 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
    }
 
    public float getMeleeDamageBonus(ItemStack stack) {
-      return this.getCombinedDamageVsEntity() + ToolModifierTypes.DAMAGE_MODIFIER.getModifierValue(stack.stackTagCompound) + this.getEnhancedDamage(stack) + this.getGemMaxLevel(stack, GemModifierTypes.damage);
+      return this.getCombinedDamageVsEntity() + ToolModifierTypes.DAMAGE_MODIFIER.getModifierValue(stack.stackTagCompound) + this.getEnhancedDamage(stack);
    }
 
    public final float getMultipliedHarvestEfficiency(Block block, ItemStack itemStack, EntityPlayer player) {

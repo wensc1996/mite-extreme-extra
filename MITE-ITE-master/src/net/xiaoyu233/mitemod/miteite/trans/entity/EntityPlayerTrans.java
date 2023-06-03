@@ -91,7 +91,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    public int storeTorchTick = 0;
 
-   public boolean hasDynamicCore = false;
+   public int dynamicCoreLevel = 0;
 
    public double money = 0D;
 
@@ -307,7 +307,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             demonHunterAmp += ToolModifierTypes.DEMON_POWER.getModifierValue(heldItemStack.getTagCompound());
          }
 
-         float damage = (critBouns + this.calcRawMeleeDamageVs(target, critical, this.isSuspendedInLiquid())) * indomitableAmp * demonHunterAmp;
+         float damage = (critBouns + this.calcRawMeleeDamageVs(target, critical, this.isSuspendedInLiquid() )) * indomitableAmp * demonHunterAmp + (float) heldItemStack.getGemMaxLevel(GemModifierTypes.damage);
          if (damage <= 0.0F) {
             return;
          }
@@ -965,16 +965,16 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
          ItemStack currentItemStack = this.inventory.getDynamicCore();
          if(currentItemStack != null) {
             if(currentItemStack.getItemDamage() < currentItemStack.getMaxDamage() - 2) {
-               this.hasDynamicCore = true;
+
+               this.dynamicCoreLevel = ((ItemDynamicCore)currentItemStack.getItem()).level;
                if (!this.worldObj.isRemote){
                   currentItemStack.tryDamageItem(DamageSource.causePlayerDamage(ReflectHelper.dyCast(this)), 2, ReflectHelper.dyCast(this));
                }
             } else {
-               this.hasDynamicCore = false;
+               this.dynamicCoreLevel = 0;
             }
          } else {
-            this.hasDynamicCore = false;
-            this.storeTorchTick = 0;
+            this.dynamicCoreLevel = 0;
          }
          this.storeTorchTick = 10;
       } else {
