@@ -307,7 +307,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             demonHunterAmp += ToolModifierTypes.DEMON_POWER.getModifierValue(heldItemStack.getTagCompound());
          }
 
-         float damage = (critBouns + this.calcRawMeleeDamageVs(target, critical, this.isSuspendedInLiquid() )) * indomitableAmp * demonHunterAmp + (float) heldItemStack.getGemMaxLevel(GemModifierTypes.damage);
+         float damage = (critBouns + this.calcRawMeleeDamageVs(target, critical, this.isSuspendedInLiquid() )) * indomitableAmp * demonHunterAmp + (heldItemStack != null ?(float) heldItemStack.getGemMaxLevel(GemModifierTypes.damage) : 0f);
          if (damage <= 0.0F) {
             return;
          }
