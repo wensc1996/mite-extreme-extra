@@ -26,8 +26,9 @@ public class DedicatedServerTrans {
         par1EntityPlayerMP.sendChatToPlayer(ChatMessage.createFromTranslationKey("[MITE-Extreme]:").setColor(EnumChatFormat.WHITE)
                 .appendComponent(ChatMessage.createFromTranslationKey("MITE-Extreme-" + Constant.MITE_ITE_VERSION +" 由 ")
                         .appendComponent(ChatMessage.createFromTranslationKey("wensc,洛小雨").setColor(EnumChatFormat.WHITE)))
-                .addText(" 重写,").setColor(EnumChatFormat.DARK_AQUA).appendComponent(ChatMessage.createFromTranslationKey("「99」,「我对你好吗」特约赞助").setColor(EnumChatFormat.BROWN)));
-//                .appendComponent(ChatMessage.createFromTranslationKey("https://www.wensc.cn").setColor(EnumChatFormat.DARK_GREEN)));
+                .addText(" 重写,").setColor(EnumChatFormat.DARK_AQUA)
+                .appendComponent(ChatMessage.createFromTranslationKey("「我对你好吗」特约赞助").setColor(EnumChatFormat.BROWN))
+                .appendComponent(ChatMessage.createFromTranslationKey(" 下载地址：wensc.cn").setColor(EnumChatFormat.DARK_GREEN)));
         if (par1EntityPlayerMP.isFirstLogin == true) {
             par1EntityPlayerMP.isFirstLogin = false;
         }

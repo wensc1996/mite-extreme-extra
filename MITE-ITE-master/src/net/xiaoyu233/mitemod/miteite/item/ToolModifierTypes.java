@@ -1,7 +1,6 @@
 package net.xiaoyu233.mitemod.miteite.item;
 
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.util.EnumChatFormats;
 
 import java.util.function.Predicate;
 
