@@ -18,4 +18,13 @@ public enum GemModifierTypes{
         this.iconName = iconName;
     }
 
+    public float getRate() {
+        if(this == protection) {
+            return 0.25f;
+        } else if(this == recover) {
+            return 0.125f;
+        } else {
+            return 1f;
+        }
+    }
 }

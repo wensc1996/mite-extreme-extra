@@ -17,9 +17,18 @@ public class GuiCraftingTrans {
     @Shadow public Container e;
     @Inject(locals = LocalCapture.CAPTURE_FAILHARD, method = "drawItemStackTooltip",at = @At(value = "INVOKE", target = "Lnet/minecraft/BlockWorkbench;getToolMaterial(I)Lnet/minecraft/Material;", shift = At.Shift.AFTER))
     public void judgeGemListExistThenPrevent(ItemStack par1ItemStack, int par2, int par3, Slot slot, CallbackInfo ci, List var4, Item item, aah recipe, Material material_to_check_tool_bench_hardness_against, boolean upper_body_in_web, List tooltips, ContainerWorkbench container_workbench) {
-        if(Arrays.stream(par1ItemStack.GemsList).anyMatch(e -> e != null)) {
-            tooltips.add(EnumChatFormat.RED + Translator.get("container.crafting.needsRemoveGems"));
-            this.e.crafting_result_shown_but_prevented = true;
+        for (int i = 0; i < container_workbench.craft_matrix.getInventory().length; i++) {
+            if(container_workbench.craft_matrix.getInventory() != null) {
+                ItemStack itemStack = container_workbench.craft_matrix.getInventory()[i];
+                if(itemStack != null) {
+                    for (int i1 = 0; i1 < itemStack.GemsList.length; i1++) {
+                        if(itemStack.GemsList[i1] != null) {
+                            tooltips.add(EnumChatFormat.RED + Translator.get("container.crafting.needsRemoveGems"));
+                            this.e.crafting_result_shown_but_prevented = true;
+                        }
+                    }
+                }
+            }
         }
     }
 

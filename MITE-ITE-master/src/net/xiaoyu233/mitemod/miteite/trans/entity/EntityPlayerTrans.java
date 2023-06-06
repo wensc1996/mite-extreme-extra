@@ -172,6 +172,10 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       }
    }
 
+   public float getGemSumNumeric(GemModifierTypes gemModifierTypes) {
+      return (float) this.getGemSumLevel(gemModifierTypes) * gemModifierTypes.getRate();
+   }
+
    public int getGemSumLevel(GemModifierTypes gemModifierTypes) {
       int sum = 0;
       ItemStack[] var3 = this.getWornItems();
@@ -215,7 +219,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    @Overwrite
    public float getHealthLimit() {
-      return (float)getHealthLimit(this.getExperienceLevel()) + (float) this.getGemSumLevel(GemModifierTypes.health) * 2f;
+      return (float)getHealthLimit(this.getExperienceLevel()) + this.getGemSumNumeric(GemModifierTypes.health);
    }
 
 
@@ -307,7 +311,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             demonHunterAmp += ToolModifierTypes.DEMON_POWER.getModifierValue(heldItemStack.getTagCompound());
          }
 
-         float damage = (critBouns + this.calcRawMeleeDamageVs(target, critical, this.isSuspendedInLiquid() )) * indomitableAmp * demonHunterAmp + (heldItemStack != null ?(float) heldItemStack.getGemMaxLevel(GemModifierTypes.damage) : 0f);
+         float damage = (critBouns + this.calcRawMeleeDamageVs(target, critical, this.isSuspendedInLiquid() )) * indomitableAmp * demonHunterAmp + (heldItemStack != null ? heldItemStack.getGemMaxNumeric(GemModifierTypes.damage) : 0f);
          if (damage <= 0.0F) {
             return;
          }

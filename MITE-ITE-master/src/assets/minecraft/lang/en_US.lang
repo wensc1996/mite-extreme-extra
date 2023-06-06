@@ -189,4 +189,4 @@ item.tooltip.gem_shard_usage_3=用于合成七角宝石
 item.tooltip.gem_shard_usage_4=用于合成八角宝石
 
 tile.gem_setting.name=宝石镶嵌台
-
+container.crafting.needsRemoveGems=请先移除宝石

@@ -92,7 +92,7 @@ public abstract class ItemArmorTrans extends Item implements IDamageableItem, IU
 
          total_defense = MathHelper.tryFitToNearestInteger(total_defense, 1.0E-4F);
          if(owner instanceof EntityPlayer) {
-            total_defense += (float) ((EntityPlayer) owner).getGemSumLevel(GemModifierTypes.protection) * 0.25f;
+            total_defense += (float) ((EntityPlayer) owner).getGemSumNumeric(GemModifierTypes.protection);
          }
          return total_defense;
       }
@@ -124,9 +124,10 @@ public abstract class ItemArmorTrans extends Item implements IDamageableItem, IU
          }
 
          if (extended_info) {
-            info.add("§5宝石护甲增加:§6" + ItemStack.field_111284_a.format((float)itemStack.getGemMaxLevel(GemModifierTypes.protection) * 0.25f));
-            info.add("§5宝石生命增加:§6" + ItemStack.field_111284_a.format(itemStack.getGemMaxLevel(GemModifierTypes.health)));
-            info.add("§5宝石恢复增加:§6" + ItemStack.field_111284_a.format((float)itemStack.getGemMaxLevel(GemModifierTypes.recover)* 0.125f));
+            info.add("§5宝石:");
+            info.add(" §3护甲增加:§6" + ItemStack.field_111284_a.format(itemStack.getGemMaxNumeric(GemModifierTypes.protection)));
+            info.add(" §3生命增加:§6" + ItemStack.field_111284_a.format(itemStack.getGemMaxNumeric(GemModifierTypes.health)));
+            info.add(" §3恢复增加:§6" + ItemStack.field_111284_a.format(itemStack.getGemMaxNumeric(GemModifierTypes.recover)));
             NBTTagCompound compound = itemStack.stackTagCompound.getCompoundTag("modifiers");
             if (!compound.hasNoTags()) {
                info.add("装备强化:");

@@ -80,10 +80,6 @@ public class Configs {
         public static ConfigItem <Integer> quartzExp = new ConfigItem("quartzExp", 35, "石英经验", 0 ,10000);
         public static ConfigItem <Integer> goldenAppleEatTime = new ConfigItem("goldenAppleEatTime", 10, "金苹果使用耗时（tick）", 0 ,1000000);
         public static ConfigItem <Integer> enchantedGoldenAppleEatTime = new ConfigItem("enchantedGoldenAppleEatTime", 10, "附魔金苹果使用耗时（tick）", 0 ,1000000);
-        public static ConfigItem <Integer> ironToMithrilCookTime = new ConfigItem("ironToMithrilCookTime", 6000, "铁烧制为秘银耗时（tick）", 0 ,1000000);
-        public static ConfigItem <Integer> ironBlockCountToMithril = new ConfigItem("ironBlockCountToMithril", 2, "铁烧制为秘银所需铁块数量", 1 ,4);
-        public static ConfigItem <Integer> mithrilToAdamantiumCookTime = new ConfigItem("mithrilToAdamantiumCookTime", 9000, "秘银烧制为艾德曼耗时(tick)", 0 ,1000000);
-        public static ConfigItem <Integer> mithrilBlockCountToAdamantium = new ConfigItem("mithrilBlockCountToAdamantium", 1, "秘银烧制为艾德曼所需秘银块数量", 1 ,4);
         public static ConfigItem <Integer> critEnchantmentChanceBoostPerLvl = new ConfigItem("critEnchantmentChanceBoostPerLvl", 2, "暴击附魔每级暴击几率", 0 ,100);
         public static ConfigItem <Float> critEnchantmentDamageBoostPerLvl = new ConfigItem("critEnchantmentDamageBoostPerLvl", 0.4F, "暴击附魔每级额外伤害", 0f ,100f);
         public static ConfigItem <Integer> emergencyCooldown = new ConfigItem("emergencyCooldown", 120000, "紧急守备冷却时间（tick）", 0 ,1000000);
@@ -144,7 +140,7 @@ public class Configs {
         public static ConfigItem <Integer> mithrilFrequencyUnderworld = new ConfigItem("mithrilFrequencyUnderworld_v0.0.5", 6, "地底世界秘银矿生成频率", 0 ,100);
         public static ConfigItem <Integer> lapisFrequencyUnderworld = new ConfigItem("lapisFrequencyUnderworld_v0.0.5", 0, "地底世界青金石矿生成频率", 0 ,100);
         public static ConfigItem <Integer> diamondFrequencyUnderworld = new ConfigItem("diamondFrequencyUnderworld_v0.0.5", 6, "地底世界钻石矿生成频率", 0 ,100);
-        public static ConfigItem <Integer> fancyRedFrequencyUnderworld = new ConfigItem("fancyRedFrequencyUnderworld", 3, "地底世界红钻矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> fancyRedFrequencyUnderworld = new ConfigItem("fancyRedFrequencyUnderworld_v1.3.3", 6, "地底世界红钻矿生成频率", 0 ,100);
         public static ConfigItem <Integer> adamantiumFrequencyUnderworld = new ConfigItem("adamantiumFrequencyUnderworld_v0.0.9", 1, "地底世界艾德曼矿生成频率", 0 ,100);
         public static ConfigItem <Integer> underworldMantleBlockOffset = new ConfigItem("underworldMantleBlockOffset_v0.0.2", 75, "地底世界地幔位置向上偏移", 0 ,140);
         public static ConfigItem <Integer> netherAdamantiumMaxCountPerChunk = new ConfigItem("netherAdamantiumMaxCountPerChunk", 2, "地狱艾德曼每个区块最大生成数量", 0 ,100);
@@ -213,10 +209,6 @@ public class Configs {
         wenscMap.put("quartzExp", wenscConfig.quartzExp);
         wenscMap.put("goldenAppleEatTime", wenscConfig.goldenAppleEatTime);
         wenscMap.put("enchantedGoldenAppleEatTime", wenscConfig.enchantedGoldenAppleEatTime);
-        wenscMap.put("ironToMithrilCookTime", wenscConfig.ironToMithrilCookTime);
-        wenscMap.put("ironBlockCountToMithril", wenscConfig.ironBlockCountToMithril);
-        wenscMap.put("mithrilToAdamantiumCookTime", wenscConfig.mithrilToAdamantiumCookTime);
-        wenscMap.put("mithrilBlockCountToAdamantium", wenscConfig.mithrilBlockCountToAdamantium);
         wenscMap.put("critEnchantmentChanceBoostPerLvl", wenscConfig.critEnchantmentChanceBoostPerLvl);
         wenscMap.put("critEnchantmentDamageBoostPerLvl", wenscConfig.critEnchantmentDamageBoostPerLvl);
         wenscMap.put("emergencyCooldown", wenscConfig.emergencyCooldown);
@@ -280,7 +272,7 @@ public class Configs {
 
         wenscMap.put("mithrilFrequencyUnderworld_v0.0.5", wenscConfig.mithrilFrequencyUnderworld);
         wenscMap.put("diamondFrequencyUnderworld_v0.0.5", wenscConfig.diamondFrequencyUnderworld);
-        wenscMap.put("fancyRedFrequencyUnderworld", wenscConfig.fancyRedFrequencyUnderworld);
+        wenscMap.put("fancyRedFrequencyUnderworld_v1.3.3", wenscConfig.fancyRedFrequencyUnderworld);
         wenscMap.put("adamantiumFrequencyUnderworld_v0.0.9", wenscConfig.adamantiumFrequencyUnderworld);
         wenscMap.put("underworldMantleBlockOffset_v0.0.2", wenscConfig.underworldMantleBlockOffset);
         wenscMap.put("netherAdamantiumMaxCountPerChunk", wenscConfig.netherAdamantiumMaxCountPerChunk);

@@ -77,7 +77,7 @@ public class FoodStatsTrans {
                         this.hunger_for_nutrition_only = 0.0F;
                     }
                 } else {
-                    this.heal_progress += (4.0E-4F + (float)this.nutrition * 2.0E-5F) * (par1EntityPlayer.isMalnourished() ? 0.25F : 1.0F) * (par1EntityPlayer.inBed() ? 4.0F : 1.0F) * EnchantmentManager.getRegenerationModifier(this.player) * (1f + (float) this.player.getGemSumLevel(GemModifierTypes.recover) * 0.125);
+                    this.heal_progress += (4.0E-4F + (float)this.nutrition * 2.0E-5F) * (par1EntityPlayer.isMalnourished() ? 0.25F : 1.0F) * (par1EntityPlayer.inBed() ? 4.0F : 1.0F) * EnchantmentManager.getRegenerationModifier(this.player) * (1f + this.player.getGemSumNumeric(GemModifierTypes.recover));
                     this.starve_progress = 0.0F;
                     if (par1EntityPlayer.worldObj.getGameRules().getGameRuleBooleanValue("naturalRegeneration") && par1EntityPlayer.shouldHeal()) {
                         if (this.heal_progress >= 1.0F) {

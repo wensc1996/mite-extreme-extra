@@ -23,6 +23,9 @@ public class ItemDynamicCore extends Item implements IDamageableItem {
     public boolean isHarmedByFire() {
         return false;
     }
+    public boolean isHarmedByLava() {
+        return false;
+    }
 
     public final int getMultipliedDurability()
     {

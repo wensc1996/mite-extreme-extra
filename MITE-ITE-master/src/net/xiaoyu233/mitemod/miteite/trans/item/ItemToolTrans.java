@@ -85,7 +85,8 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
          }
 
          if (extended_info) {
-            info.add("§5宝石攻击增加:§6" + ItemStack.field_111284_a.format(item_stack.getGemMaxLevel(GemModifierTypes.damage)));
+            info.add("§5宝石:");
+            info.add(" §3攻击增加:§6" + ItemStack.field_111284_a.format(item_stack.getGemMaxNumeric(GemModifierTypes.damage)));
             NBTTagCompound compound = item_stack.stackTagCompound.getCompoundTag("modifiers");
             if (!compound.hasNoTags()) {
                info.add("工具强化:");

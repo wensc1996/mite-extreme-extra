@@ -23,6 +23,10 @@ public class ShapelessRecipeTrans {
     @Inject(method = "getCraftingResult",at = @At(value = "INVOKE",target = "Lnet/minecraft/ItemStack;setTagCompound(Lnet/minecraft/NBTTagCompound;)Lnet/minecraft/ItemStack;",shift = At.Shift.AFTER),locals = LocalCapture.CAPTURE_FAILHARD)
     private void injectDowngradeForgingGrade(InventoryCrafting par1InventoryCrafting, CallbackInfoReturnable<CraftingResult> cir, ItemStack output, int index, ItemStack currentItem){
         if (currentItem.getItem() instanceof IUpgradableItem && currentItem.getItem().isDamageable()){
+            // 这里在nbt有可能残留存储有宝石 强制去除
+            for (int i = 0; i < output.GemsList.length; i++) {
+                output.GemsList[i] = null;
+            }
             output.setItemDamage(currentItem.getItemDamage());
         }
     }

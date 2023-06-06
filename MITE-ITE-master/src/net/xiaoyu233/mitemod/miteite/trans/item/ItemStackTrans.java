@@ -223,6 +223,10 @@ public class ItemStackTrans {
       return 0;
    }
 
+   public float getGemMaxNumeric(GemModifierTypes gemModifierTypes) {
+      return (float) this.getGemMaxLevel(gemModifierTypes) * gemModifierTypes.getRate();
+   }
+
    public int getGemMaxLevel(GemModifierTypes gemModifierTypes) {
       // 在宝石里面寻找最大的
       ItemStack[] gemList = this.GemsList;
@@ -245,7 +249,7 @@ public class ItemStackTrans {
 
    @Overwrite
    public float getMeleeDamageBonus() {
-      return this.getItem().getMeleeDamageBonus(ReflectHelper.dyCast(this)) + this.getGemMaxLevel(GemModifierTypes.damage);
+      return this.getItem().getMeleeDamageBonus(ReflectHelper.dyCast(this)) + this.getGemMaxNumeric(GemModifierTypes.damage);
    }
 
    @Shadow

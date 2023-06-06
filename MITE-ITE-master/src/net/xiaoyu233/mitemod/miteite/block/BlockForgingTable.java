@@ -33,7 +33,12 @@ public class BlockForgingTable extends Block implements IContainer,IBlockWithSub
     @Override
     @SoftOverride
     public String getItemDisplayName(ItemStack itemStack) {
-        return Translator.get("tile.forging_table." + this.getNames()[itemStack.getItemSubtype()] + ".name");
+        if(itemStack != null) {
+            return Translator.get("tile.forging_table." + this.getNames()[itemStack.getItemSubtype()] + ".name");
+        } else {
+            return  "";
+        }
+
     }
 
     @Override

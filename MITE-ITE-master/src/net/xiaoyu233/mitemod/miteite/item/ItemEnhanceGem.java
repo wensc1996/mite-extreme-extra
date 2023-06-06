@@ -20,6 +20,16 @@ public class ItemEnhanceGem extends Item {
         this.setCreativeTab(CreativeModeTab.tabMisc);
     }
 
+    public boolean isHarmedByAcid() {
+        return false;
+    }
+    public boolean isHarmedByFire() {
+        return false;
+    }
+    public boolean isHarmedByLava() {
+        return false;
+    }
+
     /**
      * Returns the metadata of the block which this Item (ItemBlock) can place
      */
@@ -83,6 +93,7 @@ public class ItemEnhanceGem extends Item {
         }
     }
 
+
     public void addInformation(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot)
     {
         if (extended_info)
@@ -92,7 +103,7 @@ public class ItemEnhanceGem extends Item {
             if(item_stack != null) {
                 int subtype = item_stack.getItemSubtype();
                 if(subtype < GemModifierTypes.values().length) {
-                    info.add(EnumChatFormat.RED + Translator.getFormatted("item.tooltip.attributeGem." + GemModifierTypes.values()[subtype].gemName) + ":" + this.gemLevel);
+                    info.add(EnumChatFormat.RED + Translator.getFormatted("item.tooltip.attributeGem." + GemModifierTypes.values()[subtype].gemName) + ":" + GemModifierTypes.values()[subtype].getRate() * gemLevel);
                 }
             }
         }

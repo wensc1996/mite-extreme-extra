@@ -37,7 +37,7 @@ public abstract class EntityMonsterTrans extends EntityInsentient implements IMo
             at = @At(value = "INVOKE",target = "Lnet/minecraft/AttributeInstance;getAttributeValue()D"))
    private double redirectEntityDamageGet(AttributeInstance caller){
       if (this.getHeldItem() instanceof ItemTool){
-         return (caller.getAttributeValue() + (double) this.getHeldItemStack().getGemMaxLevel(GemModifierTypes.damage)) * this.getWeaponDamageBoost();
+         return (caller.getAttributeValue() + (double) this.getHeldItemStack().getGemMaxNumeric(GemModifierTypes.damage)) * this.getWeaponDamageBoost();
       }
       return caller.getAttributeValue();
    }
@@ -46,7 +46,7 @@ public abstract class EntityMonsterTrans extends EntityInsentient implements IMo
            at = @At(value = "INVOKE",target = "Lnet/minecraft/AttributeInstance;getAttributeValue()D"))
    private static double redirectEntityDamageGetStatic(AttributeInstance caller,EntityInsentient attacker, Entity target){
       if (attacker != null && attacker.getHeldItem() instanceof ItemTool){
-         return (caller.getAttributeValue() + (double) attacker.getHeldItemStack().getGemMaxLevel(GemModifierTypes.damage)) * attacker.getWeaponDamageBoost();
+         return (caller.getAttributeValue() + (double) attacker.getHeldItemStack().getGemMaxNumeric(GemModifierTypes.damage)) * attacker.getWeaponDamageBoost();
       }
       return caller.getAttributeValue();
    }

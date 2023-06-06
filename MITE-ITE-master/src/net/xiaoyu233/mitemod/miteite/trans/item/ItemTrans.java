@@ -149,15 +149,7 @@ public abstract class ItemTrans {
    }
 
    public int getCookTime() {
-      if (this.itemID == Block.blockMithril.blockID) {
-         return Configs.wenscConfig.mithrilToAdamantiumCookTime.ConfigValue;
-      } else if (this.itemID == Block.blockIron.blockID) {
-         return Configs.wenscConfig.ironToMithrilCookTime.ConfigValue;
-      } else if (this.itemID == Block.coalBlock.blockID) {
-         return 2000;
-      } else {
-         return this.isBlock() ? 200 * (this.getAsItemBlock().getBlock().getMinHarvestLevel(-1) + 1) : 200;
-      }
+      return this.isBlock() ? 200 * (this.getAsItemBlock().getBlock().getMinHarvestLevel(-1) + 1) : 200;
    }
 
    public int getExpReqForLevel(int i, boolean weapon) {
