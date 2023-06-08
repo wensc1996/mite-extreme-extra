@@ -25,7 +25,6 @@ public class EnchantmentUtil {
                 }
             }
         }
-
     }
 
     public static List<EnchantmentInstance> buildEnchantmentList(Random random, ItemStack item_stack, int enchantment_levels,int maxTotalLevel,int maxEnchantmentNum) {

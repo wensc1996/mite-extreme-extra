@@ -52,7 +52,7 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
    }
 
    private void initEnhanceBookList() {
-      villagerEnhanceSpecialBookList = new Enchantment[] {Enchantment.protection, Enchantment.sharpness,  Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric, Enchantment.butchering};
+      villagerEnhanceSpecialBookList = new Enchantment[] {Enchantment.protection, Enchantment.sharpness,  Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric, Enchantment.butchering, Enchantments.enchantmentFixed, Enchantments.enchantmentChain, Enchantments.EMERGENCY};
       villagerEnhanceSimpleBookList = Arrays.stream(Enchantment.enchantmentsBookList).filter(enhance -> (enhance.getNumLevels() > 1 && !Arrays.stream(villagerEnhanceSpecialBookList).anyMatch(spcialEnhance ->  spcialEnhance.effectId == enhance.effectId))).toArray();
    }
 
@@ -206,13 +206,17 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
          }
          if (this.rand.nextFloat() < this.adjustProbability(0.05f)) {
             Enchantment var12 = this.villagerEnhanceSpecialBookList[this.rand.nextInt(villagerEnhanceSpecialBookList.length)];
-            int currentMaxLevelSpecial = 1;
-            if (this.buyingList != null) {
-               currentMaxLevelSpecial = (int) Math.round(Math.sqrt(this.buyingList.size()));
+//            int currentMaxLevelSpecial = 1;
+//            if (this.buyingList != null) {
+//               currentMaxLevelSpecial = (int) Math.round(Math.sqrt(this.buyingList.size()));
+//            }
+            int level = MathHelper.getRandomIntegerInRange(this.rand, 1, var12.getNumLevelsForVibranium());
+            ItemStack var14 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(var12, level));
+            if(var12.getNumLevelsForVibranium() > 1) {
+               var6 = level * 5 + this.rand.nextInt(10);
+            } else {
+               var6 = 7 * 5 + this.rand.nextInt(10);
             }
-            int var13 = MathHelper.getRandomIntegerInRange(this.rand, 1, currentMaxLevelSpecial > var12.getNumLevelsForVibranium() ? var12.getNumLevelsForVibranium() : currentMaxLevelSpecial);
-            ItemStack var14 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(var12, var13));
-            var6 = var13 * 5 + this.rand.nextInt(10);
             if(var6 > 32) {
                var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 32), new ItemStack(Item.emerald, (var6 - 32 > 32 ? 32 : var6 - 32)), var14));
             } else {

@@ -46,10 +46,12 @@ public class EntityZombieBoss extends EntityZombie {
             while (var4.hasNext()) {
                 Object o = var4.next();
                 EntityPlayer player = (EntityPlayer)o;
-                float damage = attackDamageMap.get(player.getEntityName());
-                int nums = Math.round(damage) / 20;
-                if(nums > 0) {
-                    player.inventory.addItemStackToInventoryOrDropIt(new ItemStack(Item.diamond, nums * 2));
+                if(attackDamageMap.containsKey(player.getEntityName())) {
+                    float damage = attackDamageMap.get(player.getEntityName());
+                    int nums = Math.round(damage) / 20;
+                    if(nums > 0) {
+                        player.inventory.addItemStackToInventoryOrDropIt(new ItemStack(Item.diamond, nums * 2));
+                    }
                 }
             }
 

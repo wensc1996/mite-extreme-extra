@@ -9,7 +9,7 @@ public class ItemMobVoucher extends Item {
     public ItemMobVoucher(int id, String entityName) {
         super(id, Materials.copper, "voucher/voucher_" + entityName);
         this.entityName = entityName;
-        this.setMaxStackSize(8);
+        this.setMaxStackSize(64);
         this.setCreativeTab(CreativeModeTab.tabMaterials);
     }
 
