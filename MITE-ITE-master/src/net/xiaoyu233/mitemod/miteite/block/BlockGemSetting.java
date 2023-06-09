@@ -8,6 +8,7 @@ public class BlockGemSetting extends Block implements IContainer {
     public IIcon furnaceIconTop;
     public IIcon furnaceIconFront;
 
+
     public BlockGemSetting(int par1, Material par2Material, BlockConstants constants) {
         super(par1, par2Material, constants);
         this.setStepSound(soundStoneFootstep);
@@ -73,7 +74,8 @@ public class BlockGemSetting extends Block implements IContainer {
         if (player.onServer() && world.isAirOrPassableBlock(x, y + 1, z, false))
         {
             TileEntityGemSetting tile_entity = (TileEntityGemSetting) world.getBlockTileEntity(x, y, z);
-            if(tile_entity != null && !tile_entity.isUsing()) {
+            if(tile_entity != null && !tile_entity.isUsing) {
+                tile_entity.isUsing = true;
                 player.displayGUIGemSetting(tile_entity);
             }
         }

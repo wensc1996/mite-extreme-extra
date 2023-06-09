@@ -36,24 +36,21 @@ public class SlotGem extends Slot {
     @Override
     public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack) {
         super.onPickupFromSlot(par1EntityPlayer, par2ItemStack);
-        if(par2ItemStack != null) {
-            if(slotIndex == 0) {
-                this.containerGemSetting.getTileEntityFurnace().destroyInventory();
-            } else {
-                ItemStack source = containerGemSetting.getSlot(0).getStack();
-                if(source != null) {
-                    source.GemsList[slotIndex - 1] = null;
-                }
+        if(slotIndex == 0) {
+            this.containerGemSetting.getTileEntityFurnace().destroyInventory();
+        } else {
+            ItemStack source = containerGemSetting.getSlot(0).getStack();
+            if(source != null) {
+                source.GemsList[slotIndex - 1] = null;
             }
         }
     }
 
     public void initGems(ItemStack itemStack) {
-
         for (int var2 = 0; var2 < itemStack.GemsList.length; ++var2)
         {
             ItemStack temp = itemStack.GemsList[var2];
-            containerGemSetting.getTileEntityFurnace().setInventorySlotContents(var2 + 1, temp != null ? itemStack.GemsList[var2].copy() : null);
+            containerGemSetting.getTileEntityFurnace().setInventorySlotContents(var2 + 1, temp != null ? temp.copy() : null);
         }
     }
 

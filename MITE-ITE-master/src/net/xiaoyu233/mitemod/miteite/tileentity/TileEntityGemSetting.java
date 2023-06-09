@@ -170,12 +170,14 @@ public class TileEntityGemSetting extends TileEntity implements IWorldInventory 
         return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
     }
 
+    @Override
     public void openChest() {
-        this.isUsing = true;
+
     }
 
+    @Override
     public void closeChest() {
-        this.isUsing = false;
+
     }
 
     /**
@@ -226,9 +228,5 @@ public class TileEntityGemSetting extends TileEntity implements IWorldInventory 
         {
             item_stacks[i] = null;
         }
-    }
-
-    public boolean isUsing() {
-        return this.isUsing;
     }
 }

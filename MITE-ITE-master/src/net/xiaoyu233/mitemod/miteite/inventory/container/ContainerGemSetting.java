@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.inventory.container;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.block.BlockGemSetting;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 
 import java.util.ArrayList;
@@ -37,6 +38,12 @@ public class ContainerGemSetting extends Container {
         }
     }
 
+
+    @Override
+    public void onContainerClosed(EntityPlayer par1EntityPlayer) {
+        this.furnace.isUsing = false;
+        super.onContainerClosed(par1EntityPlayer);
+    }
 
     /**
      * Looks for changes made in the container, sends them to every listener.
