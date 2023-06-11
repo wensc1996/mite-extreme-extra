@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.inventory.container;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.block.BlockGemSetting;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,14 @@ public class ContainerGemSetting extends Container {
     public void onContainerClosed(EntityPlayer par1EntityPlayer) {
         this.furnace.isUsing = false;
         super.onContainerClosed(par1EntityPlayer);
+        if (!this.world.isRemote) {
+            this.updatePlayerInventory(par1EntityPlayer);
+            ItemStack var2 = this.furnace.getStackInSlotOnClosing(0);
+            if (var2 != null) {
+                par1EntityPlayer.dropPlayerItem(var2);
+            }
+            this.furnace.destroyInventory();
+        }
     }
 
     /**
