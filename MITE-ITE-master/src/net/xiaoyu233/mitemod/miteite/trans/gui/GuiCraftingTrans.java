@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.gui;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.ItemEnhanceGem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,10 +22,17 @@ public class GuiCraftingTrans {
             if(container_workbench.craft_matrix.getInventory() != null) {
                 ItemStack itemStack = container_workbench.craft_matrix.getInventory()[i];
                 if(itemStack != null) {
-                    for (int i1 = 0; i1 < itemStack.GemsList.length; i1++) {
-                        if(itemStack.GemsList[i1] != null) {
-                            tooltips.add(EnumChatFormat.RED + Translator.get("container.crafting.needsRemoveGems"));
-                            this.e.crafting_result_shown_but_prevented = true;
+                    if(itemStack.stackTagCompound != null && itemStack.stackTagCompound.hasKey("Gems")) {
+                        NBTTagList nbtTagList = itemStack.stackTagCompound.getTagList("Gems");
+                        for (int j = 0; j < nbtTagList.tagCount(); j++) {
+                            NBTTagCompound nbtTagCompound = (NBTTagCompound) nbtTagList.tagAt(j);
+                            if (nbtTagCompound.getShort("id") >= 0 && nbtTagCompound.getByte("meta") >= 0) {
+                                Item itemLocal = Item.getItem(nbtTagCompound.getShort("id"));
+                                if (itemLocal instanceof ItemEnhanceGem) {
+                                    tooltips.add(EnumChatFormat.RED + Translator.get("container.crafting.needsRemoveGems"));
+                                    this.e.crafting_result_shown_but_prevented = true;
+                                }
+                            }
                         }
                     }
                 }

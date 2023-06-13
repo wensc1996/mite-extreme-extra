@@ -16,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Mixin(ItemStack.class)
@@ -38,8 +40,6 @@ public class ItemStackTrans {
    private int subtype;
    private boolean toolNbtFixed;
 
-   public ItemStack[] GemsList = new ItemStack[8];
-
    public ItemStackTrans(int id, int stack_size, int subtype) {
       this.itemID = id;
       this.stackSize = stack_size;
@@ -58,7 +58,6 @@ public class ItemStackTrans {
    @Inject(method = "splitStack", at = @At("RETURN"), cancellable = true)
    public void splitStack(CallbackInfoReturnable<ItemStack>callbackInfoReturnable) {
       ItemStack itemStack = callbackInfoReturnable.getReturnValue();
-      itemStack.GemsList = this.GemsList;
       callbackInfoReturnable.setReturnValue(itemStack);
       callbackInfoReturnable.cancel();
    }
@@ -94,7 +93,6 @@ public class ItemStackTrans {
       var1.setItemDamage(this.damage);
       var1.setQuality(this.getQuality());
       var1.setIsArtifact(this.is_artifact);
-      var1.GemsList = this.GemsList;
       if (this.stackTagCompound != null) {
          var1.stackTagCompound = (NBTTagCompound)this.stackTagCompound.copy();
       }
@@ -227,18 +225,45 @@ public class ItemStackTrans {
       return (float) this.getGemMaxLevel(gemModifierTypes) * gemModifierTypes.getRate();
    }
 
+   public void setGem(ItemStack gemStack, int index)
+   {
+      if (this.stackTagCompound == null)
+      {
+         this.setTagCompound(new NBTTagCompound());
+      }
+      if(!this.stackTagCompound.hasKey("Gems")){
+         NBTTagList nbtTagList =  new NBTTagList("Gems");
+
+         for (int i = 0; i < 8; i++) {
+            NBTTagCompound var4  = new NBTTagCompound();
+            var4.setShort("id", (short)-1);
+            var4.setByte("meta", (byte)-1);
+            nbtTagList.appendTag(var4);
+         }
+         this.stackTagCompound.setTag("Gems", nbtTagList);
+      }
+      NBTTagList nbtTagList =  this.stackTagCompound.getTagList("Gems");
+      NBTTagCompound nbtTagCompound = (NBTTagCompound)nbtTagList.tagAt(index);
+
+      nbtTagCompound.setShort("id", gemStack != null ? (short)gemStack.getItem().itemID : (short) -1);
+      nbtTagCompound.setByte("meta",gemStack != null? (byte)gemStack.getItemSubtype() : (byte) -1);
+   }
+
    public int getGemMaxLevel(GemModifierTypes gemModifierTypes) {
       // 在宝石里面寻找最大的
-      ItemStack[] gemList = this.GemsList;
       int max = 0;
-      for (ItemStack gemStack : gemList) {
-         if(gemStack != null) {
-            Item gem  = Item.getItem(gemStack.itemID);
-            if(gem instanceof ItemEnhanceGem) {
-               if(gemStack.getItemSubtype() == gemModifierTypes.ordinal()) {
-                  int level = ((ItemEnhanceGem) gem).gemLevel;
-                  if(level > max) {
-                     max = level;
+      if(this.stackTagCompound != null && this.stackTagCompound.hasKey("Gems")) {
+         NBTTagList nbtTagList = this.stackTagCompound.getTagList("Gems");
+         for (int i = 0; i < nbtTagList.tagCount(); i++) {
+            NBTTagCompound nbtTagCompound = (NBTTagCompound) nbtTagList.tagAt(i);
+            if (nbtTagCompound.getShort("id") >= 0 && nbtTagCompound.getByte("meta") >= 0) {
+               Item item = Item.getItem(nbtTagCompound.getShort("id"));
+               if (item instanceof ItemEnhanceGem) {
+                  if (nbtTagCompound.getByte("meta") == gemModifierTypes.ordinal()) {
+                     int level = ((ItemEnhanceGem) item).gemLevel;
+                     if (level > max) {
+                        max = level;
+                     }
                   }
                }
             }
@@ -357,18 +382,6 @@ public class ItemStackTrans {
       }
 
       this.is_artifact = par1NBTTagCompound.getBoolean("is_artifact");
-
-      if(par1NBTTagCompound.hasKey("Gems")) {
-         this.GemsList = new ItemStack[this.GemsList.length];
-         NBTTagList gemsNbt = par1NBTTagCompound.getTagList("Gems");
-
-         for (int var4 = 0; var4 < gemsNbt.tagCount(); ++var4)
-         {
-            NBTTagCompound var3 = (NBTTagCompound)gemsNbt.tagAt(var4);
-
-            this.GemsList[var3.getInteger("SlotIndex")] = new ItemStack(var3.getInteger("GemId"), 1, var3.getInteger("GemMeta"));
-         }
-      }
    }
 
    public double getPrice() {
@@ -471,22 +484,6 @@ public class ItemStackTrans {
       if (this.is_artifact) {
          par1NBTTagCompound.setBoolean("is_artifact", this.is_artifact);
       }
-
-
-      NBTTagList gemsNbt = new NBTTagList("Gems");
-
-      for(int i = 0; i < this.GemsList.length; i++) {
-         if(this.GemsList[i] != null) {
-            NBTTagCompound gemOne = new NBTTagCompound();
-            gemOne.setInteger("SlotIndex", i);
-            gemOne.setInteger("GemId", this.GemsList[i].itemID);
-            gemOne.setInteger("GemMeta", this.GemsList[i].getItemSubtype());
-            gemsNbt.appendTag(gemOne);
-         }
-      }
-
-      par1NBTTagCompound.setTag("Gems", gemsNbt);
-
       return par1NBTTagCompound;
    }
 }

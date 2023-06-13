@@ -183,17 +183,20 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       if(var3 != null) {
          for (ItemStack wornItem : var3) {
             if (wornItem != null) {
-               // 在宝石里面寻找最大的
-               ItemStack[] gemList = wornItem.GemsList;
                int max = 0;
-               for (ItemStack gemStack : gemList) {
-                  if(gemStack != null) {
-                     Item gem  = Item.getItem(gemStack.itemID);
-                     if(gem instanceof ItemEnhanceGem) {
-                        if(gemStack.getItemSubtype() == gemModifierTypes.ordinal()) {
-                           int level = ((ItemEnhanceGem) gem).gemLevel;
-                           if(level > max) {
-                              max = level;
+               // 在宝石里面寻找最大的
+               if(wornItem.stackTagCompound != null && wornItem.stackTagCompound.hasKey("Gems")) {
+                  NBTTagList nbtTagList = wornItem.stackTagCompound.getTagList("Gems");
+                  for (int i = 0; i < nbtTagList.tagCount(); i++) {
+                     NBTTagCompound nbtTagCompound = (NBTTagCompound) nbtTagList.tagAt(i);
+                     if (nbtTagCompound.getShort("id") >= 0 && nbtTagCompound.getByte("meta") >= 0) {
+                        Item item = Item.getItem(nbtTagCompound.getShort("id"));
+                        if (item instanceof ItemEnhanceGem) {
+                           if (nbtTagCompound.getByte("meta") == gemModifierTypes.ordinal()) {
+                              int level = ((ItemEnhanceGem) item).gemLevel;
+                              if (level > max) {
+                                 max = level;
+                              }
                            }
                         }
                      }

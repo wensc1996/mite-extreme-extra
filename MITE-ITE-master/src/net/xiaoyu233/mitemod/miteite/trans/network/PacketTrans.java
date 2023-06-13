@@ -46,18 +46,6 @@ public abstract class PacketTrans{
             short var4 = par0DataInput.readShort();
             var1 = new ItemStack(var2, var3, var4);
 
-            int gemLength = par0DataInput.readByte();
-            for(int i = 0; i < gemLength; i++) {
-                int index = par0DataInput.readByte();
-                int id = par0DataInput.readShort();
-                int meta = par0DataInput.readByte();
-                if(id > 0 && meta >= 0) {
-                    var1.GemsList[index] = new ItemStack(id, 1, meta);
-                } else {
-                    var1.GemsList[index] = null;
-                }
-            }
-
             int quality_ordinal = par0DataInput.readByte();
             if (quality_ordinal >= 0) {
                 var1.setQuality(EnumQuality.values()[quality_ordinal]);
@@ -86,19 +74,6 @@ public abstract class PacketTrans{
             par1DataOutput.writeByte(par0ItemStack.stackSize);
             par1DataOutput.writeShort(par0ItemStack.getItemSubtype());
 
-            par1DataOutput.writeByte(par0ItemStack.GemsList.length);
-            for(int i = 0; i < par0ItemStack.GemsList.length; i++) {
-                if(par0ItemStack.GemsList[i] != null) {
-                    par1DataOutput.writeByte(i);
-                    par1DataOutput.writeShort(par0ItemStack.GemsList[i].itemID);
-                    par1DataOutput.writeByte(par0ItemStack.GemsList[i].getItemSubtype());
-                } else {
-                    par1DataOutput.writeByte(i);
-                    par1DataOutput.writeShort(-1);
-                    par1DataOutput.writeByte(-1);
-                }
-            }
-
             par1DataOutput.writeByte(par0ItemStack.getQuality() == null ? -1 : par0ItemStack.getQuality().ordinal());
             NBTTagCompound var2 = null;
             if (par0ItemStack.getItem().isDamageable() || par0ItemStack.getItem().getShareTag()) {
@@ -117,7 +92,7 @@ public abstract class PacketTrans{
 
     @Overwrite
     public static int getPacketSizeOfItemStack(ItemStack item_stack) {
-        int length = item_stack == null ? 2 : (!item_stack.isItemStackDamageable() ? 6 : 6 + getPacketSizeOfItemStackDamage(item_stack.getMaxDamage())) + item_stack.GemsList.length * 4 + 1;
+        int length = item_stack == null ? 2 : (!item_stack.isItemStackDamageable() ? 6 : 6 + getPacketSizeOfItemStackDamage(item_stack.getMaxDamage()));
         return length;
     }
 }
