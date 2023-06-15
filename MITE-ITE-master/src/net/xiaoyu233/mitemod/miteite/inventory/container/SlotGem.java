@@ -37,43 +37,10 @@ public class SlotGem extends Slot {
         }
         super.onSlotChanged();
     }
-
-//    public void putStack(ItemStack par1ItemStack) {
-//        if(par1ItemStack != null) {
-//            System.out.println("放入" + par1ItemStack.itemID + " " + slotIndex);
-//        }
-//
-//        if(par1ItemStack != null) {
-//            if(slotIndex == 0) {
-//                this.initGems(par1ItemStack);
-//            } else {
-//                ItemStack source = containerGemSetting.getSlot(0).getStack();
-//                if(source != null) {
-//                    source.setGem(par1ItemStack, this.slotIndex - 1);
-//                }
-//            }
-//        }
-//        super.putStack(par1ItemStack);
-//    }
-
     @Override
     public int getSlotStackLimit() {
         return 1;
     }
-
-//    @Override
-//    public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack) {
-//        System.out.println("拿取");
-//        super.onPickupFromSlot(par1EntityPlayer, par2ItemStack);
-//        if(slotIndex == 0) {
-//            this.containerGemSetting.getTileEntityFurnace().destroyInventory();
-//        } else {
-//            ItemStack source = containerGemSetting.getSlot(0).getStack();
-//            if(source != null) {
-//                source.setGem(par2ItemStack, this.slotIndex - 1);
-//            }
-//        }
-//    }
 
     public void initGems(ItemStack source) {
         if(source.stackTagCompound != null && source.stackTagCompound.hasKey("Gems")) {
