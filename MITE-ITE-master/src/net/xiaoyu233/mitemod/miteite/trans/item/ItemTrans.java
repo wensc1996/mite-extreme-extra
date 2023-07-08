@@ -149,7 +149,7 @@ public abstract class ItemTrans {
    }
 
    public int getCookTime() {
-      return this.isBlock() ? 200 * (this.getAsItemBlock().getBlock().getMinHarvestLevel(-1) + 1) : 200;
+      return this.isBlock() ? 100 * (this.getAsItemBlock().getBlock().getMinHarvestLevel(-1) + 1) : 100;
    }
 
    public int getExpReqForLevel(int i, boolean weapon) {

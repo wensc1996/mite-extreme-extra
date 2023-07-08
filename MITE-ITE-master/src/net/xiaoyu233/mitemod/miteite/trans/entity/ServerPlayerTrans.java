@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.Arrays;
@@ -59,11 +60,10 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
       super(par1World, par2Str);
    }
 
-   @Override
-   @Shadow
-   public boolean canCommandSenderUseCommand(int i, String s) {
-      return false;
-   }
+  @Redirect(method = "canCommandSenderUseCommand", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z"))
+  public boolean injectDevMode(int par1, String par2Str) {
+      return Minecraft.inDevMode() || this.isOp();
+  }
 
    public void displayGUIChestForMinecartEntity(EntityMinecartChest par1IInventory) {
       if (this.openContainer != this.inventoryContainer) {

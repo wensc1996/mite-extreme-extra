@@ -135,8 +135,6 @@ public class Items extends Item{
         VIBRANIUM_NUGGET.setSoldPrice(10D);
 
         Items.bread.setItemPrice(0.2D).setSoldPrice(0.2D);
-        Items.brewingStand.setItemPrice(500D);
-        Items.netherStalkSeeds.setItemPrice(10D);
 
         Items.getItem(Blocks.plantYellow.blockID).setSoldPrice(0.1D);
         Items.getItem(Blocks.plantRed.blockID).setSoldPrice(0.1D);

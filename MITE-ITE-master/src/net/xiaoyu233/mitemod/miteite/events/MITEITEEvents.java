@@ -11,6 +11,8 @@ import net.xiaoyu233.mitemod.miteite.network.*;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 
+import static net.minecraft.CommandAbstract.parseIntBounded;
+
 public class MITEITEEvents {
 
     @Subscribe
@@ -22,6 +24,24 @@ public class MITEITEEvents {
             World world = event.getWorld();
             ItemStack itemStack;
             NBTTagCompound compound;
+
+            if (par2Str.startsWith("itemlevel reset")) {
+                itemStack = player.getHeldItemStack();
+                if (itemStack.stackTagCompound != null) {
+                    compound = itemStack.stackTagCompound;
+                    if (compound.hasKey("tool_level")) {
+                        compound.removeTag("tool_level");
+                    }
+                    if (compound.hasKey("tool_exp")) {
+                        compound.removeTag("tool_exp");
+                    }
+                    if (compound.hasKey("modifiers")) {
+                        compound.removeTag("modifiers");
+                    }
+                    event.setExecuteSuccess(true);
+                }
+            }
+
             if (par2Str.startsWith("itemlevel setLevel")) {
                 itemStack = player.getHeldItemStack();
                 if (itemStack.stackTagCompound != null) {
@@ -189,6 +209,15 @@ public class MITEITEEvents {
                 event.setExecuteSuccess(true);
             }
 
+            if (par2Str.startsWith("recall")) {
+                ChunkCoordinates chunkCoordinates = world.getSpawnPoint();
+                if(!player.worldObj.isOverworld()) {
+                    player.travelToDimension(world.DIMENSION_ID_OVERWORLD);
+                }
+                player.setPositionAndUpdate(chunkCoordinates.posX, chunkCoordinates.posY, chunkCoordinates.posZ);
+                event.setExecuteSuccess(true);
+            }
+
             if (par2Str.startsWith("plusMoney")) {
                 double money = Double.parseDouble(par2Str.substring(10));
                 player.addChatMessage("现有余额：" + player.plusMoney(money));
@@ -268,7 +297,7 @@ public class MITEITEEvents {
                         } else {
                             player.addChatMessage("现有余额：" + String.format("%.2f", player.subMoney(buyGoods.getPrice() * poses[1])));
                             player.addContainedItem(poses[0]);
-                            player.dropItemStack(buyGoods, 1.0F);
+                            player.inventory.addItemStackToInventoryOrDropIt (buyGoods);
                         }
                     }
                 }
@@ -356,48 +385,6 @@ public class MITEITEEvents {
         event.register(140, true, true, BiPacketUpdateDefense.class);
     }
 
-//    @Subscribe
-//    public void onGuiOverlayDraw(GuiOverlayDrawEvent event){
-//        Minecraft minecraft = event.getMinecraft();
-//        GuiIngame gui = event.getGuiIngame();
-//        float protein = minecraft.h.getProtein();
-//        float phytonutrients = minecraft.h.getPhytonutrients();
-//        int y = event.getGuiUp()+32 + (Config.ConfigEntry.HEALTH_BAR_Y_OFFSET);
-//        int x = event.getVar12()+240 + (Config.ConfigEntry.HEALTH_BAR_X_OFFSET);
-//        GL11.glPushMatrix();
-//        GL11.glPushMatrix();
-//        gui.b(minecraft.l,(int)phytonutrients + "/" + 160000, x-167,y-8,0xffffff);
-//        GL11.glScalef(0.6f,1f,1f);
-//        minecraft.J().a(Constant.icons_ite);
-//        gui.b(x,y,0,106,182,6);
-//        gui.b(x,y,0,94, (int) (182f * (  phytonutrients / 160000f )),6);
-//        GL11.glPopMatrix();
-//        x=event.getVar12() - 303;
-//        GL11.glPushMatrix();
-//        gui.b(minecraft.l,(int)protein + "/" + 160000, x,y-8,0xffffff);
-//        GL11.glScalef(0.6f,1f,1f);
-//        minecraft.J().a(Constant.icons_ite);
-//        gui.b(x,y,0,106,182,6);
-//        gui.b(x,y,0,100,(int) (182f * (  protein / 160000f )),6);
-//        GL11.glPopMatrix();
-//        GL11.glPopMatrix();
-//
-//        if (gui.overlayMsgTime > 0) {
-//            minecraft.C.a("overlayMessage");
-//            awf window = new awf(minecraft.u, minecraft.d, minecraft.e);
-//            int var6 = window.a();
-//            int var7 = window.b();
-//            GL11.glPushMatrix();
-//            GL11.glTranslatef((float)(var6 / 2), (float)(var7 - 68), 0.0F);
-//            GL11.glEnable(3042);
-//            GL11.glBlendFunc(770, 771);
-//            gui.b(gui.overlayMsg, - minecraft.l.a(this.overlayMsg) / 2, -4, gui.overlayMsgColor);
-//            GL11.glDisable(3042);
-//            GL11.glPopMatrix();
-//            minecraft.C.b();
-//            gui.overlayMsgTime--;
-//        }
-//    }
     @Subscribe
     public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
         EntityPlayer player = event.getPlayer();
@@ -406,7 +393,6 @@ public class MITEITEEvents {
                 .appendComponent(ChatMessage.createFromTranslationKey("MITE-Extreme由 ").setColor(EnumChatFormat.DARK_AQUA))
                 .appendComponent(ChatMessage.createFromTranslationKey("wensc,洛小雨").setColor(EnumChatFormat.WHITE))
                 .appendComponent(ChatMessage.createFromTranslationKey(" 重写,").setColor(EnumChatFormat.DARK_AQUA))
-                .appendComponent(ChatMessage.createFromTranslationKey("「我对你好吗」特约赞助").setColor(EnumChatFormat.BROWN))
                 .appendComponent(ChatMessage.createFromTranslationKey(" 下载地址：wensc.cn").setColor(EnumChatFormat.DARK_GREEN)));
         if (player.isFirstLogin == true) {
 

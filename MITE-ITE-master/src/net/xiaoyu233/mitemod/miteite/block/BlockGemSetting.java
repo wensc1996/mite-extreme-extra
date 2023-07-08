@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.block;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityForgingTable;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 
 public class BlockGemSetting extends Block implements IContainer {
@@ -11,7 +12,8 @@ public class BlockGemSetting extends Block implements IContainer {
 
     public BlockGemSetting(int par1, Material par2Material, BlockConstants constants) {
         super(par1, par2Material, constants);
-        this.setStepSound(soundStoneFootstep);
+        this.setHardness(BlockHardness.workbench);
+        this.setStepSound(soundWoodFootstep);
         this.setCreativeTab(CreativeModeTab.tabDecorations);
         this.setMaxStackSize(1);
         this.setLightOpacity(0);
@@ -39,14 +41,16 @@ public class BlockGemSetting extends Block implements IContainer {
         return true;
     }
 
-    @Override
-    public boolean isPortal() {
-        return true;
-    }
 
     public float getCraftingDifficultyAsComponent(int metadata)
     {
         return -1.0F;
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, int block_id, int metadata) {
+        super.breakBlock(world, x, y, z, block_id, metadata);
+        world.removeBlockTileEntity(x, y, z);
     }
 
     /**

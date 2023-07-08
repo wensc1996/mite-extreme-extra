@@ -36,6 +36,25 @@ public class EntityZombieBoss extends EntityZombie {
         }
     }
 
+    public void getEnchantBookDependsOnDamageRate(EntityPlayer entityPlayer, int rate) {
+        ItemStack var11 = null;
+        Enchantment dropEnchantment = Enchantment.enchantmentsList[rand.nextInt(Enchantment.enchantmentsList.length)];
+        if(dropEnchantment != null) {
+            if(dropEnchantment.getNumLevelsForVibranium() > 1) {
+                var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, Math.min(rate, dropEnchantment.getNumLevelsForVibranium())));
+            } else {
+                if(rate >= 7) {
+                    var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, 1));
+                } else {
+                    getEnchantBookDependsOnDamageRate(entityPlayer, rate);
+                }
+            }
+        } else {
+            getEnchantBookDependsOnDamageRate(entityPlayer, rate);
+        }
+        entityPlayer.inventory.addItemStackToInventoryOrDropIt(var11);
+    }
+
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
             this.broadcastDamage("僵尸BOSS挑战成功");
@@ -47,7 +66,11 @@ public class EntityZombieBoss extends EntityZombie {
                 EntityPlayer player = (EntityPlayer)o;
                 if(attackDamageMap.containsKey(player.getEntityName())) {
                     float damage = attackDamageMap.get(player.getEntityName());
-                    int nums = Math.round(damage) / 10;
+                    int nums = Math.round(damage) / 20;
+                    int damageWithEnchantBookRate = Math.round(damage) / 50;
+                    if(damageWithEnchantBookRate > 0) {
+                        this.getEnchantBookDependsOnDamageRate(player, damageWithEnchantBookRate);
+                    }
                     if(nums > 0) {
                         player.inventory.addItemStackToInventoryOrDropIt(new ItemStack(Item.diamond, nums));
                     }
@@ -60,7 +83,7 @@ public class EntityZombieBoss extends EntityZombie {
         super.applyEntityAttributes();
         int rate = Math.min(200, worldObj.getDayOfOverworld()) / 20;
         this.setEntityAttribute(GenericAttributes.attackDamage, 6 + rate * 2);
-        this.setEntityAttribute(GenericAttributes.maxHealth, 20 + rate * 20);
+        this.setEntityAttribute(GenericAttributes.maxHealth, 20 + rate * 100);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3D);
     }
 

@@ -64,9 +64,9 @@ public class TileEntityFurnaceTrans extends TileEntity {
       return this.furnaceItemStacks[0];
    }
 
-   @Shadow
-   public int getItemBurnTime(ItemStack itemStack) {
-      return 0;
+   @Overwrite
+   public int getItemBurnTime(ItemStack item_stack) {
+      return item_stack == null ? 0 : item_stack.getItem().getBurnTime(item_stack) / 2;
    }
 
    @Shadow
