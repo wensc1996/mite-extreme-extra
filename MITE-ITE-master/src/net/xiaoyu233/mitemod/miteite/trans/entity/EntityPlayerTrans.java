@@ -1,5 +1,6 @@
 package net.xiaoyu233.mitemod.miteite.trans.entity;
 
+import com.sun.org.apache.bcel.internal.generic.GETFIELD;
 import net.minecraft.*;
 import net.xiaoyu233.fml.relaunch.server.Main;
 import net.xiaoyu233.mitemod.miteite.achievement.Achievements;
@@ -15,7 +16,9 @@ import net.xiaoyu233.mitemod.miteite.network.SPacketOverlayMessage;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 import net.xiaoyu233.mitemod.miteite.util.BlockPos;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
+import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -130,6 +133,13 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    private int defenseCooldown;
 
+   @Shadow
+   public double pos_x_before_bed;
+   @Shadow
+   public double pos_y_before_bed;
+   @Shadow
+   public double pos_z_before_bed;
+
    public long getStoneCount() {
       return this.StoneCount;
    }
@@ -155,6 +165,90 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       double reduce = (1 - (emergencyItemList.size() - 1) * Configs.wenscConfig.emergencyCooldownReduceEveryArmor.ConfigValue);
       for (ItemStack itemStack : emergencyItemList) {
          itemStack.setEmergencyCooldown((int) (Configs.wenscConfig.emergencyCooldown.ConfigValue * reduce));
+      }
+   }
+
+   @Shadow
+   public void setSizeNormal() {
+      this.setSize(0.6F, 1.8F);
+   }
+   @Shadow
+   protected void resetHeight() {}
+
+   @Overwrite
+   public void getOutOfBed(Entity entity_to_look_at) {
+      this.setSizeNormal();
+      this.resetHeight();
+      if (this.bed_location != null) {
+         int x = this.bed_location.posX;
+         int y = this.bed_location.posY;
+         int z = this.bed_location.posZ;
+         ChunkCoordinates new_location;
+         int blockId = this.worldObj.getBlockId(x, y, z);
+         if (Arrays.stream(Constant.bedBlockTypes).anyMatch(e -> e.blockID == blockId)) {
+            BlockBed.setBedOccupied(this.worldObj, x, y, z, false);
+            new_location = BlockBed.getNearestEmptyChunkCoordinates(this.worldObj, x, y, z, 0, this.worldObj.getVec3(this.pos_x_before_bed, this.pos_y_before_bed, this.pos_z_before_bed));
+            if (new_location == null) {
+               new_location = new ChunkCoordinates(x, y + 1, z);
+            }
+         } else {
+            new_location = new ChunkCoordinates(x, y, z);
+         }
+
+         if (new_location.posX == MathHelper.floor_double(this.pos_x_before_bed) && new_location.posY == MathHelper.floor_double(this.pos_y_before_bed + 0.949999988079071) && new_location.posZ == MathHelper.floor_double(this.pos_z_before_bed)) {
+            this.setPosition(this.pos_x_before_bed, this.pos_y_before_bed + (double)this.yOffset, this.pos_z_before_bed, true);
+         } else {
+            this.setPosition((double)((float)new_location.posX + 0.5F), (double)((float)new_location.posY + this.yOffset), (double)((float)new_location.posZ + 0.5F), true);
+         }
+      }
+
+      if (entity_to_look_at == null) {
+         if (this.bed_location != null) {
+            this.setRotationForLookingAt(this.worldObj.getBlockCenterPos(this.bed_location.posX, this.bed_location.posY, this.bed_location.posZ));
+         }
+      } else {
+         this.setRotationForLookingAt(entity_to_look_at instanceof EntityLiving ? entity_to_look_at.getAsEntityLivingBase().getFootPosPlusFractionOfHeight(0.75F) : entity_to_look_at.getCenterPoint());
+      }
+
+      this.bed_location = null;
+      this.conscious_state = EnumConsciousState.fully_awake;
+      if (this.worldObj.isRemote) {
+         this.lastTickPosX = this.posX;
+         this.lastTickPosY = this.posY;
+         this.lastTickPosZ = this.posZ;
+      } else {
+         this.getAsEntityPlayerMP().try_push_out_of_blocks = true;
+      }
+
+   }
+
+   @Overwrite
+   public boolean inBed() {
+      if(this.bed_location != null) {
+         int blockId = this.worldObj.getBlockId(this.bed_location.posX, this.bed_location.posY, this.bed_location.posZ);
+         return (this.worldObj.isRemote || Arrays.stream(Constant.bedBlockTypes).anyMatch(e -> e.blockID == blockId));
+      } else {
+         return false;
+      }
+   }
+
+   @Overwrite
+   public static ChunkCoordinates verifyRespawnCoordinates(World par0World, ChunkCoordinates par1ChunkCoordinates, boolean par2) {
+      IChunkProvider var3 = par0World.getChunkProvider();
+      var3.loadChunk(par1ChunkCoordinates.posX - 3 >> 4, par1ChunkCoordinates.posZ - 3 >> 4);
+      var3.loadChunk(par1ChunkCoordinates.posX + 3 >> 4, par1ChunkCoordinates.posZ - 3 >> 4);
+      var3.loadChunk(par1ChunkCoordinates.posX - 3 >> 4, par1ChunkCoordinates.posZ + 3 >> 4);
+      var3.loadChunk(par1ChunkCoordinates.posX + 3 >> 4, par1ChunkCoordinates.posZ + 3 >> 4);
+      int blockId = par0World.getBlockId(par1ChunkCoordinates.posX, par1ChunkCoordinates.posY, par1ChunkCoordinates.posZ);
+      if (Arrays.stream(Constant.bedBlockTypes).anyMatch(e -> e.blockID == blockId)) {
+         ChunkCoordinates var8 = BlockBed.getNearestEmptyChunkCoordinates(par0World, par1ChunkCoordinates.posX, par1ChunkCoordinates.posY, par1ChunkCoordinates.posZ, 0, (Vec3D)null);
+         return var8;
+      } else {
+         Material var4 = par0World.getBlockMaterial(par1ChunkCoordinates.posX, par1ChunkCoordinates.posY, par1ChunkCoordinates.posZ);
+         Material var5 = par0World.getBlockMaterial(par1ChunkCoordinates.posX, par1ChunkCoordinates.posY + 1, par1ChunkCoordinates.posZ);
+         boolean var6 = !var4.isSolid() && !var4.isLiquid();
+         boolean var7 = !var5.isSolid() && !var5.isLiquid();
+         return par2 && var6 && var7 ? par1ChunkCoordinates : null;
       }
    }
 

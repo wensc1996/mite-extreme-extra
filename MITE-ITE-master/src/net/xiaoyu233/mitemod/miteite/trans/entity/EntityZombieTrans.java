@@ -10,6 +10,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 
+import java.util.Arrays;
+
 @Mixin(EntityZombie.class)
 class EntityZombieTrans extends EntityAnimalWatcher {
    @Shadow
@@ -26,6 +28,31 @@ class EntityZombieTrans extends EntityAnimalWatcher {
       if (this.worldObj.isUnderworld() && this.worldObj.getDayOfOverworld() < 64) {
          MonsterUtil.addDefaultArmor(64, this, true);
       }
+   }
+
+   @Overwrite
+   protected int getConversionTimeBoost() {
+      int var1 = 1;
+      if (this.rand.nextFloat() < 0.01F) {
+         int var2 = 0;
+
+         for(int var3 = (int)this.posX - 4; var3 < (int)this.posX + 4 && var2 < 14; ++var3) {
+            for(int var4 = (int)this.posY - 4; var4 < (int)this.posY + 4 && var2 < 14; ++var4) {
+               for(int var5 = (int)this.posZ - 4; var5 < (int)this.posZ + 4 && var2 < 14; ++var5) {
+                  int var6 = this.worldObj.getBlockId(var3, var4, var5);
+                  if (var6 == Block.fenceIron.blockID || Arrays.stream(Constant.bedBlockTypes).anyMatch(e -> e.blockID == var6)) {
+                     if (this.rand.nextFloat() < 0.3F) {
+                        ++var1;
+                     }
+
+                     ++var2;
+                  }
+               }
+            }
+         }
+      }
+
+      return var1;
    }
 
    @Overwrite

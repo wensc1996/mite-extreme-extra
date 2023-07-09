@@ -24,6 +24,6 @@ public class PlayerInteractManagerTrans {
             )
     )
     private boolean redirectInDevMode() {
-        return this.thisPlayerMP.isOp() || Minecraft.inDevMode();
+        return (this.thisPlayerMP != null && this.thisPlayerMP.isOp()) || Minecraft.inDevMode();
     }
 }

@@ -32,6 +32,23 @@ item.ring_killer_mithril.name=秘银魔灵刃
 item.ring_killer_adamantium.name=艾德曼魔灵刃
 item.ring_killer_vibranium.name=振金魔灵刃
 
+item.bed.red.name=红色的床
+item.bed.green.name=绿色的床
+item.bed.black.name=黑色的床
+item.bed.brown.name=棕色的床
+item.bed.blue.name=蓝色的床
+item.bed.purple.name=紫色的床
+item.bed.cyan.name=青色的床
+item.bed.silver.name=银色的床
+item.bed.gray.name=灰色的床
+item.bed.pink.name=粉色的床
+item.bed.lime.name=亮绿色的床
+item.bed.yellow.name=黄色的床
+item.bed.light_blue.name=浅蓝色的床
+item.bed.magenta.name=洋红色的床
+item.bed.orange.name=橙色的床
+item.bed.white.name=白色的床
+
 tile.anvil_vibranium.name=振金砧
 tile.anvil_vibranium.intact.name=振金砧
 tile.anvil_vibranium.slightlyDamaged.name=轻微受损的振金砧

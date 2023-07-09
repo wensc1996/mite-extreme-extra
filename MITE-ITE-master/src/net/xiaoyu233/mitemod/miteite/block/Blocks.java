@@ -65,6 +65,23 @@ public class Blocks extends Block{
 
     public static final Block gemSetting = (new BlockGemSetting(194, Material.stone, (new BlockConstants()).setNeverHidesAdjacentFaces())).setUnlocalizedName("gem_setting").setCreativeTab(CreativeModeTab.tabDecorations);
 
+    public static final BlockBed blackBed = (BlockBed)(new BlockBed(256).setSub(0).setAttr(0.2F, 0.6F, "black_bed", "black_bed"));
+    public static final BlockBed redBed = (BlockBed)(new BlockBed(257).setSub(1).setAttr(0.2F, 0.6F, "red_bed", "red_bed"));
+    public static final BlockBed greenBed = (BlockBed)(new BlockBed(258).setSub(2).setAttr(0.2F, 0.6F, "green_bed", "green_bed"));
+    public static final BlockBed brownBed = (BlockBed)(new BlockBed(259).setSub(3).setAttr(0.2F, 0.6F, "brown_bed", "brown_bed"));
+    public static final BlockBed blueBed = (BlockBed)(new BlockBed(260).setSub(4).setAttr(0.2F, 0.6F, "blue_bed", "blue_bed"));
+    public static final BlockBed purpleBed = (BlockBed)(new BlockBed(261).setSub(5).setAttr(0.2F, 0.6F, "purple_bed", "purple_bed"));
+    public static final BlockBed cyanBed = (BlockBed)(new BlockBed(262).setSub(6).setAttr(0.2F, 0.6F, "cyan_bed", "cyan_bed"));
+    public static final BlockBed silverBed = (BlockBed)(new BlockBed(263).setSub(7).setAttr(0.2F, 0.6F, "silver_bed", "silver_bed"));
+    public static final BlockBed grayBed = (BlockBed)(new BlockBed(264).setSub(8).setAttr(0.2F, 0.6F, "gray_bed", "gray_bed"));
+    public static final BlockBed pinkBed = (BlockBed)(new BlockBed(265).setSub(9).setAttr(0.2F, 0.6F, "pink_bed", "pink_bed"));
+    public static final BlockBed limeBed = (BlockBed)(new BlockBed(266).setSub(10).setAttr(0.2F, 0.6F, "lime_bed", "lime_bed"));
+    public static final BlockBed yellowBed = (BlockBed)(new BlockBed(267).setSub(11).setAttr(0.2F, 0.6F, "yellow_bed", "yellow_bed"));
+    public static final BlockBed lightBlueBed = (BlockBed)(new BlockBed(268).setSub(12).setAttr(0.2F, 0.6F, "light_blue_bed", "light_blue_bed"));
+    public static final BlockBed magentaBed = (BlockBed)(new BlockBed(269).setSub(13).setAttr(0.2F, 0.6F, "magenta_bed", "magenta_bed"));
+    public static final BlockBed orangeBed = (BlockBed)(new BlockBed(270).setSub(14).setAttr(0.2F, 0.6F, "yellow_bed", "yellow_bed"));
+
+
     static {
         try {
             Field field = Block.class.getDeclaredField("is_normal_cube_lookup");
@@ -83,7 +100,7 @@ public class Blocks extends Block{
         } catch (IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
-
+        Block.bed.setAttr(0.2F, 0.6F, "white_bed", "white_bed").setSub(15);
     }
 
     protected Blocks(int par1, Material par2Material, BlockConstants constants) {
@@ -143,6 +160,21 @@ public class Blocks extends Block{
         registerItemBlock(blockStairsColorful14, "colorful_stair");
         registerItemBlock(blockStairsColorful15, "colorful_stair");
 
+        registerItemBlock(blackBed);
+        registerItemBlock(redBed);
+        registerItemBlock(greenBed);
+        registerItemBlock(brownBed);
+        registerItemBlock(blueBed);
+        registerItemBlock(purpleBed);
+        registerItemBlock(cyanBed);
+        registerItemBlock(silverBed);
+        registerItemBlock(grayBed);
+        registerItemBlock(pinkBed);
+        registerItemBlock(limeBed);
+        registerItemBlock(yellowBed);
+        registerItemBlock(lightBlueBed);
+        registerItemBlock(magentaBed);
+        registerItemBlock(orangeBed);
     }
 
     private static void registerItemBlock(Block block,String resourceLocation){
@@ -154,6 +186,15 @@ public class Blocks extends Block{
         item.setMaxStackSize(block.getItemStackLimit());
         Item.itemsList[Constant.getNextItemID()] = item;
     }
+
+    private static void registerItemBlock(Block block){
+        Item item = new ItemBlock(block);
+        item.setItemPrice(block.getPrice());
+        item.setItemSoldPrice(block.getSoldPrice());
+        item.setMaxStackSize(block.getItemStackLimit());
+        Item.itemsList[Constant.getNextItemID()] = item;
+    }
+
 
     public static void registerRecipes(RecipeRegister register) {
         register.registerShapelessRecipe(new ItemStack(blockStairsColorful0, 9), true, new ItemStack(blockStairsColorful15, 9));

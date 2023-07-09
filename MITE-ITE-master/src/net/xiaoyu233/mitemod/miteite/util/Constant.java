@@ -1,8 +1,10 @@
 package net.xiaoyu233.mitemod.miteite.util;
 
+import net.minecraft.BlockBed;
 import net.minecraft.Item;
 import net.minecraft.ItemArmor;
 import net.minecraft.bjo;
+import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 
 import java.util.Random;
@@ -10,8 +12,8 @@ import java.util.Random;
 public class Constant {
     public static final double[] ENHANCE_FACTORS;
     public static final bjo icons_ite = new bjo("textures/gui/icons_ite.png");
-    public static final String MITE_ITE_VERSION = "v0.1.4.0";
-    public static final int MITE_ITE_VER_NUM = 59;
+    public static final String MITE_ITE_VERSION = "v0.1.4.2";
+    public static final int MITE_ITE_VER_NUM = 61;
     public static final bjo RES_VIBRANIUM_SINGLE = new bjo("textures/entity/chest/vibranium_single.png");
     public static int nextItemID = 2024;
     public static int nextBlockID = 160;
@@ -23,6 +25,7 @@ public class Constant {
     public static ItemArmor[] BOOTS = null;
     public static Item[] SWORDS = null;
     public static ItemArmor[][] ARMORS = null;
+    public static BlockBed [] bedBlockTypes= null;
     public static Random GARandom = new Random();
 
     static {
@@ -43,5 +46,8 @@ public class Constant {
         BOOTS = new ItemArmor[]{Item.bootsLeather, Item.bootsChainCopper, Item.bootsCopper, Item.bootsRustedIron, Item.bootsChainIron, Item.bootsIron, Item.bootsChainAncientMetal, Item.bootsAncientMetal, Item.bootsChainMithril, Item.bootsMithril, Item.bootsAdamantium, Items.VIBRANIUM_BOOTS};
         ARMORS = new ItemArmor[][]{HELMETS, CHESTPLATES, LEGGINGS, BOOTS};
         SWORDS = new Item[]{Item.swordRustedIron, Item.swordIron, Items.clubIron, Item.swordAncientMetal,Item.swordMithril,Item.swordAdamantium,Items.VIBRANIUM_SWORD};
+        bedBlockTypes = new BlockBed[] {Blocks.blackBed,
+                Blocks.redBed,Blocks.greenBed,Blocks.brownBed,Blocks.blueBed,Blocks.purpleBed,Blocks.cyanBed,Blocks.silverBed,Blocks.grayBed,Blocks.pinkBed,Blocks.limeBed,Blocks.yellowBed
+                ,Blocks.lightBlueBed,Blocks.magentaBed,Blocks.orangeBed, Blocks.bed};
     }
 }

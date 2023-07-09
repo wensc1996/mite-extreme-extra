@@ -9,13 +9,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class CommandHandlerTrans {
     @Redirect(method = {"isUserPrivileged"} , at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z"))
     public boolean injectDevJudge(EntityPlayer player) {
-        return Minecraft.inDevMode() || player.isOp();
+        return Minecraft.inDevMode() || (player != null && player.isOp());
     }
 
     @Redirect(method = {"executeCommand"} , at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z"))
     public boolean injectDevJudge2(ICommandListener par1ICommandSender, String par2Str, boolean permission_override) {
         WorldServer world = (WorldServer)par1ICommandSender.getEntityWorld();
         ServerPlayer player = (ServerPlayer)world.getPlayerEntityByName(par1ICommandSender.getCommandSenderName());
-        return Minecraft.inDevMode() || player.isOp();
+        return Minecraft.inDevMode() || (player != null && player.isOp());
     }
 }

@@ -62,7 +62,7 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
 
   @Redirect(method = "canCommandSenderUseCommand", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z"))
   public boolean injectDevMode(int par1, String par2Str) {
-      return Minecraft.inDevMode() || this.isOp();
+      return Minecraft.inDevMode() || (this !=null && this.isOp());
   }
 
    public void displayGUIChestForMinecartEntity(EntityMinecartChest par1IInventory) {
