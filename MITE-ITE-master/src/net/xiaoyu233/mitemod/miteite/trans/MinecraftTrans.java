@@ -6,6 +6,7 @@ import net.minecraft.client.main.Main;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftTrans {
@@ -15,6 +16,13 @@ public abstract class MinecraftTrans {
         String red = include_formatting ? EnumChatFormat.RED.toString() : "";
         return "1.6.4-MITE" + "-Extreme-" + Constant.MITE_ITE_VERSION + (Main.is_MITE_DS ? "-DS" : "") + " overwrite by wensc,洛小雨" + (Minecraft
                 .inDevMode() ? red + " DEV" : "");
+    }
+
+    @ModifyConstant(method = {
+            "W",
+    }, constant = @org.spongepowered.asm.mixin.injection.Constant(intValue = 256))
+    private static int injected(int value) {
+        return 1024;
     }
 
 }

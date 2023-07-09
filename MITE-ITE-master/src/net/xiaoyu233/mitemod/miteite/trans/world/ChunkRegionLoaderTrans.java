@@ -4,6 +4,10 @@ import net.minecraft.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +33,16 @@ public class ChunkRegionLoaderTrans {
    @Shadow
    private final int calcXZAndSeedChecksumComponent(Chunk chunk) {
       return 0;
+   }
+
+   @ModifyConstant(method = "handleSectionChecksumFailure", constant = @Constant(intValue = 256))
+   private static int injected(int value) {
+      return 1024;
+   }
+
+   @ModifyVariable(method = "getInvalidSectionBlockConversionIdsOrMetadata", at = @At("STORE"), ordinal = 0)
+   private static int[][] injected(int[][] source) {
+      return new int[1024][];
    }
 
    @Overwrite

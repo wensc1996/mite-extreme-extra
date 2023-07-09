@@ -12,9 +12,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
@@ -37,6 +35,13 @@ public abstract class ItemTrans {
 
    @Shadow
    protected List materials;
+
+   @ModifyConstant(method = {
+           "<init>(ILjava/lang/String;I)V",
+   }, constant = @Constant(intValue = 256))
+   private static int injected(int value) {
+      return 1024;
+   }
 
    private double soldPrice = 0;
    private double price = 0;

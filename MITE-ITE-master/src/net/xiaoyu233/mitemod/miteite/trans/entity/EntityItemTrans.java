@@ -3,9 +3,7 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 import net.minecraft.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -16,6 +14,14 @@ public abstract class EntityItemTrans extends Entity {
 
    public EntityItemTrans(World par1World) {
       super(par1World);
+   }
+
+   @ModifyConstant(method = {
+           "isImmuneToExplosion",
+           "handleExplosion",
+   }, constant = @Constant(intValue = 256))
+   private static int injected(int value) {
+      return 1024;
    }
 
    @Shadow
