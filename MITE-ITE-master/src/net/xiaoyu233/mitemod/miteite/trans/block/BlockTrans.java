@@ -17,8 +17,6 @@ public abstract class BlockTrans {
    private double soldPrice = -1D;
    private double price = -1D;
 
-   private static final boolean[] is_normal_cube_lookup = new boolean[1024];
-
    @ModifyConstant(method = {
            "<clinit>",
            "getBlock(Ljava/lang/String;)Lnet/minecraft/Block;",
