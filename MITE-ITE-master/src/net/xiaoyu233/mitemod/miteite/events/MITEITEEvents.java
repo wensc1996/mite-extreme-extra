@@ -11,6 +11,8 @@ import net.xiaoyu233.mitemod.miteite.network.*;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 
+import java.util.Arrays;
+
 import static net.minecraft.CommandAbstract.parseIntBounded;
 
 public class MITEITEEvents {
@@ -275,15 +277,17 @@ public class MITEITEEvents {
                 }
 
                 ItemStack buyGoods = null;
+                int sub = 0;
                 if(pos.length == 3) {
-                    buyGoods = new ItemStack(poses[0], poses[1], poses[2]);
+                    sub = poses[2];
+                    buyGoods = new ItemStack(poses[0], poses[1], sub);
                 } else if(pos.length == 2) {
                     buyGoods = new ItemStack(poses[0], poses[1], 0);
                 }
-                if(buyGoods == null) {
+                if(buyGoods == null || buyGoods.getItem() == null) {
                     player.addChatMessage("商品ID输入错误");
                 } else {
-                    if(buyGoods.getPrice() <= 0) {
+                    if(sub > buyGoods.getItem().buyPriceArray.length || buyGoods.getItem().buyPriceArray[sub] <= 0) {
                         player.addChatMessage("商店暂不可兑换该商品");
                     } else if(poses[1] <= 0) {
                         player.addChatMessage("请输入正确的商品数量");
@@ -292,11 +296,11 @@ public class MITEITEEvents {
                     } else {
                         if(player.money <= 0) {
                             player.addChatMessage("钱包空空");
-                        } else if(player.money - buyGoods.getPrice() * poses[1] < 0){
+                        } else if(player.money - buyGoods.getItem().buyPriceArray[sub] * poses[1] < 0){
                             player.addChatMessage("余额不足，无法购买");
                         } else {
-                            player.addChatMessage("现有余额：" + String.format("%.2f", player.subMoney(buyGoods.getPrice() * poses[1])));
-                            player.addContainedItem(poses[0]);
+                            player.addChatMessage("现有余额：" + String.format("%.2f", player.subMoney(buyGoods.getItem().buyPriceArray[sub] * poses[1])));
+//                            player.addContainedItem(poses[0]);
                             player.inventory.addItemStackToInventoryOrDropIt (buyGoods);
                         }
                     }

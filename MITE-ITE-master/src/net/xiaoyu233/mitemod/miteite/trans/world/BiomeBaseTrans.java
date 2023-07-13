@@ -4,6 +4,7 @@ import net.minecraft.*;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.entity.*;
 import net.xiaoyu233.mitemod.miteite.trans.entity.EntityGiantZombieTrans;
+import net.xiaoyu233.mitemod.miteite.world.WorldGenTreesWithTreeId;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -51,6 +52,9 @@ public class BiomeBaseTrans {
    protected WorldGenBigTree worldGeneratorBigTree;
    @Shadow
    protected WorldGenForest worldGeneratorForest;
+
+   protected WorldGenTreesWithTreeId worldGeneratorTreesWithTreeId;
+
    @Shadow
    protected WorldGenSwampTree worldGeneratorSwamp;
    @Shadow

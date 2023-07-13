@@ -5,6 +5,7 @@ import net.xiaoyu233.mitemod.miteite.block.BlockColorful;
 import net.xiaoyu233.mitemod.miteite.item.Materials;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,6 +29,12 @@ public abstract class BlockTrans {
    @Shadow protected Block setResistance(float par1){
       return null;
    };
+
+   @Overwrite
+   public void reportInvalidMetadata(int metadata) {
+//      Minecraft.setErrorMessage("Block: invalid metadata value of " + metadata + " for Block[" + this.blockID + "]");
+//      (new Exception()).printStackTrace();
+   }
 
    public String getItemDisplayName(ItemStack itemStack){
       if(itemStack != null) {

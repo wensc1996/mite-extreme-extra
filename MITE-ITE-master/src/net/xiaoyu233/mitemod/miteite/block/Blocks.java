@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.block;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.item.GemModifierTypes;
+import net.xiaoyu233.mitemod.miteite.item.ItemLeaves1;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.Materials;
 import net.xiaoyu233.mitemod.miteite.item.recipe.ForgingTableLevel;
@@ -9,11 +10,8 @@ import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.RecipeRegister;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import static net.xiaoyu233.mitemod.miteite.item.Items.VIBRANIUM_INGOT;
 
@@ -80,6 +78,11 @@ public class Blocks extends Block{
     public static final BlockBed lightBlueBed = (BlockBed)(new BlockBed(268).setSub(12).setAttr(0.2F, 0.6F, "light_blue_bed", "light_blue_bed"));
     public static final BlockBed magentaBed = (BlockBed)(new BlockBed(269).setSub(13).setAttr(0.2F, 0.6F, "magenta_bed", "magenta_bed"));
     public static final BlockBed orangeBed = (BlockBed)(new BlockBed(270).setSub(14).setAttr(0.2F, 0.6F, "yellow_bed", "yellow_bed"));
+
+    public static final BlockLog1 wood1 = (BlockLog1)(new BlockLog1(271));
+    public static final BlockLeaves1 leaves1 = (BlockLeaves1)(new BlockLeaves1(272));
+
+    public static final Block sapling1 = (new BlockSapling1(273));
 
 
     static {
@@ -160,21 +163,24 @@ public class Blocks extends Block{
         registerItemBlock(blockStairsColorful14, "colorful_stair");
         registerItemBlock(blockStairsColorful15, "colorful_stair");
 
-        registerItemBlock(blackBed);
-        registerItemBlock(redBed);
-        registerItemBlock(greenBed);
-        registerItemBlock(brownBed);
-        registerItemBlock(blueBed);
-        registerItemBlock(purpleBed);
-        registerItemBlock(cyanBed);
-        registerItemBlock(silverBed);
-        registerItemBlock(grayBed);
-        registerItemBlock(pinkBed);
-        registerItemBlock(limeBed);
-        registerItemBlock(yellowBed);
-        registerItemBlock(lightBlueBed);
-        registerItemBlock(magentaBed);
-        registerItemBlock(orangeBed);
+        registerItemBlock(blackBed, (Item) null);
+        registerItemBlock(redBed, (Item) null);
+        registerItemBlock(greenBed, (Item) null);
+        registerItemBlock(brownBed, (Item) null);
+        registerItemBlock(blueBed, (Item) null);
+        registerItemBlock(purpleBed, (Item) null);
+        registerItemBlock(cyanBed, (Item) null);
+        registerItemBlock(silverBed, (Item) null);
+        registerItemBlock(grayBed, (Item) null);
+        registerItemBlock(pinkBed, (Item) null);
+        registerItemBlock(limeBed, (Item) null);
+        registerItemBlock(yellowBed, (Item) null);
+        registerItemBlock(lightBlueBed, (Item) null);
+        registerItemBlock(magentaBed, (Item) null);
+        registerItemBlock(orangeBed, (Item) null);
+        registerItemBlock(wood1, (new ItemMultiTexture(wood1, wood1.getNames())).setUnlocalizedName("log1"));
+        registerItemBlock(leaves1, (new ItemLeaves1(leaves1)).setUnlocalizedName("leaves1"));
+        registerItemBlock(sapling1, (new ItemMultiTexture(sapling1, BlockSapling1.WOOD_TYPES)).setUnlocalizedName("sapling1"));
     }
 
     private static void registerItemBlock(Block block,String resourceLocation){
@@ -187,12 +193,18 @@ public class Blocks extends Block{
         Item.itemsList[Constant.getNextItemID()] = item;
     }
 
-    private static void registerItemBlock(Block block){
-        Item item = new ItemBlock(block);
-        item.setItemPrice(block.getPrice());
-        item.setItemSoldPrice(block.getSoldPrice());
-        item.setMaxStackSize(block.getItemStackLimit());
-        Item.itemsList[Constant.getNextItemID()] = item;
+    private static void registerItemBlock(Block block, Item item){
+        if(item != null) {
+            item.setItemPrice(block.getPrice());
+            item.setItemSoldPrice(block.getSoldPrice());
+            Item.itemsList[block.blockID] = item;
+        } else {
+            Item itemBlock = new ItemBlock(block);
+            itemBlock.setItemPrice(block.getPrice());
+            itemBlock.setItemSoldPrice(block.getSoldPrice());
+            itemBlock.setMaxStackSize(block.getItemStackLimit());
+            Item.itemsList[block.blockID] = itemBlock;
+        }
     }
 
 

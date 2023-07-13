@@ -19,6 +19,8 @@ import java.util.List;
 
 @Mixin(Item.class)
 public abstract class ItemTrans {
+   @Shadow public abstract int getNumSubtypes();
+
    @Shadow private int sugar_content;
 
    @Shadow public abstract boolean hasQuality();
@@ -36,6 +38,10 @@ public abstract class ItemTrans {
    @Shadow
    protected List materials;
 
+   public double soldPriceArray[];
+
+   public double buyPriceArray[];
+
    @ModifyConstant(method = {
            "<init>(ILjava/lang/String;I)V",
    }, constant = @Constant(intValue = 256))
@@ -49,11 +55,25 @@ public abstract class ItemTrans {
    @Inject(method = "<init>()V",at = @At("RETURN"))
    private void injectCtor(CallbackInfo callbackInfo){
       ReflectHelper.dyCast(Item.class,this).recipes = new aah[500];
+      if(this.getNumSubtypes() > 0) {
+         this.soldPriceArray = new double[this.getNumSubtypes()];
+         this.buyPriceArray = new double[this.getNumSubtypes()];
+      } else {
+         this.soldPriceArray = new double[1];
+         this.buyPriceArray = new double[1];
+      }
    }
 
    @Inject(method = "<init>(ILjava/lang/String;I)V" ,at = @At("RETURN"))
    private void ItemInject(int par1, String texture, int num_subtypes, CallbackInfo callbackInfo) {
       ReflectHelper.dyCast(Item.class,this).recipes = new aah[500];
+      if(this.getNumSubtypes() > 0) {
+         this.soldPriceArray = new double[this.getNumSubtypes()];
+         this.buyPriceArray = new double[this.getNumSubtypes()];
+      } else {
+         this.soldPriceArray = new double[1];
+         this.buyPriceArray = new double[1];
+      }
    }
 
    // 在本mod进行引用 否则会造成无法找到方法的异常

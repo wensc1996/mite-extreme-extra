@@ -362,10 +362,48 @@ public class Configs {
         }
     }
 
+    public static void writePriceIntoMemory(Properties properties,FileWriter fileWriter, Item item, int i) throws IOException {
+        ItemStack itemStack = new ItemStack(item, 1, i);
+        int sub = itemStack.getItemSubtype();
+        String name = "";
+        if(item.getHasSubtypes()) {
+            name = itemStack.getUnlocalizedName() + "§" + itemStack.getItemSubtype();
+        } else {
+            name = itemStack.getUnlocalizedName();
+        }
+        String itemPrice =  (String) properties.get(name);
+        if(itemPrice != null) {
+            String [] soldPriceAndBuyPrice = itemPrice.split(",");
+            if(soldPriceAndBuyPrice.length == 2) {
+                item.soldPriceArray[sub] = Double.parseDouble(soldPriceAndBuyPrice[0]);
+                item.buyPriceArray[sub] = Double.parseDouble(soldPriceAndBuyPrice[1]);
+            } else {
+                item.soldPriceArray[sub] = Double.parseDouble(soldPriceAndBuyPrice[0]);
+            }
+        } else {
+            if(item.getHasSubtypes()) {
+                fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ i + "\n");
+                fileWriter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+            } else {
+                fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + item.itemID + "\n");
+                fileWriter.write(itemStack.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+            }
+        }
+    }
+
+    public static void readOrWritePriceLine(Properties properties, FileWriter fileWriter, Item item) throws IOException {
+        if(item.getHasSubtypes()) {
+            for (int i = 0; i < item.getNumSubtypes(); i++) {
+                writePriceIntoMemory(properties,fileWriter, item, i );
+            }
+        } else {
+            writePriceIntoMemory(properties,fileWriter, item, 0);
+        }
+    }
+
     public static void  readShopConfigFromFile(File file_mite, Properties properties) {
         try{
-            FileWriter fileWritter = new FileWriter(file_mite.getName(), true);
-
+            FileWriter fileWriter = new FileWriter(file_mite.getName(), true);
             for (Item item : Item.itemsList) {
                 if(item != null) {
                     if(item instanceof ItemBlock) {
@@ -373,37 +411,17 @@ public class Configs {
                             continue;
                         }
                     }
+                    if(item instanceof ItemWorldMap) {
+                        continue;
+                    }
                     try {
-                        String itemPrice =  (String) properties.get(item.getUnlocalizedName());
-                        if(itemPrice != null) {
-                            String [] soldPriceAndBuyPrice = itemPrice.split(",");
-                            if(soldPriceAndBuyPrice.length == 2) {
-                                double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
-                                double price = Double.parseDouble(soldPriceAndBuyPrice[1]);
-                                item.setSoldPrice(soldPrice).setPrice(price);
-                            } else if(soldPriceAndBuyPrice.length == 1) {
-                                double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
-                                item.setSoldPrice(soldPrice);
-                            }
-                        } else {
-                            if(item instanceof ItemBlock) {
-                                fileWritter.write("// " + ((ItemBlock) item).getBlock().getLocalizedName() + " ID: " + ((ItemBlock) item).getBlockID() + "\n");
-                                fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
-                            } else {
-                                fileWritter.write("// " + item.getItemDisplayName() + " ID: " + item.itemID + "\n");
-                                fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
-                            }
-                        }
+                        readOrWritePriceLine(properties, fileWriter, item);
                     } catch (Exception e) {
-                        if(item instanceof ItemBlock) {
-                            Minecraft.setErrorMessage("配置项：" + ((ItemBlock) item).getBlock().getLocalizedName() + " ID: " + ((ItemBlock) item).getBlockID() + " 错误！！！");
-                        } else {
-                            Minecraft.setErrorMessage("配置项：" + item.getItemDisplayName() + " ID: " + item.itemID + " 错误！！！");
-                        }
+                        Minecraft.setErrorMessage("配置项：" + item.getItemDisplayName() + " ID: " + item.itemID + " 错误！！！");
                     }
                 }
             }
-            fileWritter.close();
+            fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -482,11 +500,20 @@ public class Configs {
                         if(!((ItemBlock) item).getBlock().canBeCarried()) {
                             continue;
                         }
-                        fileWritter.write("// " + ((ItemBlock) item).getBlock().getLocalizedName() + " ID: " + ((ItemBlock) item).getBlockID() + "\n");
-                        fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                    }
+                    if(item instanceof ItemWorldMap) {
+                        continue;
+                    }
+                    if(item.getHasSubtypes()) {
+                        for(int i = 0; i < item.getNumSubtypes(); i++) {
+                            ItemStack itemStack = new ItemStack(item, 1, i);
+                            fileWritter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ itemStack.getItemSubtype() + "\n");
+                            fileWritter.write(itemStack.getUnlocalizedName() + "§" + itemStack.getItemSubtype() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                        }
                     } else {
-                        fileWritter.write("// " + item.getItemDisplayName() + " ID: " + item.itemID + "\n");
-                        fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                        ItemStack itemStack = new ItemStack(item, 1, 0);
+                        fileWritter.write("// " + itemStack.getDisplayName() + " ID: " + item.itemID + "\n");
+                        fileWritter.write(itemStack.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
                     }
                 }
             }
