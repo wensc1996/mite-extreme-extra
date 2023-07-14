@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.item;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.block.BlockLeaves1;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
+import net.xiaoyu233.mitemod.miteite.util.Constant;
 
 public class ItemLeaves1 extends ItemBlock {
     public ItemLeaves1(Block block) {
@@ -19,7 +20,9 @@ public class ItemLeaves1 extends ItemBlock {
 
     public int a(ItemStack par1ItemStack, int par2) {
         int var3 = par1ItemStack.getItemSubtype();
-        return (var3 & 1) == 1 ? abs.a() : ((var3 & 2) == 2 ? abs.b() : abs.c());
+        return (var3 & 1) == 1 ? abs.a()
+                : ((var3 & 2) == 2 ? abs.b()
+                : Constant.getFoliageColorMaple());
     }
 
     public String getUnlocalizedName(ItemStack par1ItemStack) {

@@ -207,3 +207,9 @@ item.tooltip.gem_shard_usage_4=用于合成八角宝石
 
 tile.gem_setting.name=宝石镶嵌台
 container.crafting.needsRemoveGems=请先移除宝石
+
+tile.leaves1.maple.name=枫树树叶
+tile.log1.maple.name=枫树木
+tile.sapling1.maple.name=枫树树苗
+tile.wood.maple.name=枫树木板
+tile.slab.group2.maple.name=枫树木台阶

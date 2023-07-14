@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.block;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.util.Constant;
 import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
 
 import java.util.Random;
@@ -25,7 +26,6 @@ public final class BlockLeaves1 extends BlockTransparant {
         this.setCreativeTab(CreativeModeTab.tabDecorations);
         this.setCushioning(0.8F);
         this.setHardness(0.2F);
-        this.setLightOpacity(1);
         this.setStepSound(soundGrassFootstep);
         this.setUnlocalizedName("leaves1");
         this.setTextureName("leaves1");
@@ -38,7 +38,9 @@ public final class BlockLeaves1 extends BlockTransparant {
     }
 
     public int b(int par1) {
-        return (par1 & 3) == 1 ? abs.a() : ((par1 & 3) == 2 ? abs.b() : abs.c());
+        return (par1 & 3) == 1 ? abs.a()
+                : ((par1 & 3) == 2 ? abs.b()
+                : Constant.getFoliageColorMaple());
     }
 
     public int c(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
@@ -48,20 +50,7 @@ public final class BlockLeaves1 extends BlockTransparant {
         } else if ((var5 & 3) == 2) {
             return abs.b();
         } else {
-            int var6 = 0;
-            int var7 = 0;
-            int var8 = 0;
-
-            for(int var9 = -1; var9 <= 1; ++var9) {
-                for(int var10 = -1; var10 <= 1; ++var10) {
-                    int var11 = par1IBlockAccess.getBiomeGenForCoords(par2 + var10, par4 + var9).l();
-                    var6 += (var11 & 16711680) >> 16;
-                    var7 += (var11 & '\uff00') >> 8;
-                    var8 += var11 & 255;
-                }
-            }
-
-            return (var6 / 9 & 255) << 16 | (var7 / 9 & 255) << 8 | var8 / 9 & 255;
+            return Constant.getFoliageColorMaple();
         }
     }
 
@@ -261,8 +250,10 @@ public final class BlockLeaves1 extends BlockTransparant {
     }
 
     public IIcon a(int par1, int par2) {
-        return (par2 & 3) == 1 ? this.iconArray[this.e][1] : ((par2 & 3) == 3
-                ? this.iconArray[this.e][3] : ((par2 & 3) == 2 ? this.iconArray[this.e][2] : this.iconArray[this.e][0]));
+        return (par2 & 3) == 1 ? this.iconArray[this.e][1]
+                : ((par2 & 3) == 3 ? this.iconArray[this.e][3]
+                : ((par2 & 3) == 2 ? this.iconArray[this.e][2]
+                : this.iconArray[this.e][0]));
     }
 
     public void a(boolean par1) {
@@ -291,7 +282,8 @@ public final class BlockLeaves1 extends BlockTransparant {
         }
     }
 
-    public boolean hidesAdjacentSide(IBlockAccess block_access, int x, int y, int z, Block neighbor, int side) {
-        return false;
+    public boolean hidesAdjacentSide(IBlockAccess block_access, int x, int y, int z, Block neighbor, int side)
+    {
+        return !graphicsLevel;
     }
 }

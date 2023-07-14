@@ -383,10 +383,10 @@ public class Configs {
         } else {
             if(item.getHasSubtypes()) {
                 fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ i + "\n");
-                fileWriter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                fileWriter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.soldPriceArray[itemStack.getItemSubtype()] +","+ item.buyPriceArray[itemStack.getItemSubtype()]+ "\n\n");
             } else {
                 fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + item.itemID + "\n");
-                fileWriter.write(itemStack.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                fileWriter.write(itemStack.getUnlocalizedName() + "=" + item.soldPriceArray[0] +","+ item.buyPriceArray[0] + "\n\n");
             }
         }
     }
@@ -508,12 +508,12 @@ public class Configs {
                         for(int i = 0; i < item.getNumSubtypes(); i++) {
                             ItemStack itemStack = new ItemStack(item, 1, i);
                             fileWritter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ itemStack.getItemSubtype() + "\n");
-                            fileWritter.write(itemStack.getUnlocalizedName() + "§" + itemStack.getItemSubtype() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                            fileWritter.write(itemStack.getUnlocalizedName() + "§" + itemStack.getItemSubtype() + "=" + item.soldPriceArray[itemStack.getItemSubtype()] +","+ item.buyPriceArray[itemStack.getItemSubtype()]+ "\n\n");
                         }
                     } else {
                         ItemStack itemStack = new ItemStack(item, 1, 0);
                         fileWritter.write("// " + itemStack.getDisplayName() + " ID: " + item.itemID + "\n");
-                        fileWritter.write(itemStack.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                        fileWritter.write(itemStack.getUnlocalizedName() + "=" + item.soldPriceArray[0] +","+ item.buyPriceArray[0]+ "\n\n");
                     }
                 }
             }

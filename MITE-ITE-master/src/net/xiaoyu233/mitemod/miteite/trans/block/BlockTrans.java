@@ -15,9 +15,6 @@ import java.lang.ref.Reference;
 
 @Mixin(Block.class)
 public abstract class BlockTrans {
-   private double soldPrice = -1D;
-   private double price = -1D;
-
    @ModifyConstant(method = {
            "<clinit>",
            "getBlock(Ljava/lang/String;)Lnet/minecraft/Block;",
@@ -44,32 +41,6 @@ public abstract class BlockTrans {
       }
    }
 
-   public double getPrice(){
-      return this.price;
-   }
-
-   public Block setBlockPrice(double price){
-      return this.setPrice(price);
-   }
-
-   public Block setPrice(double price){
-      this.price = price;
-      return (Block) ReflectHelper.dyCast(this);
-   }
-
-
-   public double getSoldPrice(){
-      return this.soldPrice;
-   }
-
-   public Block setBlockSoldPrice(double price){
-      return this.setSoldPrice(price);
-   }
-
-   public Block setSoldPrice(double price){
-      this.soldPrice = price;
-      return (Block) ReflectHelper.dyCast(this);
-   }
 
    public Block setBlockHardness(float resistance) {
       return this.setHardness(resistance);

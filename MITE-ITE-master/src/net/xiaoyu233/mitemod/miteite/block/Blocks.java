@@ -9,6 +9,7 @@ import net.xiaoyu233.mitemod.miteite.item.recipe.ForgingTableLevel;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.RecipeRegister;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
+import org.spongepowered.asm.mixin.injection.Inject;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -81,9 +82,7 @@ public class Blocks extends Block{
 
     public static final BlockLog1 wood1 = (BlockLog1)(new BlockLog1(271));
     public static final BlockLeaves1 leaves1 = (BlockLeaves1)(new BlockLeaves1(272));
-
-    public static final Block sapling1 = (new BlockSapling1(273));
-
+    public static final Block sapling1 = (new BlockSapling1(195));
 
     static {
         try {
@@ -114,7 +113,7 @@ public class Blocks extends Block{
         block.setUnlocalizedName(resourceLocation);
         block.setResourceLocation(resourceLocation);
         Item item = new ItemAnvil(block).setUnlocalizedName(resourceLocation);
-        Item.itemsList[Constant.getNextItemID()] = item;
+        Item.itemsList[block.blockID] = item;
         item.setMaxStackSize(block.getItemStackLimit());
     }
     public static int getNextBlockID() {
@@ -181,27 +180,42 @@ public class Blocks extends Block{
         registerItemBlock(wood1, (new ItemMultiTexture(wood1, wood1.getNames())).setUnlocalizedName("log1"));
         registerItemBlock(leaves1, (new ItemLeaves1(leaves1)).setUnlocalizedName("leaves1"));
         registerItemBlock(sapling1, (new ItemMultiTexture(sapling1, BlockSapling1.WOOD_TYPES)).setUnlocalizedName("sapling1"));
+
+
+        Items.getItem(Blocks.blockStairsColorful0.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful1.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful2.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful3.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful4.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful5.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful6.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful7.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful8.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful9.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful10.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful11.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful12.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful13.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful14.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockStairsColorful15.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+
+        Items.getItem(Blocks.blockColorful.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockGotcha.blockID).setSoldPrice(2D).setBuyPrice(2D);
     }
 
     private static void registerItemBlock(Block block,String resourceLocation){
         block.setUnlocalizedName(resourceLocation);
         block.setResourceLocation(resourceLocation);
         Item item = new ItemBlock(block).setUnlocalizedName(resourceLocation);
-        item.setItemPrice(block.getPrice());
-        item.setItemSoldPrice(block.getSoldPrice());
         item.setMaxStackSize(block.getItemStackLimit());
-        Item.itemsList[Constant.getNextItemID()] = item;
+        Item.itemsList[block.blockID] = item;
     }
 
     private static void registerItemBlock(Block block, Item item){
         if(item != null) {
-            item.setItemPrice(block.getPrice());
-            item.setItemSoldPrice(block.getSoldPrice());
             Item.itemsList[block.blockID] = item;
         } else {
             Item itemBlock = new ItemBlock(block);
-            itemBlock.setItemPrice(block.getPrice());
-            itemBlock.setItemSoldPrice(block.getSoldPrice());
             itemBlock.setMaxStackSize(block.getItemStackLimit());
             Item.itemsList[block.blockID] = itemBlock;
         }
@@ -307,6 +321,8 @@ public class Blocks extends Block{
         RecipesFurnace.smelting().addSmelting(Blocks.blockMithril.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 2));
         RecipesFurnace.smelting().addSmelting(Blocks.blockAdamantium.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 3));
         RecipesFurnace.smelting().addSmelting(Blocks.blockVibranium.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 4));
+
+        RecipesFurnace.smelting().addSmelting(Blocks.wood1.blockID, new ItemStack(Item.coal, 1, 1));
     }
 
     private static void registerForgingTableUpgradeRecipes(RecipeRegister register, ForgingTableLevel originalLevel, Item ingot){

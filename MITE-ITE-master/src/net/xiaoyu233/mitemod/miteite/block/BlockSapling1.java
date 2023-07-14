@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.block;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.world.WorldGenTreesWithTreeId;
 
 import java.util.Random;
 
@@ -54,40 +55,10 @@ public class BlockSapling1  extends BlockPlant {
 
     private void growTree(World par1World, int par2, int par3, int par4, Random par5Random) {
         int var6 = par1World.getBlockMetadata(par2, par3, par4) & 3;
-        Object var7 = null;
+        Object var7 = new WorldGenTreesWithTreeId(false, 4, Blocks.wood1, 0, Blocks.leaves1, 0, false);
         int var8 = 0;
         int var9 = 0;
         boolean var10 = false;
-        if (var6 == 1) {
-            var7 = new WorldGenTaiga2(true);
-        } else if (var6 == 0) {
-            var7 = new WorldGenForest(true);
-        } else if (var6 == 3) {
-            for(var8 = 0; var8 >= -1; --var8) {
-                for(var9 = 0; var9 >= -1; --var9) {
-                    if (this.isSameSapling(par1World, par2 + var8, par3, par4 + var9, 3) && this.isSameSapling(par1World, par2 + var8 + 1, par3, par4 + var9, 3) && this.isSameSapling(par1World, par2 + var8, par3, par4 + var9 + 1, 3) && this.isSameSapling(par1World, par2 + var8 + 1, par3, par4 + var9 + 1, 3)) {
-                        var7 = new WorldGenMegaTree(true, 10 + par5Random.nextInt(20), 3, 3);
-                        var10 = true;
-                        break;
-                    }
-                }
-
-                if (var7 != null) {
-                    break;
-                }
-            }
-
-            if (var7 == null) {
-                var9 = 0;
-                var8 = 0;
-                var7 = new WorldGenTrees(true, 4 + par5Random.nextInt(7), 3, 3, false);
-            }
-        } else {
-            var7 = new WorldGenTrees(true);
-            if (par5Random.nextInt(10) == 0) {
-                var7 = new WorldGenBigTree(true);
-            }
-        }
 
         if (var10) {
             par1World.setBlock(par2 + var8, par3, par4 + var9, 0, 0, 4);

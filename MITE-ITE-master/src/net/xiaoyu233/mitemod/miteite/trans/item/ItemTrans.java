@@ -19,6 +19,8 @@ import java.util.List;
 
 @Mixin(Item.class)
 public abstract class ItemTrans {
+   @Shadow public abstract boolean getHasSubtypes();
+
    @Shadow public abstract int getNumSubtypes();
 
    @Shadow private int sugar_content;
@@ -76,34 +78,31 @@ public abstract class ItemTrans {
       }
    }
 
-   // 在本mod进行引用 否则会造成无法找到方法的异常
-   public Item setItemPrice(double price) {
-      return this.setPrice(price);
-   }
-
    // 向源类进行注入
-   public Item setPrice(double price) {
-      this.price = price;
+   public Item setBuyPrice(double price) {
+      if(this.getHasSubtypes()) {
+         for (int i = 0; i < this.getNumSubtypes(); i++) {
+            this.buyPriceArray[i] = price;
+         }
+      } else {
+         this.buyPriceArray[0] = price;
+      }
       return (Item) ReflectHelper.dyCast(this);
    }
 
-   public double getPrice() {
-      return this.price;
-   }
-
-   public Item setItemSoldPrice(double price) {
-      return this.setSoldPrice(price);
-   }
 
    // 向源类进行注入
    public Item setSoldPrice(double price) {
-      this.soldPrice = price;
+      if(this.getHasSubtypes()) {
+         for (int i = 0; i < this.getNumSubtypes(); i++) {
+            this.soldPriceArray[i] = price;
+         }
+      } else {
+         this.soldPriceArray[0] = price;
+      }
       return (Item) ReflectHelper.dyCast(this);
    }
 
-   public double getSoldPrice() {
-      return this.soldPrice;
-   }
 
    public void setSugarContent(int sugarContent){
       this.sugar_content = sugarContent;

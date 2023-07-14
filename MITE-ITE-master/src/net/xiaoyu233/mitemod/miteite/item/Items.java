@@ -134,7 +134,7 @@ public class Items extends Item{
         Items.adamantiumNugget.setSoldPrice(6D);
         VIBRANIUM_NUGGET.setSoldPrice(10D);
 
-        Items.bread.setItemPrice(0.2D).setSoldPrice(0.2D);
+
 
         Items.getItem(Blocks.plantYellow.blockID).setSoldPrice(0.1D);
         Items.getItem(Blocks.plantRed.blockID).setSoldPrice(0.1D);
@@ -149,6 +149,8 @@ public class Items extends Item{
         Items.getItem(Blocks.stone.blockID).setSoldPrice(2D);
         Items.getItem(Blocks.cobblestoneWall.blockID).setSoldPrice(1D);
         Items.getItem(Blocks.wood.blockID).setSoldPrice(1D);
+
+        Items.bread.setBuyPrice(0.2D).setSoldPrice(0.2D);
 
         register("obsidian_stick", OBSIDIAN_STICK, CreativeModeTab.tabMaterials);
         register("vibranium", VIBRANIUM_INGOT, CreativeModeTab.tabMaterials);
@@ -448,6 +450,8 @@ public class Items extends Item{
                 'T', Item.ghastTear,
                 'B', Item.book,
                 'E', Item.enderPearl);
+        register.registerShapedRecipe(new ItemStack(Block.woodSingleSlab, 6, 4), true, new Object[] {"###", '#', new ItemStack(Block.planks, 1, 4)});
+        register.registerShapedRecipe(new ItemStack(Block.planks, 4, 4), true, new Object[] {"#", '#', new ItemStack(Blocks.wood1, 1, 0)});
         // 开始注入商品价格配置文件
         Configs.beginToLoadShopConfig();
     }

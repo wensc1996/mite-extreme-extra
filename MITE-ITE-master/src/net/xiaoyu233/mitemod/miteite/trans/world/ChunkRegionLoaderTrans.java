@@ -1,13 +1,14 @@
 package net.xiaoyu233.mitemod.miteite.trans.world;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,26 @@ import java.util.Map.Entry;
 
 @Mixin(ChunkRegionLoader.class)
 public class ChunkRegionLoaderTrans {
+   @ModifyConstant(method = {
+           "handleSectionChecksumFailure",
+           "getInvalidSectionBlockConversionIdsOrMetadata"
+   }, constant = @Constant(intValue = 256))
+   private static int injected(int value) {
+      return 1024;
+   }
+
+   @Shadow
+   private static int[] same() {
+      return new int[]{-1, -1};
+   }
+
+   @Inject(locals = LocalCapture.CAPTURE_FAILHARD, method = "getInvalidSectionBlockConversionIdsOrMetadata", at = @At(value = "INVOKE", target = "Lnet/minecraft/ChunkRegionLoader;same()[I", ordinal = 0, shift = At.Shift.AFTER))
+   private static void injectBlock(CallbackInfoReturnable<Integer[][]> cir, int array[][]) {
+      array[Blocks.wood1.blockID] = same();
+      array[Blocks.leaves1.blockID] = same();
+      array[Blocks.sapling1.blockID] = same();
+   }
+
    @Shadow
    private final int calcEntityChecksum(Entity entity) {
       return 0;
@@ -35,10 +56,7 @@ public class ChunkRegionLoaderTrans {
       return 0;
    }
 
-   @ModifyConstant(method = "handleSectionChecksumFailure", constant = @Constant(intValue = 256))
-   private static int injected(int value) {
-      return 1024;
-   }
+
 
    @ModifyVariable(method = "getInvalidSectionBlockConversionIdsOrMetadata", at = @At("STORE"), ordinal = 0)
    private static int[][] injected(int[][] source) {
