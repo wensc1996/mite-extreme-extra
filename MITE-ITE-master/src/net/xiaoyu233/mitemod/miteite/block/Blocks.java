@@ -200,6 +200,7 @@ public class Blocks extends Block{
         Items.getItem(Blocks.blockStairsColorful15.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
 
         Items.getItem(Blocks.blockColorful.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
+        Items.getItem(Blocks.blockColorfulBrick.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
         Items.getItem(Blocks.blockGotcha.blockID).setSoldPrice(2D).setBuyPrice(2D);
     }
 
