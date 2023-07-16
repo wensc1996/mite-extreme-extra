@@ -17,6 +17,11 @@ public class EntityExchanger extends EntitySkeleton {
     }
 
     @Override
+    public boolean canNeverPickUpItem(Item item_on_ground) {
+        return true;
+    }
+
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         int day = this.getWorld().getDayOfOverworld();

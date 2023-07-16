@@ -160,14 +160,30 @@ public class Configs {
         public static ConfigItem <Double> zombieBossMaxHealth = new ConfigItem("zombieBossMaxHealth", 1000d, "僵尸BOSS最大血量", 1d ,10000d);
         public static ConfigItem <Double> zombieBossBaseDamage = new ConfigItem("zombieBossBaseDamage", 12d, "僵尸BOSS基础攻击伤害", 1d ,100d);
         public static ConfigItem <Float> zombieBossSpawnPercent = new ConfigItem("zombieBossSpawnPercent", 0.5f, "挖掘刷怪笼多大几率刷出僵尸BOSS", 0f,1f);
-
         public static ConfigItem <Integer> creeperFuseTime = new ConfigItem("creeperFuseTime", 30, "苦力怕蓄力时间(tick)", 10,1000);
+
+        public static ConfigItem <Boolean> BlnFinsh = new ConfigItem("BlnFinsh", false, "是否开启急速钓鱼");
+        public static ConfigItem <Boolean> isActiveSecondaryAttribute = new ConfigItem("isActiveSecondaryAttribute", true, "是否开启副属性");
+        public static ConfigItem <Double> skeletonBossMaxHealth = new ConfigItem("skeletonBossMaxHealth", 125d, "骷髅BOSS最大血量", 20d ,10000d);
+        public static ConfigItem <Double> skeletonBossBaseDamage = new ConfigItem("skeletonBossBaseDamage", 12d, "骷髅BOSS基础攻击伤害", 1d ,100d);
+        public static ConfigItem <Float> skeletonBossSpawnPercent = new ConfigItem("skeletonBossSpawnPercent", 0.5f, "挖掘刷怪笼多大几率刷出骷髅BOSS", 0f,1f);
+        public static ConfigItem <Boolean> isSkeletonandZombieSpawnBoth = new ConfigItem("isSkeletonandZombieSpawnBoth", true, "是否有机会在挖掘刷怪笼时同时生成多种boss");
+        public static ConfigItem <Boolean> isSpawnSkeletonWithBat = new ConfigItem("isSpawnSkeletonWithBat", true, "生成骷髅时是否有概率乘坐蝙蝠");
+        public static ConfigItem <Boolean> hasBlockSpawnRecipe = new ConfigItem("hasBlockSpawnRecipe", true, "是否有复活传送阵配方");
 
 //        public static ConfigItem <String> md5String = new ConfigItem("md5String", new lh("wensc").a("busy"), "MD5");
 
     }
 
     public static void loadConfigs(){
+        wenscMap.put("hasBlockSpawnRecipe", wenscConfig.hasBlockSpawnRecipe);
+        wenscMap.put("isSpawnSkeletonWithBat", wenscConfig.isSpawnSkeletonWithBat);
+        wenscMap.put("skeletonBossMaxHealth",wenscConfig.skeletonBossMaxHealth);
+        wenscMap.put("skeletonBossBaseDamage",wenscConfig.skeletonBossBaseDamage);
+        wenscMap.put("skeletonBossSpawnPercent",wenscConfig.skeletonBossSpawnPercent);
+        wenscMap.put("isSkeletonandZombieSpawnBoth",wenscConfig.isSkeletonandZombieSpawnBoth);
+        wenscMap.put("isActiveSecondaryAttribute", wenscConfig.isActiveSecondaryAttribute);
+
 
         wenscMap.put("BlnGravel", wenscConfig.BlnGravel);
         wenscMap.put("isOpenStrongBoxBreakRecord", wenscConfig.isOpenStrongBoxBreakRecord);

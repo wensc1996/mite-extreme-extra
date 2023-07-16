@@ -1,6 +1,8 @@
 package net.xiaoyu233.mitemod.miteite.trans.util;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.ArmorModifierTypes;
+import net.xiaoyu233.mitemod.miteite.item.ToolModifierTypes;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -26,8 +28,19 @@ public class DamageTrans {
       } else {
          if (target instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer)target;
+            float block_boost = 0.0F;
+            float evasion_chance = 0.0f;
+            if (target.getHeldItemStack() != null) {
+               block_boost = (ToolModifierTypes.LAST_STAND.getModifierValue(target.getHeldItemStack().getTagCompound()));
+            }
+            if (target.getBoots() != null){
+               evasion_chance = ArmorModifierTypes.AGILITY.getModifierValue(target.getBoots().getTagCompound());
+            }
+            if((double)evasion_chance > Math.random()){
+               return 0.0F;
+            }
             if (!this.bypassesMundaneArmor() && player.isBlocking()) {
-               this.amount /= 2.0F;
+               this.amount /= 2.0F + block_boost;
                if (this.amount < 1.0F) {
                   this.amount = 1.0F;
                }

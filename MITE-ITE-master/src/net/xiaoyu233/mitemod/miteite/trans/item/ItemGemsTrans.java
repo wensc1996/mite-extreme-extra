@@ -29,16 +29,44 @@ public class ItemGemsTrans extends Item {
       }
    }
 
-   @Inject(
-           method = "onItemRightClick(Lnet/minecraft/EntityPlayer;Lnet/minecraft/ItemStack;FZ)Z",
-           at = @At(value = "INVOKE",
-                   shift = At.Shift.BEFORE,
-                   target = "Lnet/minecraft/EntityPlayer;causeBreakingItemEffect(Lnet/minecraft/Item;I)V"),
-           cancellable = true)
-   private static void injectNetherQuartzLimit(EntityPlayer player, ItemStack item_stack,float partial_tick,boolean ctrl_is_down,CallbackInfoReturnable<Boolean> callbackInfoReturnable){
-      if (item_stack.getItem() == netherQuartz && player.getExperienceLevel() >= Configs.wenscConfig.quartzMaxExpLevel.ConfigValue) {
-         callbackInfoReturnable.setReturnValue(false);
-         callbackInfoReturnable.cancel();
+   @Overwrite
+   public static boolean onItemRightClick(EntityPlayer player, ItemStack item_stack, float partial_tick, boolean ctrl_is_down) {
+      int xp_value = getExperienceValueWhenSacrificed(item_stack);
+      if (xp_value < 1) {
+         return false;
+      } else {
+         if (player.onServer()) {
+            if (item_stack.getItem() == netherQuartz && player.getExperienceLevel() >= Configs.wenscConfig.quartzMaxExpLevel.ConfigValue) {
+               return false;
+            }
+
+            if (ctrl_is_down){
+               player.addExperience(xp_value * item_stack.stackSize);
+               player.setHeldItemStack(null);;
+            } else{
+               player.convertOneOfHeldItem(null);
+               player.addExperience(xp_value);
+            }
+
+            player.causeBreakingItemEffect(item_stack.getItem(), player.inventory.currentItem);
+         } else {
+            player.bobItem();
+         }
+
+         return true;
       }
    }
+
+//   @Inject(
+//           method = "onItemRightClick(Lnet/minecraft/EntityPlayer;Lnet/minecraft/ItemStack;FZ)Z",
+//           at = @At(value = "INVOKE",
+//                   shift = At.Shift.BEFORE,
+//                   target = "Lnet/minecraft/EntityPlayer;causeBreakingItemEffect(Lnet/minecraft/Item;I)V"),
+//           cancellable = true)
+//   private static void injectNetherQuartzLimit(EntityPlayer player, ItemStack item_stack,float partial_tick,boolean ctrl_is_down,CallbackInfoReturnable<Boolean> callbackInfoReturnable){
+//      if (item_stack.getItem() == netherQuartz && player.getExperienceLevel() >= Configs.wenscConfig.quartzMaxExpLevel.ConfigValue) {
+//         callbackInfoReturnable.setReturnValue(false);
+//         callbackInfoReturnable.cancel();
+//      }
+//   }
 }

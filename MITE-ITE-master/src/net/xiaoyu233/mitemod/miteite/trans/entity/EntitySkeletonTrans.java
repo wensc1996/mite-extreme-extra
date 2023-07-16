@@ -358,7 +358,7 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
 
       this.setCombatTask();
 
-      if(rand.nextInt(5) == 0) {
+      if(rand.nextInt(5) == 0 && Configs.wenscConfig.isSpawnSkeletonWithBat.ConfigValue) {
          EntityBat entityBat;
          // 近战骷髅
          if(this.getSkeletonType() > 0) {

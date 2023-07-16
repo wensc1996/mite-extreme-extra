@@ -267,12 +267,14 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
       Block block = info.block;
       ItemStack item_stack = info.getHarvesterItemStack();
       if (!(block instanceof BlockOre && info.getMetadata() == 1) && block != Block.oreDiamond && block != Block.oreCoal && block != Block.oreEmerald && block != Block.oreRedstone && block != Block.oreLapis && block != Block.oreNetherQuartz){
-         float expReward = ToolModifierTypes.GEOLOGY.getModifierValue(info.getHarvesterItemStack().getTagCompound());
-         if (expReward != 0){
-            ItemStack dropItemStack = new ItemStack(info.block);
-            ItemStack smeltingResult = RecipesFurnace.smelting().getSmeltingResult(dropItemStack, 5);
-            if (smeltingResult != null){
-               info.world.spawnEntityInWorld(new EntityExperienceOrb(info.world, info.drop_x, info.drop_y + 0.5D, info.drop_z, (int) (smeltingResult.getExperienceReward() * expReward)));
+         if(!BlockGoldOre.isGoldOreNetherrack(block, info.getMetadata())) {
+            float expReward = ToolModifierTypes.GEOLOGY.getModifierValue(info.getHarvesterItemStack().getTagCompound());
+            if (expReward != 0) {
+               ItemStack dropItemStack = new ItemStack(info.block);
+               ItemStack smeltingResult = RecipesFurnace.smelting().getSmeltingResult(dropItemStack, 5);
+               if (smeltingResult != null) {
+                  info.world.spawnEntityInWorld(new EntityExperienceOrb(info.world, info.drop_x, info.drop_y + 0.5D, info.drop_z, (int) (smeltingResult.getExperienceReward() * expReward)));
+               }
             }
          }
       }

@@ -7,6 +7,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.util.Random;
+
 @Mixin(Entity.class)
 public abstract class EntityTrans {
    @Shadow public abstract boolean canCatchFire();
@@ -14,6 +16,13 @@ public abstract class EntityTrans {
    @Shadow @Final public AxisAlignedBB boundingBox;
    @Shadow public World worldObj;
    private int netherrackWalkTime = 0;
+
+   @Shadow
+   protected Random rand;
+
+   public Random getRand() {
+      return rand;
+   }
 
    @Shadow
    protected void entityInit() {

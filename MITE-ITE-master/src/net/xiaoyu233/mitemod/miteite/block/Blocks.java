@@ -6,6 +6,7 @@ import net.xiaoyu233.mitemod.miteite.item.ItemLeaves1;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.Materials;
 import net.xiaoyu233.mitemod.miteite.item.recipe.ForgingTableLevel;
+import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.RecipeRegister;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
@@ -57,13 +58,9 @@ public class Blocks extends Block{
     public static final Block blockStairsColorful13 = new BlockStairsColorful(189, blockColorful, 13);
     public static final Block blockStairsColorful14 = new BlockStairsColorful(190, blockColorful, 14);
     public static final Block blockStairsColorful15 = new BlockStairsColorful(191, blockColorful, 15);
-
     public static final BlockSpawn blockSpawn = (new BlockSpawn(192, Material.stone));
-
     public static final Block fancyRed = (new BlockFancyRed(193, Material.diamond, 4)).setCreativeTab(CreativeModeTab.tabBlock);
-
     public static final Block gemSetting = (new BlockGemSetting(194, Material.stone, (new BlockConstants()).setNeverHidesAdjacentFaces())).setUnlocalizedName("gem_setting").setCreativeTab(CreativeModeTab.tabDecorations);
-
     public static final BlockBed blackBed = (BlockBed)(new BlockBed(256).setSub(0).setAttr(0.2F, 0.6F, "black_bed", "black_bed"));
     public static final BlockBed redBed = (BlockBed)(new BlockBed(257).setSub(1).setAttr(0.2F, 0.6F, "red_bed", "red_bed"));
     public static final BlockBed greenBed = (BlockBed)(new BlockBed(258).setSub(2).setAttr(0.2F, 0.6F, "green_bed", "green_bed"));
@@ -79,10 +76,16 @@ public class Blocks extends Block{
     public static final BlockBed lightBlueBed = (BlockBed)(new BlockBed(268).setSub(12).setAttr(0.2F, 0.6F, "light_blue_bed", "light_blue_bed"));
     public static final BlockBed magentaBed = (BlockBed)(new BlockBed(269).setSub(13).setAttr(0.2F, 0.6F, "magenta_bed", "magenta_bed"));
     public static final BlockBed orangeBed = (BlockBed)(new BlockBed(270).setSub(14).setAttr(0.2F, 0.6F, "yellow_bed", "yellow_bed"));
-
     public static final BlockLog1 wood1 = (BlockLog1)(new BlockLog1(271));
     public static final BlockLeaves1 leaves1 = (BlockLeaves1)(new BlockLeaves1(272));
     public static final Block sapling1 = (new BlockSapling1(195));
+
+    public static final Block vibraniumDoor = ReflectHelper.createInstance(BlockDoor.class, new Class[] {int.class,Material.class}
+            , 501, Materials.vibranium).setStepSound_(soundMetalFootstep);
+
+
+
+
 
     static {
         try {
@@ -126,6 +129,9 @@ public class Blocks extends Block{
     }
 
     public static void registerBlocks(){
+
+        registerItemBlock(vibraniumDoor,"door_vibranium");
+
 
         registerAnvil(anvilVibranium,"anvil_vibranium");
         registerItemBlock(blockVibranium,"block_vibranium");
@@ -250,13 +256,15 @@ public class Blocks extends Block{
         register.registerShapelessRecipe(new ItemStack(blockColorful, 9, 0), true, new ItemStack(blockColorful, 9, 15));
         register.registerShapelessRecipe(new ItemStack(blockColorfulBrick, 9, 0), true, new ItemStack(blockColorfulBrick, 9, 15));
 
-        register.registerShapedRecipe(new ItemStack(blockSpawn), true,
-                "ABA",
-                "BCB",
-                "ABA",
-                'A', Blocks.obsidian,
-                'B', Items.diamond,
-                'C', Items.enderPearl);
+        if(Configs.wenscConfig.hasBlockSpawnRecipe.ConfigValue) {
+            register.registerShapedRecipe(new ItemStack(blockSpawn), true,
+                    "ABA",
+                    "BCB",
+                    "ABA",
+                    'A', Blocks.obsidian,
+                    'B', Items.diamond,
+                    'C', Items.enderPearl);
+        }
         register.registerShapedRecipe(new ItemStack(anvilVibranium),true,
                 "AVA",
                 " I ",

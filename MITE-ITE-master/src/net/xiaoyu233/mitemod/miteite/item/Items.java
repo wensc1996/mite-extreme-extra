@@ -5,6 +5,7 @@ import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.RecipeRegister;
+import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.List;
@@ -33,14 +34,11 @@ public class Items extends Item{
     public static final ItemEnhanceStone MITHRIL_ENHANCE_STONE = (ItemEnhanceStone) new ItemEnhanceStone(ItemEnhanceStone.Types.mithril).setCraftingDifficultyAsComponent(ItemRock.getCraftingDifficultyAsComponent(Material.mithril) * 2f);
     public static final ItemEnhanceStone ADAMANTIUM_ENHANCE_STONE = (ItemEnhanceStone) new ItemEnhanceStone(ItemEnhanceStone.Types.adamantium).setCraftingDifficultyAsComponent(ItemRock.getCraftingDifficultyAsComponent(Material.diamond) * 2f);
     public static final ItemEnhanceStone UNIVERSAL_ENHANCE_STONE = (ItemEnhanceStone) new ItemEnhanceStone(ItemEnhanceStone.Types.universal).setCraftingDifficultyAsComponent(ItemRock.getCraftingDifficultyAsComponent(Material.ender_pearl) * 2f);
-
     public static final Item lavaInPipes = new ItemLavaInPipes(Constant.getNextItemID(), Materials.lava);
-
     public static final Item clubIron = new ItemClubMetal(Constant.getNextItemID(), Material.iron);
     public static final Item clubMithril = new ItemClubMetal(Constant.getNextItemID(), Material.mithril);
     public static final Item clubAdamantium = new ItemClubMetal(Constant.getNextItemID(), Material.adamantium);
     public static final Item clubVibranium = new ItemClubMetal(Constant.getNextItemID(), Materials.vibranium);
-
     public static final Item ringKillerCopper = new ItemRingKiller(Constant.getNextItemID(), Materials.copper).setUnlocalizedName("ringKillerCopper");
     public static final Item ringKillerIron = new ItemRingKiller(Constant.getNextItemID(), Materials.iron).setUnlocalizedName("ringKillerIron");
     public static final Item ringKillerAncient = new ItemRingKiller(Constant.getNextItemID(), Materials.ancient_metal).setUnlocalizedName("ringKillerAncient");
@@ -48,7 +46,6 @@ public class Items extends Item{
     public static final Item ringKillerAdamantium = new ItemRingKiller(Constant.getNextItemID(), Materials.adamantium).setUnlocalizedName("ringKillerAdamantium");
     public static final Item ringKillerVibranium = new ItemRingKiller(Constant.getNextItemID(), Materials.vibranium).setUnlocalizedName("ringKillerVibranium");
     public static final Item Stack_Torch = createInstance(Item.class, new Class[]{int.class, Material.class, String.class}, Constant.getNextItemID(), Material.circuits, "stack_torch");
-
     public static final Item voucherExchanger = new ItemMobVoucher(Constant.getNextItemID(), "exchanger");
     public static final Item voucherDoor = new ItemMobVoucher(Constant.getNextItemID(), "door");
     public static final Item voucherZombieLord = new ItemMobVoucher(Constant.getNextItemID(), "zombie_lord");
@@ -60,24 +57,44 @@ public class Items extends Item{
     public static final Item voucherPlanting = new ItemMobVoucher(Constant.getNextItemID(), "planting");
     public static final Item voucherVillager = new ItemMobVoucher(Constant.getNextItemID(), "villager");
     public static final Item voucherClubCore = new ItemMobVoucher(Constant.getNextItemID(), "club_core");
-
     public static final Item itemDynamicCoreIron = new ItemDynamicCore(Constant.getNextItemID(), Materials.iron, 1).setUnlocalizedName("dynamic_core_iron");
     public static final Item itemDynamicCoreAncient_metal = new ItemDynamicCore(Constant.getNextItemID(), Materials.ancient_metal, 2).setUnlocalizedName("dynamic_core_ancient_metal");
     public static final Item itemDynamicCoreMithril = new ItemDynamicCore(Constant.getNextItemID(), Materials.mithril, 3).setUnlocalizedName("dynamic_core_mithril");
-
     public static final Item itemDynamicCoreAdamantium = new ItemDynamicCore(Constant.getNextItemID(), Materials.adamantium, 4).setUnlocalizedName("dynamic_core_adamantium");
     public static final Item itemDynamicCoreVibranium = new ItemDynamicCore(Constant.getNextItemID(), Materials.vibranium, 5).setUnlocalizedName("dynamic_core_vibranium");
     public static final Item fancyRed = (new ItemFancyRed(Constant.getNextItemID(), Material.diamond, "fancy_red"));
-
     public static ItemEnhanceGem itemEnhanceGem = (ItemEnhanceGem)(new ItemEnhanceGem(Constant.getNextItemID(), 1)).setUnlocalizedName("enhance_gem_phase1");
     public static ItemEnhanceGem itemEnhanceGem2 = (ItemEnhanceGem)(new ItemEnhanceGem(Constant.getNextItemID(), 2)).setUnlocalizedName("enhance_gem_phase2");
     public static ItemEnhanceGem itemEnhanceGem3 = (ItemEnhanceGem)(new ItemEnhanceGem(Constant.getNextItemID(), 3)).setUnlocalizedName("enhance_gem_phase3");
     public static ItemEnhanceGem itemEnhanceGem4 = (ItemEnhanceGem)(new ItemEnhanceGem(Constant.getNextItemID(), 4)).setUnlocalizedName("enhance_gem_phase4");
     public static ItemEnhanceGem itemEnhanceGem5 = (ItemEnhanceGem)(new ItemEnhanceGem(Constant.getNextItemID(), 5)).setUnlocalizedName("enhance_gem_phase5");
     public static ItemEnhanceGem itemEnhanceGem6 = (ItemEnhanceGem)(new ItemEnhanceGem(Constant.getNextItemID(), 6)).setUnlocalizedName("enhance_gem_phase6");
-
     public static ItemEnhanceGemBox itemEnhanceGemBox = (ItemEnhanceGemBox)(new ItemEnhanceGemBox(Constant.getNextItemID())).setUnlocalizedName("enhance_gem_box_phase1");
     public static ItemGemShard itemGemShard = (ItemGemShard)(new ItemGemShard(Constant.getNextItemID())).setUnlocalizedName("gem_shard");
+
+
+
+
+    public static final Item furnaceClay = new ItemFurnace(Block.furnaceClayIdle, Materials.clay);
+    public static final Item furnaceClayBurning = new ItemFurnace(Block.furnaceClayBurning, Materials.clay);
+    public static final Item furnaceCobblestone = new ItemFurnace(Block.furnaceIdle, Materials.stone);
+    public static final Item furnaceCobblestoneBurning = new ItemFurnace(Block.furnaceBurning, Materials.stone);
+    public static final Item furnaceHardenedClay = new ItemFurnace(Block.furnaceHardenedClayIdle, Materials.hardened_clay);
+    public static final Item furnaceHardenedClayBurning = new ItemFurnace(Block.furnaceHardenedClayBurning, Materials.hardened_clay);
+    public static final Item furnaceNetherrack = new ItemFurnace(Block.furnaceNetherrackIdle, Materials.netherrack);
+    public static final Item furnaceNetherrackBurning = new ItemFurnace(Block.furnaceNetherrackBurning, Materials.netherrack);
+    public static final Item furnaceObsidian = new ItemFurnace(Block.furnaceObsidianIdle, Materials.obsidian);
+    public static final Item furnaceObsidianBurning = new ItemFurnace(Block.furnaceObsidianBurning, Materials.obsidian);
+    public static final Item furnaceSandstone = new ItemFurnace(Block.furnaceSandstoneIdle, Materials.sand);
+    public static final Item furnaceSandstoneBurning = new ItemFurnace(Block.furnaceSandstoneBurning, Materials.sand);
+    public static final Item furnaceVibranium = new ItemFurnace(Blocks.furnaceVibraniumIdle, Materials.vibranium);
+    public static final Item furnaceVibraniumBurning = new ItemFurnace(Blocks.furnaceVibraniumBurning, Materials.vibranium);
+    public static final Item clubCopper = new ItemClubMetal(Constant.getNextItemID(), Material.copper);
+    public static final Item clubSilver = new ItemClubMetal(Constant.getNextItemID(),Material.silver);
+    public static final ItemCoin coinVibranium = ReflectHelper.createInstance(ItemCoin.class, new Class[]{Integer.TYPE, Material.class}, Constant.getNextItemID(), Materials.vibranium);
+    public static final Item doorVibranium = new ItemDoor(Constant.getNextItemID(), Materials.vibranium);
+    public static final Item fishRodVibranium = new ItemFishingRod(Constant.getNextItemID(), Materials.vibranium);
+    public static final Item endBook = new ItemEndBook(Constant.getNextItemID());
 
     private static Item register(String resourceLocation, Item item, CreativeModeTab tab) {
         item.setResourceLocation(item.getResourceLocationPrefix() + resourceLocation);
@@ -134,8 +151,6 @@ public class Items extends Item{
         Items.adamantiumNugget.setSoldPrice(6D);
         VIBRANIUM_NUGGET.setSoldPrice(10D);
 
-
-
         Items.getItem(Blocks.plantYellow.blockID).setSoldPrice(0.1D);
         Items.getItem(Blocks.plantRed.blockID).setSoldPrice(0.1D);
         Items.getItem(Blocks.torchWood.blockID).setSoldPrice(0.2D);
@@ -151,6 +166,9 @@ public class Items extends Item{
         Items.getItem(Blocks.wood.blockID).setSoldPrice(1D);
 
         Items.bread.setBuyPrice(0.2D).setSoldPrice(0.2D);
+
+
+        doorVibranium.setSoldPrice(500D);
 
         register("obsidian_stick", OBSIDIAN_STICK, CreativeModeTab.tabMaterials);
         register("vibranium", VIBRANIUM_INGOT, CreativeModeTab.tabMaterials);
@@ -215,10 +233,88 @@ public class Items extends Item{
         register("gem/enhance_gem_phase5", itemEnhanceGem5).setUnlocalizedName("enhance_gem_phase5").setLowestCraftingDifficultyToProduce(1.0F);
         register("gem/enhance_gem_phase5", itemEnhanceGem6).setUnlocalizedName("enhance_gem_phase6").setLowestCraftingDifficultyToProduce(1.0F);
 
+
+        register("furnace_clay", furnaceClay);
+        register("furnace_clay_burning", furnaceClayBurning);
+        register("furnace_stone", furnaceCobblestone);
+        register("furnace_stone_burning", furnaceCobblestoneBurning);
+        register("furnace_hclay", furnaceHardenedClay);
+        register("furnace_hclay", furnaceHardenedClayBurning);
+        register("furnace_netherrack", furnaceNetherrack);
+        register("furnace_netherrack_burning", furnaceNetherrackBurning);
+        register("furnace_Obsidian", furnaceObsidian);
+        register("furnace_Obsidian_burning", furnaceObsidianBurning);
+        register("furnace_sand_stone", furnaceSandstone);
+        register("furnace_sand_stone_burning", furnaceSandstoneBurning);
+        register("furnace_vibranium", furnaceVibranium);
+        register("furnace_vibranium_burning", furnaceVibraniumBurning);
+        register("copper_club", clubCopper).setUnlocalizedName("copper_club").setLowestCraftingDifficultyToProduce(1.0F);
+        register("silver_club", clubSilver).setUnlocalizedName("silver_club").setLowestCraftingDifficultyToProduce(1.0F);
+        register("fishing_rods/vibranium_fishrod", fishRodVibranium);
+        register("vibranium_coin", coinVibranium);
+        register("vibranium_door", doorVibranium);
+        register("end_book", endBook, CreativeModeTab.tabTools);
         Constant.initItemArray();
     }
 
     public static void registerRecipes(RecipeRegister register) {
+        register.registerShapelessRecipe(new ItemStack(endBook), true, Block.enderChest, Item.book);
+        register.registerShapedRecipe(new ItemStack(doorVibranium),
+                false,
+                "NN ",
+                "NN ",
+                "NN ",
+                'N',
+                VIBRANIUM_INGOT);
+        register.registerShapedRecipe(new ItemStack(doorVibranium),
+                false,
+                " NN",
+                " NN",
+                " NN",
+                'N',
+                VIBRANIUM_INGOT);
+        register.registerShapedRecipe(new ItemStack(fishRodVibranium),
+                false,
+                "  S",
+                " SL",
+                "XZL",
+                'L', Item.silk,
+                'Z', VIBRANIUM_NUGGET,
+                'S', OBSIDIAN_STICK,
+                'X', Item.fishingRodAncientMetal);
+        register.registerShapedRecipe(new ItemStack(fishRodVibranium),
+                false,
+                "  X",
+                " SL",
+                "SZL",
+                'L', Item.silk,
+                'Z', VIBRANIUM_NUGGET,
+                'S', OBSIDIAN_STICK,
+                'X', Item.fishingRodAncientMetal);
+        register.registerShapedRecipe(new ItemStack(fishRodVibranium),
+                false,
+                "  S",
+                " XL",
+                "SZL",
+                'L', Item.silk,
+                'Z', VIBRANIUM_NUGGET,
+                'S', OBSIDIAN_STICK,
+                'X', Item.fishingRodAncientMetal);
+
+
+        ItemCoin[] coins = new ItemCoin[]{Item.coinCopper, Item.coinSilver, Item.coinGold, Item.coinAncientMetal, Item.coinMithril, Item.coinAdamantium, coinVibranium};
+
+        for (ItemCoin coin : coins) {
+            for (int plank_subtype = 1; plank_subtype <= 9; ++plank_subtype) {
+                register.registerShapelessRecipe(new ItemStack(coin.getNuggetPeer(), plank_subtype), true, new Object[]{new ItemStack(coin, plank_subtype)});
+            }
+
+            register.registerShapelessRecipe(new ItemStack(coin), true, new Object[]{new ItemStack(coin.getNuggetPeer())});
+        }
+
+
+
+
         for(int j = 0; j < 16; j++){
             register.registerShapelessRecipe(new ItemStack(Item.bed, 1, j), true, new Object[] {new ItemStack(Item.dyePowder, 1, j), new ItemStack(Item.bed, 1, 0)});
         }

@@ -1,4 +1,4 @@
-package net.xiaoyu233.mitemod.miteite.trans;
+package net.xiaoyu233.mitemod.miteite.trans.util;
 
 import net.minecraft.StatisticList;
 import org.spongepowered.asm.mixin.Mixin;

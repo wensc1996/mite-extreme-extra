@@ -1,3 +1,16 @@
+enchantment.forge=锻造
+item.vibranium_coin.name=振金币
+item.vibranium_door.name=振金门
+item.end_book.name=末影书
+item.tooltip.buyprice=购价
+item.tooltip.soldprice=售价
+item.tooltip.ID=ID
+item.tooltip.SUB=Sub
+item.copper_club.name=铜棒
+item.silver_club.name=银棒
+
+
+
 item.vibranium.name=振金锭
 item.obsidian_stick.name=黑曜石棒
 item.vibranium_nugget.name=振金粒

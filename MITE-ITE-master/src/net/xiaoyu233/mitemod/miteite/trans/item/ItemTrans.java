@@ -103,40 +103,50 @@ public abstract class ItemTrans {
       return (Item) ReflectHelper.dyCast(this);
    }
 
+   public boolean hasSoldPrice(int meta) {
+      return soldPriceArray[meta] > 0;
+   }
+
+   public boolean hasBuyPrice(int meta) {
+      return buyPriceArray[meta] > 0;
+   }
+
 
    public void setSugarContent(int sugarContent){
       this.sugar_content = sugarContent;
    }
 
    public void addExpForTool(ItemStack stack, EntityPlayer player, int exp) {
-      stack.fixNBT();
-      NBTTagCompound tagCompound = stack.stackTagCompound;
-      if (tagCompound != null) {
-         if (tagCompound.hasKey("tool_exp")) {
-            tagCompound.setInteger("tool_exp", tagCompound.getInteger("tool_exp") + exp);
-            if (tagCompound.hasKey("tool_level")) {
-               int currentLevel = tagCompound.getInteger("tool_level");
-               int nextLevelExpReq = this.getExpReqForLevel(currentLevel, this.isWeapon(stack.getItem()));
-               if (tagCompound.getInteger("tool_exp") >= nextLevelExpReq) {
-                  tagCompound.setInteger("tool_level", currentLevel + 1);
-                  tagCompound.setInteger("tool_exp", 0);
-                  if (!player.worldObj.isRemote) {
-                     player.sendChatToPlayer(ChatMessage.createFromTranslationKey("你的" + stack.getMITEStyleDisplayName() + "已升级,当前等级:" + (currentLevel + 1)).setColor(EnumChatFormat.DARK_AQUA));
-                  }
+      if (Configs.wenscConfig.isActiveSecondaryAttribute.ConfigValue) {
+         stack.fixNBT();
+         NBTTagCompound tagCompound = stack.stackTagCompound;
+         if (tagCompound != null) {
+            if (tagCompound.hasKey("tool_exp")) {
+               tagCompound.setInteger("tool_exp", tagCompound.getInteger("tool_exp") + exp);
+               if (tagCompound.hasKey("tool_level")) {
+                  int currentLevel = tagCompound.getInteger("tool_level");
+                  int nextLevelExpReq = this.getExpReqForLevel(currentLevel, this.isWeapon(stack.getItem()));
+                  if (tagCompound.getInteger("tool_exp") >= nextLevelExpReq) {
+                     tagCompound.setInteger("tool_level", currentLevel + 1);
+                     tagCompound.setInteger("tool_exp", 0);
+                     if (!player.worldObj.isRemote) {
+                        player.sendChatToPlayer(ChatMessage.createFromTranslationKey("你的" + stack.getMITEStyleDisplayName() + "已升级,当前等级:" + (currentLevel + 1)).setColor(EnumChatFormat.DARK_AQUA));
+                     }
 
-                  if (!tagCompound.hasKey("modifiers")) {
-                     tagCompound.setCompoundTag("modifiers", new NBTTagCompound());
-                  }
+                     if (!tagCompound.hasKey("modifiers")) {
+                        tagCompound.setCompoundTag("modifiers", new NBTTagCompound());
+                     }
 
-                  this.onItemLevelUp(tagCompound, player, stack);
+                     this.onItemLevelUp(tagCompound, player, stack);
+                  }
                }
             }
+         } else {
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setInteger("tool_exp", 0);
+            compound.setInteger("tool_level", 0);
+            stack.stackTagCompound = compound;
          }
-      } else {
-         NBTTagCompound compound = new NBTTagCompound();
-         compound.setInteger("tool_exp", 0);
-         compound.setInteger("tool_level", 0);
-         stack.stackTagCompound = compound;
       }
    }
 

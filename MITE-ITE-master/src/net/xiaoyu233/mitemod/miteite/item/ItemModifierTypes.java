@@ -9,6 +9,11 @@ public interface ItemModifierTypes {
         return itemTag != null && itemTag.hasKey("modifiers") && itemTag.getCompoundTag("modifiers").hasKey(modifierType.nbtName);
     }
 
+    static boolean hasModifier(ItemStack stack, ToolModifierTypes modifierType) {
+        NBTTagCompound itemTag = stack.stackTagCompound;
+        return itemTag != null && itemTag.hasKey("modifiers") && itemTag.getCompoundTag("modifiers").hasKey(modifierType.nbtName);
+    }
+
     float getModifierValue(NBTTagCompound itemTag);
     int getModifierLevel(NBTTagCompound itemTag);
     float getWeight();

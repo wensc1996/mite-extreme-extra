@@ -34,7 +34,12 @@ public enum ToolModifierTypes implements ItemModifierTypes{
     SLOWDOWN_MODIFIER(1.0F,"织网",EnumChatFormat.GRAY,10, ToolModifierTypes::isWeapon,5),
     UNNATURAL_MODIFIER(0.1f,"超自然",EnumChatFormat.LIGHT_GRAY,6, itemStack -> !ToolModifierTypes.isWeapon(itemStack),5),
     DEMON_POWER(0.25f,"恶魔之力",EnumChatFormat.RED,4, ToolModifierTypes::isWeapon, 1),
-    GEOLOGY(0.5f,"地质学",EnumChatFormat.LIGHT_PURPLE,2,itemStack -> itemStack.getItem() instanceof ItemPickaxe,1);
+    GEOLOGY(0.5f,"地质学",EnumChatFormat.LIGHT_PURPLE,2,itemStack -> itemStack.getItem() instanceof ItemPickaxe,1),
+
+//    MELTING(1.0f,"熔毁",EnumChatFormat.RED,1,itemStack -> itemStack.getItem() instanceof ItemPickaxe && hasNotOtherMiningModifier(itemStack,1),1),
+    LAST_STAND(0.67F,"不破之盾",EnumChatFormat.YELLOW,1,(stack -> true),3),
+    NATURE_BLESSING(0.125f,"自然祝福",EnumChatFormat.GREEN,1, ToolModifierTypes::isWeapon, 4),
+    APOCALYPSE(1.0f,"天启",EnumChatFormat.DARK_RED,2,ToolModifierTypes::isWeapon, 4);
 //    BEHEADING_MODIFIER(0.02f, "斩首" , EnumChatFormats.DEAR_GREEN,1, ToolModifierTypes::isWeapon, 5);
     public final String nbtName;
     public final float levelAddition;
@@ -52,6 +57,17 @@ public enum ToolModifierTypes implements ItemModifierTypes{
         this.canApplyTo = canApplyTo;
         this.maxLevel = maxLevel;
     }
+
+//    private static boolean hasNotOtherMiningModifier(ItemStack stack,int MiningType){
+//        switch (MiningType){
+//            case 0:
+//                return !ItemModifierTypes.hasModifier(stack, MELTING);
+//            case 1:
+//                return !ItemModifierTypes.hasModifier(stack, GEOLOGY);
+//            default:
+//                return true;
+//        }
+//    }
 
     public static boolean isWeapon(ItemStack stack) {
         Item item = stack.getItem();

@@ -15,7 +15,10 @@ public enum ArmorModifierTypes implements ItemModifierTypes{
     STEADY_MODIFIER(0.15F,"稳定",EnumChatFormat.BROWN,8,5,(stack -> true)),
     BLESSED_MODIFIER(1F,"神圣",EnumChatFormat.YELLOW,8,5,(stack -> true)),
     INDOMITABLE(0.25f,"坚毅不倒",EnumChatFormat.DARK_GRAY,5,4,itemStack -> itemStack.getItem() instanceof ItemCuirass),
-    IMMUNITY(0.15f,"免疫",EnumChatFormat.DARK_AQUA,3,4,itemStack -> itemStack.getItem() instanceof ItemHelmet);
+    IMMUNITY(0.15f,"免疫",EnumChatFormat.DARK_AQUA,3,4,itemStack -> itemStack.getItem() instanceof ItemHelmet),
+
+    INVINCIBLE(0.05f,"精力充沛",EnumChatFormat.DARK_GREEN,2,4,itemStack -> itemStack.getItem() instanceof ItemLeggings),
+    AGILITY(0.05f,"灵敏",EnumChatFormat.LIGHT_PURPLE,2,4,itemStack -> itemStack.getItem() instanceof ItemBoots);
     public final String nbtName;
     public final float levelAddition;
     public final String displayName;

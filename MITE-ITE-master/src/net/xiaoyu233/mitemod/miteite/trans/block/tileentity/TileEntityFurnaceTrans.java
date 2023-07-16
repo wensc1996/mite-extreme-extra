@@ -2,13 +2,19 @@ package net.xiaoyu233.mitemod.miteite.trans.block.tileentity;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
-import net.xiaoyu233.mitemod.miteite.util.Configs;
+import net.xiaoyu233.mitemod.miteite.item.Items;
+import net.xiaoyu233.mitemod.miteite.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TileEntityFurnace.class)
-public class TileEntityFurnaceTrans extends TileEntity {
+public abstract class TileEntityFurnaceTrans extends TileEntity {
+   @Shadow public abstract BlockFurnace getFurnaceBlock();
+
    @Shadow
    private final ItemStack[] furnaceItemStacks = new ItemStack[3];
    @Shadow
@@ -20,9 +26,36 @@ public class TileEntityFurnaceTrans extends TileEntity {
    @Shadow
    public int heat_level = 0;
 
+   public int damage;
+   @Inject(method = "readFromNBT",at = @At("RETURN"))
+   public void injectReadNBT(NBTTagCompound nbtTagCompound, CallbackInfo callbackInfo) {
+      this.damage = nbtTagCompound.getInteger("Damage");
+   }
+   @Inject(method = "writeToNBT",at = @At("RETURN"))
+   public void injectWriteNBT(NBTTagCompound nbtTagCompound, CallbackInfo callbackInfo) {
+      nbtTagCompound.setInteger("Damage", this.damage);
+   }
+
+   public void addDamage(World world, int x, int y, int z, int amount) {
+      if (world.isRemote) {
+         Minecraft.setErrorMessage("addDamage: why adding damage to furnace on client?");
+      }
+      if(this.getFurnaceBlock().blockMaterial != Materials.vibranium){
+         this.damage += amount;
+      }
+
+      if (world.getBlock(x, y, z) != null && world.getBlock(x, y, z) instanceof BlockFurnace){
+         BlockFurnace block = (BlockFurnace)world.getBlock(x, y, z);
+         if(this.damage >= block.getDurability()){
+            world.setBlock(x, y, z, Block.fire.blockID);
+         }
+      }
+   }
+
+
    @Overwrite
    public static int getHeatLevelRequired(int item_id) {
-         // 高燃染料=振金，艾德曼
+      // 高燃染料=振金，艾德曼
       if (item_id == Block.coalBlock.blockID || item_id == Blocks.blockVibranium.blockID || item_id == Block.blockAdamantium.blockID) {
          return 5;
          // 烈焰棒=秘银块，远古金属块
@@ -54,46 +87,6 @@ public class TileEntityFurnaceTrans extends TileEntity {
       return this.furnaceItemStacks[0] == null ? this.furnaceCookTime * par1 / 200 : this.furnaceCookTime * par1 / (this.furnaceItemStacks[0].getItem().getCookTime() / Math.max(this.heat_level, 1));
    }
 
-   @Shadow
-   public int getFuelHeatLevel() {
-      return 0;
-   }
-
-   @Shadow
-   public ItemStack getInputItemStack() {
-      return this.furnaceItemStacks[0];
-   }
-
-   @Overwrite
-   public int getItemBurnTime(ItemStack item_stack) {
-      return item_stack == null ? 0 : item_stack.getItem().getBurnTime(item_stack) / 2;
-   }
-
-   @Shadow
-   public int getItemHeatLevel(ItemStack itemStack) {
-      return 0;
-   }
-
-   @Shadow
-   public ItemStack getOutputItemStack() {
-      return this.furnaceItemStacks[2];
-   }
-
-   @Shadow
-   public boolean isBurning() {
-      return false;
-   }
-
-   @Shadow
-   public boolean isFlooded() {
-      return false;
-   }
-
-   @Shadow
-   public boolean isSmotheredBySolidBlock() {
-      return false;
-   }
-
    @Overwrite
    public void smeltItem(int heat_level) {
       if (this.canSmelt(heat_level)) {
@@ -113,18 +106,18 @@ public class TileEntityFurnaceTrans extends TileEntity {
             consumption = 1;
          }
 
-         ItemStack var10000 = this.getInputItemStack();
-         var10000.stackSize -= consumption;
+         ItemStack inputItemStack = this.getInputItemStack();
+         inputItemStack.stackSize -= consumption;
          if (this.getInputItemStack().getItem() == Item.clay && var1.getItem() == Item.brick) {
             int extra_converted = Math.min(this.getOutputItemStack().getMaxStackSize() - this.getOutputItemStack().stackSize, this.getInputItemStack().stackSize);
             if (extra_converted > 3) {
                extra_converted = 3;
             }
 
-            var10000 = this.getOutputItemStack();
-            var10000.stackSize += extra_converted;
-            var10000 = this.getInputItemStack();
-            var10000.stackSize -= extra_converted;
+            inputItemStack = this.getOutputItemStack();
+            inputItemStack.stackSize += extra_converted;
+            inputItemStack = this.getInputItemStack();
+            inputItemStack.stackSize -= extra_converted;
          }
 
          if (this.furnaceItemStacks[0].stackSize <= 0) {
@@ -166,6 +159,9 @@ public class TileEntityFurnaceTrans extends TileEntity {
                if (this.furnaceCookTime == this.furnaceItemStacks[0].getItem().getCookTime() / this.heat_level) {
                   this.furnaceCookTime = 0;
                   this.smeltItem(this.heat_level);
+
+                  this.addDamage(this.worldObj, super.xCoord, super.yCoord, super.zCoord, this.heat_level * 15);
+
                   var2 = true;
                }
             } else {
@@ -193,6 +189,44 @@ public class TileEntityFurnaceTrans extends TileEntity {
          this.furnaceBurnTime = 0;
          this.furnaceCookTime = 0;
       }
+   }
+   @Shadow
+   public int getFuelHeatLevel() {
+      return 0;
+   }
 
+   @Shadow
+   public ItemStack getInputItemStack() {
+      return this.furnaceItemStacks[0];
+   }
+
+   @Shadow
+   public int getItemBurnTime(ItemStack itemStack) {
+      return 0;
+   }
+
+   @Shadow
+   public int getItemHeatLevel(ItemStack itemStack) {
+      return 0;
+   }
+
+   @Shadow
+   public ItemStack getOutputItemStack() {
+      return this.furnaceItemStacks[2];
+   }
+
+   @Shadow
+   public boolean isBurning() {
+      return false;
+   }
+
+   @Shadow
+   public boolean isFlooded() {
+      return false;
+   }
+
+   @Shadow
+   public boolean isSmotheredBySolidBlock() {
+      return false;
    }
 }

@@ -33,6 +33,7 @@ import java.util.Map.Entry;
 
 @Mixin(EntityPlayer.class)
 public abstract class EntityPlayerTrans extends EntityLiving implements ICommandListener {
+   @Shadow protected FoodMetaData foodStats;
    @Shadow public abstract void mountEntity(Entity par1Entity);
 
    @Shadow public abstract World getEntityWorld();
@@ -403,12 +404,27 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             }
          }
 
+         if (healthPercent >= 0.5f){
+            ItemStack leggings = this.getCurrentArmor(2);
+            if (leggings != null){
+               float value = ArmorModifierTypes.INVINCIBLE.getModifierValue(leggings.getTagCompound());
+               if (value != 0){
+                  indomitableAmp = this.getInvincibleAmp(healthPercent);
+               }
+            }
+         }
+
          float demonHunterAmp = 1;
          if (!target.getWorld().isOverworld() && heldItemStack != null){
             demonHunterAmp += ToolModifierTypes.DEMON_POWER.getModifierValue(heldItemStack.getTagCompound());
          }
 
          float damage = (critBouns + this.calcRawMeleeDamageVs(target, critical, this.isSuspendedInLiquid() )) * indomitableAmp * demonHunterAmp + (heldItemStack != null ? heldItemStack.getGemMaxNumeric(GemModifierTypes.damage) : 0f);
+
+         if (critical && heldItemStack != null && heldItemStack.getItem() instanceof ItemBattleAxe) {
+            damage = damage * 2;
+         }
+
          if (damage <= 0.0F) {
             return;
          }
@@ -443,6 +459,23 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
                if(!(target instanceof EntityZombieBoss)) {
                   this.heal((float)EnchantmentManager.getVampiricTransfer(this, (EntityLiving)target, damage), EnumEntityFX.vampiric_gain);
+               }
+
+               if (heldItemStack != null) {
+                  int apocalypse = (int)(ToolModifierTypes.APOCALYPSE.getModifierValue(heldItemStack.getTagCompound()));
+                  ((EntityLiving)target).addPotionEffect(new MobEffect(MobEffectList.wither.id, apocalypse * 200, apocalypse));
+               }
+
+               float bless_of_nature = 0;
+               if (heldItemStack != null) {
+                  bless_of_nature = ToolModifierTypes.NATURE_BLESSING.getModifierValue(heldItemStack.getTagCompound());
+               }
+               if ((double)bless_of_nature > Math.random() * 2.0D) {
+                  this.heal(1);
+               }
+               if ((double)bless_of_nature > Math.random()) {
+                  this.foodStats.addNutrition(1);
+                  this.foodStats.addSatiation(1);
                }
             }
 
@@ -514,6 +547,21 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
          return 1.35f;
       }else if (healthPercent <= 0.5f){
          return 1.25f;
+      }
+      return 1.0f;
+   }
+
+   private float getInvincibleAmp(float healthPercent){
+      ItemStack leggings = this.getCurrentArmor(2);
+      float value = ArmorModifierTypes.INVINCIBLE.getModifierValue(leggings.getTagCompound());
+      if (healthPercent >= 0.875f){
+         return 1.0f + (value * 4);
+      }else if (healthPercent >= 0.75f) {
+         return 1.0f + (value * 3);
+      }else if (healthPercent >= 0.625f){
+         return 1.0f + (value * 2);
+      }else if (healthPercent >= 0.5f){
+         return 1.0f + (value * 1);
       }
       return 1.0f;
    }

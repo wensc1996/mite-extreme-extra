@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.block;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.entity.EntitySkeletonBoss;
 import net.xiaoyu233.mitemod.miteite.entity.EntityZombieBoss;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,6 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(BlockMobSpawner.class)
 public class BlockMobSpawnerTrans extends BlockContainer {
+    private boolean HasSpawnZombieBoss = false;
     protected BlockMobSpawnerTrans(int par1, Material par2Material, BlockConstants block_constants) {
         super(par1, par2Material, block_constants);
     }
@@ -26,7 +28,21 @@ public class BlockMobSpawnerTrans extends BlockContainer {
             entityZombieBoss.entityFX(EnumEntityFX.summoned);
             entityZombieBoss.onSpawnWithEgg(null);
             info.world.spawnEntityInWorld(entityZombieBoss);
+            HasSpawnZombieBoss = true;
         }
+
+        if(info.world.isUnderworld() && info.world.rand.nextFloat() < Configs.wenscConfig.skeletonBossSpawnPercent.ConfigValue && (HasSpawnZombieBoss == Configs.wenscConfig.isSkeletonandZombieSpawnBoth.ConfigValue)) {
+            EntitySkeletonBoss entitySkeletonBoss = new EntitySkeletonBoss(info.world);
+            entitySkeletonBoss.setPosition(info.x, info.y, info.z);
+            entitySkeletonBoss.refreshDespawnCounter(-9600);
+            if(info.getResponsiblePlayer() != null) {
+                entitySkeletonBoss.setAttackTarget(info.getResponsiblePlayer());
+            }
+            entitySkeletonBoss.entityFX(EnumEntityFX.summoned);
+            entitySkeletonBoss.onSpawnWithEgg(null);
+            info.world.spawnEntityInWorld(entitySkeletonBoss);
+        }
+
         return 0;
     }
 
