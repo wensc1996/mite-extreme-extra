@@ -394,12 +394,12 @@ public class Items extends Item{
                 'E', Item.enderPearl);
 
         register.registerShapedRecipe(new ItemStack(Block.planks, 4, 4), true, new Object[] {"#", '#', new ItemStack(Blocks.wood1, 1, 0)});
-        register.registerShapedRecipe(new ItemStack(Block.planks, 4, 4), true, new Object[] {"#", '#', new ItemStack(Blocks.wood1, 1, 1)});
+        register.registerShapedRecipe(new ItemStack(Block.planks, 4, 5), true, new Object[] {"#", '#', new ItemStack(Blocks.wood1, 1, 1)});
 
         register.registerShapedRecipe(new ItemStack(Block.woodSingleSlab, 6, 4), true, new Object[] {"###", '#', new ItemStack(Block.planks, 1, 4)});
         register.registerShapedRecipe(new ItemStack(Blocks.stairsMaple, 4), true,"#  ", "## ", "###", '#', new ItemStack(Block.planks, 1, 4));
 
-        register.registerShapedRecipe(new ItemStack(Block.woodSingleSlab, 6, 4), true, new Object[] {"###", '#', new ItemStack(Block.planks, 1, 5)});
-        register.registerShapedRecipe(new ItemStack(Blocks.stairsMaple, 4), true,"#  ", "## ", "###", '#', new ItemStack(Block.planks, 1, 5));
+        register.registerShapedRecipe(new ItemStack(Block.woodSingleSlab, 6, 5), true, new Object[] {"###", '#', new ItemStack(Block.planks, 1, 5)});
+        register.registerShapedRecipe(new ItemStack(Blocks.stairsCherry, 4), true,"#  ", "## ", "###", '#', new ItemStack(Block.planks, 1, 5));
     }
 }

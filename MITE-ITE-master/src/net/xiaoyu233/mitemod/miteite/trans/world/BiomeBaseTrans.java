@@ -2,11 +2,13 @@ package net.xiaoyu233.mitemod.miteite.trans.world;
 
 import net.minecraft.*;
 import net.xiaoyu233.fml.util.ReflectHelper;
+import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.entity.*;
 import net.xiaoyu233.mitemod.miteite.trans.entity.EntityGiantZombieTrans;
 import net.xiaoyu233.mitemod.miteite.world.WorldGenTreesWithTreeId;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Mixin(BiomeBase.class)
 public class BiomeBaseTrans {
@@ -125,6 +128,14 @@ public class BiomeBaseTrans {
       this.spawnableMonsterList.add(new BiomeMeta(EntityZombieDoor.class, 2, 1, 1));
       this.spawnableMonsterList.add(new BiomeMeta(EntityExchanger.class, 2,1, 1));
       this.spawnableMonsterList.add(new BiomeMeta(EntityMirrorSkeleton.class, 5,1, 1));
+   }
+
+   @Overwrite
+   public WorldGenerator getRandomWorldGenForTrees(Random par1Random) {
+      return (WorldGenerator)(par1Random.nextInt(5) == 0 ? this.worldGeneratorBigTree
+              : par1Random.nextInt(2) == 0 ? this.worldGeneratorTrees
+              : par1Random.nextInt(2) == 0 ? new WorldGenTreesWithTreeId(false, 4, Blocks.wood1, 0, Blocks.leaves1, 0, false)
+              : new WorldGenTreesWithTreeId(false, 4, Blocks.wood1, 1, Blocks.leaves1, 1, false));
    }
 
    @Shadow

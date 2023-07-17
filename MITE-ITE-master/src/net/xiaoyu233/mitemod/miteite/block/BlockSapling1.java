@@ -110,11 +110,9 @@ public class BlockSapling1  extends BlockPlant {
     public static boolean canGrowInBiome(int subtype, BiomeBase biome) {
         if (!biome.hasRainfall()) {
             return false;
-        } else if (subtype == 0) {
+        } else if (subtype == 0 || subtype == 1) {
             return biome.temperature >= 0.4F;
-        } else if (subtype == 1) {
-            return biome.temperature >= 0.5F;
-        } else {
+        }else {
             return true;
         }
     }

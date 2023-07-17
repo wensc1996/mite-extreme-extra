@@ -7,11 +7,11 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin(BlockSlabGroup2.class)
 public class BlockSlabGroup2Trans {
-    private static String[] types = new String[] {"oak", "spruce", "birch", "jungle", "maple"};
+    private static String[] types = new String[] {"oak", "spruce", "birch", "jungle", "maple", "cherry"};
 
     @Overwrite
     public boolean isValidMetadata(int metadata) {
-        return metadata >= 0 && metadata < 5;
+        return metadata >= 0 && metadata < types.length;
     }
 
     @Overwrite
