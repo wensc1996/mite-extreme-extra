@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.trans.item;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.item.ItemModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.Materials;
@@ -14,11 +15,14 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.List;
+import java.util.*;
 
 @Mixin(Item.class)
 public abstract class ItemTrans {
+   @Shadow public abstract List getSubItems();
+
    @Shadow public abstract boolean getHasSubtypes();
 
    @Shadow public abstract int getNumSubtypes();
@@ -40,9 +44,9 @@ public abstract class ItemTrans {
    @Shadow
    protected List materials;
 
-   public double soldPriceArray[];
+   public Map<Integer, Double> soldPriceArray = new HashMap<>();
 
-   public double buyPriceArray[];
+   public Map<Integer, Double> buyPriceArray = new HashMap<>();
 
    @ModifyConstant(method = {
            "<init>(ILjava/lang/String;I)V",
@@ -51,56 +55,45 @@ public abstract class ItemTrans {
       return 1024;
    }
 
-   private double soldPrice = 0;
-   private double price = 0;
-
    @Inject(method = "<init>()V",at = @At("RETURN"))
-   private void injectCtor(CallbackInfo callbackInfo){
-      ReflectHelper.dyCast(Item.class,this).recipes = new aah[500];
-      if(this.getNumSubtypes() > 0) {
-         this.soldPriceArray = new double[this.getNumSubtypes()];
-         this.buyPriceArray = new double[this.getNumSubtypes()];
-      } else {
-         this.soldPriceArray = new double[1];
-         this.buyPriceArray = new double[1];
-      }
+   private void injectCtor(CallbackInfo callbackInfo) {
+      ReflectHelper.dyCast(Item.class, this).recipes = new aah[500];
    }
 
-   @Inject(method = "<init>(ILjava/lang/String;I)V" ,at = @At("RETURN"))
-   private void ItemInject(int par1, String texture, int num_subtypes, CallbackInfo callbackInfo) {
-      ReflectHelper.dyCast(Item.class,this).recipes = new aah[500];
-      if(this.getNumSubtypes() > 0) {
-         this.soldPriceArray = new double[this.getNumSubtypes()];
-         this.buyPriceArray = new double[this.getNumSubtypes()];
-      } else {
-         this.soldPriceArray = new double[1];
-         this.buyPriceArray = new double[1];
-      }
+   @Inject(method = "<init>(ILjava/lang/String;I)V",at = @At("RETURN"))
+   private void injectCtor(int par1, String texture, int num_subtypes, CallbackInfo callbackInfo) {
+      ReflectHelper.dyCast(Item.class, this).recipes = new aah[500];
    }
 
    // 向源类进行注入
    public Item setBuyPrice(double price) {
       if(this.getHasSubtypes()) {
-         for (int i = 0; i < this.getNumSubtypes(); i++) {
-            this.buyPriceArray[i] = price;
+         List subs = this.getSubItems();
+         for (int i = 0; i < subs.size(); i++) {
+            ItemStack itemStack = (ItemStack) subs.get(i);
+            int sub = itemStack.getItemSubtype();
+            this.buyPriceArray.put(sub, price);
          }
       } else {
-         this.buyPriceArray[0] = price;
+         this.buyPriceArray.put(0, price);
       }
-      return (Item) ReflectHelper.dyCast(this);
+      return ReflectHelper.dyCast(Item.class,this);
    }
 
 
    // 向源类进行注入
    public Item setSoldPrice(double price) {
       if(this.getHasSubtypes()) {
-         for (int i = 0; i < this.getNumSubtypes(); i++) {
-            this.soldPriceArray[i] = price;
+         List subs = this.getSubItems();
+         for (int i = 0; i < subs.size(); i++) {
+            ItemStack itemStack = (ItemStack) subs.get(i);
+            int sub = itemStack.getItemSubtype();
+            this.soldPriceArray.put(sub, price);
          }
       } else {
-         this.soldPriceArray[0] = price;
+         this.soldPriceArray.put(0, price);
       }
-      return (Item) ReflectHelper.dyCast(this);
+      return ReflectHelper.dyCast(Item.class, this);
    }
 
 

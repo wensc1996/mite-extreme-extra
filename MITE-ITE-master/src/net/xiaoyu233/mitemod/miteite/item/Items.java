@@ -98,60 +98,6 @@ public class Items extends Item{
     }
 
     public static void registerItems() {
-        Items.manure.setSoldPrice(0.1D);
-        Items.seeds.setSoldPrice(0.1D);
-        Items.sinew.setSoldPrice(0.1D);
-        Items.silk.setSoldPrice(0.1D);
-        Items.feather.setSoldPrice(0.1D);
-        Items.flint.setSoldPrice(0.1D);
-        Items.redstone.setSoldPrice(1D);
-        Items.coal.setSoldPrice(1D);
-        Items.bone.setSoldPrice(1D);
-        Items.gunpowder.setSoldPrice(1D);
-        Items.rottenFlesh.setSoldPrice(1D);
-        Items.spiderEye.setSoldPrice(1D);
-        Items.doorWood.setSoldPrice(1.5D);
-        Items.doorCopper.setSoldPrice(30D);
-        Items.doorSilver.setSoldPrice(30D);
-        Items.doorGold.setSoldPrice(30D);
-        Items.doorIron.setSoldPrice(60D);
-        Items.doorMithril.setSoldPrice(120D);
-        Items.doorAdamantium.setSoldPrice(180D);
-        Items.ingotCopper.setSoldPrice(10D);
-        Items.ingotSilver.setSoldPrice(10D);
-        Items.ingotGold.setSoldPrice(10D);
-        Items.ingotIron.setSoldPrice(20D);
-        Items.ingotAncientMetal.setSoldPrice(30D);
-        Items.ingotMithril.setSoldPrice(40D);
-        Items.ingotAdamantium.setSoldPrice(60D);
-        VIBRANIUM_INGOT.setSoldPrice(100D);
-        Items.copperNugget.setSoldPrice(1D);
-        Items.silverNugget.setSoldPrice(1D);
-        Items.goldNugget.setSoldPrice(1D);
-        Items.ironNugget.setSoldPrice(2D);
-        Items.ancientMetalNugget.setSoldPrice(3D);
-        Items.mithrilNugget.setSoldPrice(4D);
-        Items.adamantiumNugget.setSoldPrice(6D);
-        VIBRANIUM_NUGGET.setSoldPrice(10D);
-
-
-
-        Items.getItem(Blocks.plantYellow.blockID).setSoldPrice(0.1D);
-        Items.getItem(Blocks.plantRed.blockID).setSoldPrice(0.1D);
-        Items.getItem(Blocks.torchWood.blockID).setSoldPrice(0.2D);
-
-        Items.getItem(Blocks.leaves.blockID).setSoldPrice(0.25D);
-        Items.getItem(Blocks.planks.blockID).setSoldPrice(0.25D);
-        Items.getItem(Blocks.pumpkin.blockID).setSoldPrice(0.25D);
-        Items.getItem(Blocks.dirt.blockID).setSoldPrice(0.5D);
-        Items.getItem(Blocks.sand.blockID).setSoldPrice(0.5D);
-        Items.getItem(Blocks.cobblestone.blockID).setSoldPrice(1D);
-        Items.getItem(Blocks.stone.blockID).setSoldPrice(2D);
-        Items.getItem(Blocks.cobblestoneWall.blockID).setSoldPrice(1D);
-        Items.getItem(Blocks.wood.blockID).setSoldPrice(1D);
-
-        Items.bread.setBuyPrice(0.2D).setSoldPrice(0.2D);
-
         register("obsidian_stick", OBSIDIAN_STICK, CreativeModeTab.tabMaterials);
         register("vibranium", VIBRANIUM_INGOT, CreativeModeTab.tabMaterials);
         register("vibranium_nugget", VIBRANIUM_NUGGET, CreativeModeTab.tabMaterials);
@@ -239,22 +185,18 @@ public class Items extends Item{
         register.registerShapelessRecipe(new ItemStack(Items.voucherClubCore, 1), true, Items.voucherFishing, Items.voucherVillager, Items.voucherPlanting);
 
         if(Configs.wenscConfig.isRecipeGATorch.ConfigValue) {
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{Block.wood, Item.silk, Item.coal, Item.coal});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{Block.wood, Item.sinew, Item.coal, Item.coal});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{Block.wood, Item.silk, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{Block.wood, Item.sinew, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 1), Item.silk, Item.coal, Item.coal});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 1), Item.sinew, Item.coal, Item.coal});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 1), Item.silk, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 1), Item.sinew, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 2), Item.silk, Item.coal, Item.coal});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 2), Item.sinew, Item.coal, Item.coal});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 2), Item.silk, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 2), Item.sinew, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 3), Item.silk, Item.coal, Item.coal});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 3), Item.sinew, Item.coal, Item.coal});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 3), Item.silk, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
-            register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, 3), Item.sinew, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
+            for (int i = 0; i < 4; i++) {
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, i), Item.silk, Item.coal, Item.coal});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, i), Item.sinew, Item.coal, Item.coal});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, i), Item.silk, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, i), Item.sinew, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
+
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Blocks.wood1, 1, i), Item.silk, Item.coal, Item.coal});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Blocks.wood1, 1, i), Item.sinew, Item.coal, Item.coal});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Blocks.wood1, 1, i), Item.silk, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Blocks.wood1, 1, i), Item.sinew, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
+            }
+
             register.registerShapelessRecipe(new ItemStack(Block.torchWood, 64), true, new Object[]{Stack_Torch, Stack_Torch, Stack_Torch, Stack_Torch});
             register.registerShapelessRecipe(new ItemStack(Block.torchWood, 48), true, new Object[]{Stack_Torch, Stack_Torch, Stack_Torch});
             register.registerShapelessRecipe(new ItemStack(Block.torchWood, 32), true, new Object[]{Stack_Torch, Stack_Torch});
@@ -450,9 +392,14 @@ public class Items extends Item{
                 'T', Item.ghastTear,
                 'B', Item.book,
                 'E', Item.enderPearl);
-        register.registerShapedRecipe(new ItemStack(Block.woodSingleSlab, 6, 4), true, new Object[] {"###", '#', new ItemStack(Block.planks, 1, 4)});
+
         register.registerShapedRecipe(new ItemStack(Block.planks, 4, 4), true, new Object[] {"#", '#', new ItemStack(Blocks.wood1, 1, 0)});
-        // 开始注入商品价格配置文件
-        Configs.beginToLoadShopConfig();
+        register.registerShapedRecipe(new ItemStack(Block.planks, 4, 4), true, new Object[] {"#", '#', new ItemStack(Blocks.wood1, 1, 1)});
+
+        register.registerShapedRecipe(new ItemStack(Block.woodSingleSlab, 6, 4), true, new Object[] {"###", '#', new ItemStack(Block.planks, 1, 4)});
+        register.registerShapedRecipe(new ItemStack(Blocks.stairsMaple, 4), true,"#  ", "## ", "###", '#', new ItemStack(Block.planks, 1, 4));
+
+        register.registerShapedRecipe(new ItemStack(Block.woodSingleSlab, 6, 4), true, new Object[] {"###", '#', new ItemStack(Block.planks, 1, 5)});
+        register.registerShapedRecipe(new ItemStack(Blocks.stairsMaple, 4), true,"#  ", "## ", "###", '#', new ItemStack(Block.planks, 1, 5));
     }
 }

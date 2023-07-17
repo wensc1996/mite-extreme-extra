@@ -287,7 +287,7 @@ public class MITEITEEvents {
                 if(buyGoods == null || buyGoods.getItem() == null) {
                     player.addChatMessage("商品ID输入错误");
                 } else {
-                    if(sub > buyGoods.getItem().buyPriceArray.length || buyGoods.getItem().buyPriceArray[sub] <= 0) {
+                    if(!buyGoods.getItem().buyPriceArray.containsKey(sub) || (double)buyGoods.getItem().buyPriceArray.get(sub) <= 0D) {
                         player.addChatMessage("商店暂不可兑换该商品");
                     } else if(poses[1] <= 0) {
                         player.addChatMessage("请输入正确的商品数量");
@@ -296,11 +296,10 @@ public class MITEITEEvents {
                     } else {
                         if(player.money <= 0) {
                             player.addChatMessage("钱包空空");
-                        } else if(player.money - buyGoods.getItem().buyPriceArray[sub] * poses[1] < 0){
+                        } else if(player.money - (double)buyGoods.getItem().buyPriceArray.get(sub) * poses[1] < 0){
                             player.addChatMessage("余额不足，无法购买");
                         } else {
-                            player.addChatMessage("现有余额：" + String.format("%.2f", player.subMoney(buyGoods.getItem().buyPriceArray[sub] * poses[1])));
-//                            player.addContainedItem(poses[0]);
+                            player.addChatMessage("现有余额：" + String.format("%.2f", player.subMoney((double)buyGoods.getItem().buyPriceArray.get(sub) * poses[1])));
                             player.inventory.addItemStackToInventoryOrDropIt (buyGoods);
                         }
                     }

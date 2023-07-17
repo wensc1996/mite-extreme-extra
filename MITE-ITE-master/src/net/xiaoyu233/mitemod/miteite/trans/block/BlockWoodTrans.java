@@ -16,7 +16,7 @@ public class BlockWoodTrans {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void injectInit(CallbackInfo callbackInfo) {
-        this.subtypes = new BlockSubtypes(new String[] {"oak", "spruce", "birch", "jungle", "maple", "maple", "maple", "maple"});
+        this.subtypes = new BlockSubtypes(new String[] {"oak", "spruce", "birch", "jungle", "maple", "cherry", "maple", "maple"});
     }
 
     @Overwrite

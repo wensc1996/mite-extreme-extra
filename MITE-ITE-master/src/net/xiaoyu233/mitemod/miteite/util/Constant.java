@@ -1,9 +1,6 @@
 package net.xiaoyu233.mitemod.miteite.util;
 
-import net.minecraft.BlockBed;
-import net.minecraft.Item;
-import net.minecraft.ItemArmor;
-import net.minecraft.bjo;
+import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 
@@ -42,6 +39,20 @@ public class Constant {
     public static int getFoliageColorMaple()
     {
         return 16272991;
+    }
+
+    public static int getFoliageColorCherry()
+    {
+        return 15438529;
+    }
+
+    public static ItemStack getBlockComponentWithNewWood(int metadata) {
+        Material tool_material = BlockWorkbench.getToolMaterial(metadata);
+        if (tool_material == Material.flint) {
+            return new ItemStack(Blocks.wood1, 1, metadata);
+        } else {
+            return tool_material == Material.obsidian ? new ItemStack(Blocks.wood1, 1, metadata - 11) : null;
+        }
     }
 
     public static void initItemArray() {

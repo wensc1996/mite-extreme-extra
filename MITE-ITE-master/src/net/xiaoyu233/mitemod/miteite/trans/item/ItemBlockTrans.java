@@ -9,12 +9,24 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
+import java.util.List;
+
 @Mixin(ItemBlock.class)
 public abstract class ItemBlockTrans extends Item{
+    @Shadow private int blockID;
     @Shadow public abstract Block getBlock();
 
     public String getItemDisplayName(ItemStack item_stack) {
         return this.getBlock().getItemDisplayName(item_stack);
+    }
+
+    @Overwrite
+    public void a(int par1, CreativeModeTab par2CreativeTabs, List par3List) {
+        if(Block.blocksList[this.blockID] != null) {
+            Block.blocksList[this.blockID].getItemStacks(par1, par2CreativeTabs, par3List);
+        } else {
+
+        }
     }
 
     @ModifyConstant(method = {

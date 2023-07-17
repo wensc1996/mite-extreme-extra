@@ -19,7 +19,9 @@ public class BiomeForestTrans extends BiomeBase {
     public WorldGenerator getRandomWorldGenForTrees(Random par1Random) {
         return (WorldGenerator)(par1Random.nextInt(5) == 0 ? this.worldGeneratorForest : (par1Random.nextInt(10) == 0
                 ? this.worldGeneratorBigTree
-                : par1Random.nextInt(2) == 0 ? this.worldGeneratorTrees : new WorldGenTreesWithTreeId(false, 4, Blocks.wood1, 0, Blocks.leaves1, 0, false)));
+                : par1Random.nextInt(2) == 0 ? this.worldGeneratorTrees
+                : par1Random.nextInt(2) == 0 ? new WorldGenTreesWithTreeId(false, 4, Blocks.wood1, 0, Blocks.leaves1, 0, false)
+                : new WorldGenTreesWithTreeId(false, 4, Blocks.wood1, 1, Blocks.leaves1, 1, false)));
     }
     public void decorate(World par1World, Random par2Random, int par3, int par4) {
         super.decorate(par1World, par2Random, par3, par4);

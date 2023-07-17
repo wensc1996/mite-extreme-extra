@@ -6,7 +6,7 @@ import net.xiaoyu233.mitemod.miteite.world.WorldGenTreesWithTreeId;
 import java.util.Random;
 
 public class BlockSapling1  extends BlockPlant {
-    public static final String[] WOOD_TYPES = new String[]{"maple", "maple", "maple", "maple"};
+    public static final String[] WOOD_TYPES = new String[]{"maple", "cherry", "maple", "maple"};
     private IIcon[] unlocalizedName;
     public static final int OAK_TREE = 0;
     public static final int SPRUCE_TREE = 1;
@@ -55,7 +55,7 @@ public class BlockSapling1  extends BlockPlant {
 
     private void growTree(World par1World, int par2, int par3, int par4, Random par5Random) {
         int var6 = par1World.getBlockMetadata(par2, par3, par4) & 3;
-        Object var7 = new WorldGenTreesWithTreeId(false, 4, Blocks.wood1, 0, Blocks.leaves1, 0, false);
+        Object var7 = new WorldGenTreesWithTreeId(false, 4, Blocks.wood1, var6, Blocks.leaves1, var6, false);
         int var8 = 0;
         int var9 = 0;
         boolean var10 = false;
@@ -112,12 +112,10 @@ public class BlockSapling1  extends BlockPlant {
             return false;
         } else if (subtype == 0) {
             return biome.temperature >= 0.4F;
-        } else if (subtype == 2) {
+        } else if (subtype == 1) {
             return biome.temperature >= 0.5F;
-        } else if (subtype != 3) {
-            return true;
         } else {
-            return biome == BiomeBase.jungle || biome == BiomeBase.jungleHills || biome == BiomeBase.jungleRiver;
+            return true;
         }
     }
 }

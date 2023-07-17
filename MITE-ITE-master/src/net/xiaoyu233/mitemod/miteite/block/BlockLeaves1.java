@@ -7,10 +7,10 @@ import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
 import java.util.Random;
 
 public final class BlockLeaves1 extends BlockTransparant {
-    public static final String[] LEAF_TYPES = new String[]{"maple", "maple", "maple", "maple"};
+    public static final String[] LEAF_TYPES = new String[]{"maple", "cherry", "maple", "maple"};
     public static final String[][] field_94396_b = new String[][]{
-            {"leaves1_maple", "leaves1_maple", "leaves1_maple", "leaves1_maple"},
-            {"leaves1_maple_opaque", "leaves1_maple_opaque", "leaves1_maple_opaque", "leaves1_maple_opaque"}
+            {"leaves1_maple", "leaves1_cherry", "leaves1_maple", "leaves1_maple"},
+            {"leaves1_maple_opaque", "leaves1_cherry", "leaves1_maple_opaque", "leaves1_maple_opaque"}
     };
     private int e;
     private IIcon[][] iconArray = new IIcon[2][];
@@ -38,7 +38,7 @@ public final class BlockLeaves1 extends BlockTransparant {
     }
 
     public int b(int par1) {
-        return (par1 & 3) == 1 ? abs.a()
+        return (par1 & 3) == 1 ? Constant.getFoliageColorCherry()
                 : ((par1 & 3) == 2 ? abs.b()
                 : Constant.getFoliageColorMaple());
     }
@@ -46,7 +46,7 @@ public final class BlockLeaves1 extends BlockTransparant {
     public int c(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
         int var5 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
         if ((var5 & 3) == 1) {
-            return abs.a();
+            return Constant.getFoliageColorCherry();
         } else if ((var5 & 3) == 2) {
             return abs.b();
         } else {
@@ -229,7 +229,7 @@ public final class BlockLeaves1 extends BlockTransparant {
                 return num_drops;
             } else if ((num_drops = this.dropBlockAsEntityItem(info, Item.stick.itemID, 0, 1, 0.05F)) > 0) {
                 return num_drops;
-            } else if (leaf_kind == 0) {
+            } else if (leaf_kind == 0 || leaf_kind == 1) {
                 return this.dropBlockAsEntityItem(info, info.getBiome().isJungleBiome() ? Item.orange.itemID : Item.appleRed.itemID, 0, 1, 0.005F);
             } else {
                 return leaf_kind == 3 ? this.dropBlockAsEntityItem(info, Item.banana.itemID, 0, 1, 0.005F) : 0;

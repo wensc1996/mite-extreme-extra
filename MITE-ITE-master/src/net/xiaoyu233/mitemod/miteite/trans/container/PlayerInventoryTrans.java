@@ -13,6 +13,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Mixin(PlayerInventory.class)
 public class PlayerInventoryTrans {
    @Shadow
@@ -331,9 +336,10 @@ public class PlayerInventoryTrans {
       }
       if(var3 == this.jewelryInventory && par1 == 7 && par2ItemStack != null) {
          if(!Configs.wenscConfig.isCloseShop.ConfigValue) {
-            if(par2ItemStack.getItem().soldPriceArray[par2ItemStack.getItemSubtype()] > 0D) {
+            System.out.println(Arrays.toString(new Map[]{par2ItemStack.getItem().soldPriceArray}));
+            if((double)par2ItemStack.getItem().soldPriceArray.get(par2ItemStack.getItemSubtype()) > 0D) {
                if(!this.player.worldObj.isRemote) {
-                  player.addChatMessage("现有余额：" + String.format("%.2f", player.plusMoney(par2ItemStack.stackSize * par2ItemStack.getItem().soldPriceArray[par2ItemStack.getItemSubtype()])));
+                  player.addChatMessage("现有余额：" + String.format("%.2f", player.plusMoney(par2ItemStack.stackSize * (double)par2ItemStack.getItem().soldPriceArray.get(par2ItemStack.getItemSubtype()))));
                }
             }
          }

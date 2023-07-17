@@ -362,12 +362,11 @@ public class Configs {
         }
     }
 
-    public static void writePriceIntoMemory(Properties properties,FileWriter fileWriter, Item item, int i) throws IOException {
-        ItemStack itemStack = new ItemStack(item, 1, i);
+    public static void writePriceIntoMemory(Properties properties,FileWriter fileWriter, Item item, ItemStack itemStack) throws IOException {
         int sub = itemStack.getItemSubtype();
         String name = "";
         if(item.getHasSubtypes()) {
-            name = itemStack.getUnlocalizedName() + "§" + itemStack.getItemSubtype();
+            name = itemStack.getUnlocalizedName() + "§" + sub;
         } else {
             name = itemStack.getUnlocalizedName();
         }
@@ -375,29 +374,27 @@ public class Configs {
         if(itemPrice != null) {
             String [] soldPriceAndBuyPrice = itemPrice.split(",");
             if(soldPriceAndBuyPrice.length == 2) {
-                item.soldPriceArray[sub] = Double.parseDouble(soldPriceAndBuyPrice[0]);
-                item.buyPriceArray[sub] = Double.parseDouble(soldPriceAndBuyPrice[1]);
+                item.soldPriceArray.put(sub, Double.parseDouble(soldPriceAndBuyPrice[0]));
+                item.buyPriceArray.put(sub, Double.parseDouble(soldPriceAndBuyPrice[1]));
             } else {
-                item.soldPriceArray[sub] = Double.parseDouble(soldPriceAndBuyPrice[0]);
+                item.soldPriceArray.put(sub, Double.parseDouble(soldPriceAndBuyPrice[0]));
             }
         } else {
             if(item.getHasSubtypes()) {
-                fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ i + "\n");
-                fileWriter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.soldPriceArray[itemStack.getItemSubtype()] +","+ item.buyPriceArray[itemStack.getItemSubtype()]+ "\n\n");
+                fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ sub + "\n");
+                fileWriter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.soldPriceArray.get(sub) +","+ item.buyPriceArray.get(sub)+ "\n\n");
             } else {
                 fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + item.itemID + "\n");
-                fileWriter.write(itemStack.getUnlocalizedName() + "=" + item.soldPriceArray[0] +","+ item.buyPriceArray[0] + "\n\n");
+                fileWriter.write(itemStack.getUnlocalizedName() + "=" + item.soldPriceArray.get(0) +","+ item.buyPriceArray.get(0) + "\n\n");
             }
         }
     }
 
     public static void readOrWritePriceLine(Properties properties, FileWriter fileWriter, Item item) throws IOException {
-        if(item.getHasSubtypes()) {
-            for (int i = 0; i < item.getNumSubtypes(); i++) {
-                writePriceIntoMemory(properties,fileWriter, item, i );
-            }
-        } else {
-            writePriceIntoMemory(properties,fileWriter, item, 0);
+        List subs = item.getSubItems();
+        for (int i = 0; i < subs.size(); i++) {
+            ItemStack itemStack = (ItemStack) subs.get(i);
+            writePriceIntoMemory(properties,fileWriter, item, itemStack);
         }
     }
 
@@ -505,15 +502,17 @@ public class Configs {
                         continue;
                     }
                     if(item.getHasSubtypes()) {
-                        for(int i = 0; i < item.getNumSubtypes(); i++) {
-                            ItemStack itemStack = new ItemStack(item, 1, i);
-                            fileWritter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ itemStack.getItemSubtype() + "\n");
-                            fileWritter.write(itemStack.getUnlocalizedName() + "§" + itemStack.getItemSubtype() + "=" + item.soldPriceArray[itemStack.getItemSubtype()] +","+ item.buyPriceArray[itemStack.getItemSubtype()]+ "\n\n");
+                        List subs = item.getSubItems();
+                        for (int i = 0; i < subs.size(); i++) {
+                            ItemStack itemStack = (ItemStack)subs.get(i);
+                            int sub = itemStack.getItemSubtype();
+                            fileWritter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ sub + "\n");
+                            fileWritter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.soldPriceArray.get(sub) +","+ item.buyPriceArray.get(sub)+ "\n\n");
                         }
                     } else {
                         ItemStack itemStack = new ItemStack(item, 1, 0);
                         fileWritter.write("// " + itemStack.getDisplayName() + " ID: " + item.itemID + "\n");
-                        fileWritter.write(itemStack.getUnlocalizedName() + "=" + item.soldPriceArray[0] +","+ item.buyPriceArray[0]+ "\n\n");
+                        fileWritter.write(itemStack.getUnlocalizedName() + "=" + item.soldPriceArray.get(0) +","+ item.buyPriceArray.get(0)+ "\n\n");
                     }
                 }
             }

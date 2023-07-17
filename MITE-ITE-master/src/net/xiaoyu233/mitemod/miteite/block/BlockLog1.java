@@ -3,7 +3,7 @@ package net.xiaoyu233.mitemod.miteite.block;
 import net.minecraft.*;
 
 public final class BlockLog1 extends BlockRotatable implements IBlockWithSubtypes {
-    private BlockSubtypes subtypes = new BlockSubtypes(new String[]{"maple", "maple", "maple", "maple"});
+    private BlockSubtypes subtypes = new BlockSubtypes(new String[]{"maple", "cherry", "maple", "maple"});
     private IIcon[] end_icons;
 
     protected BlockLog1(int par1) {

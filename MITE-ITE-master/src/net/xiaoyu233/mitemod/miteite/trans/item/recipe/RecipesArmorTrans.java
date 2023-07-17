@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.item.recipe;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
+import net.xiaoyu233.mitemod.miteite.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -104,6 +105,32 @@ public abstract class RecipesArmorTrans {
                 "A A",
                 'A',Item.ingotAncientMetal,
                 'L',Item.legsIron).func_92100_c();
+        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.bootsAncientMetal),true,
+                "ABA",
+                "A A",
+                'A',Item.ingotAncientMetal,
+                'B',Item.bootsIron).func_92100_c();
+
+        int plank_subtype, i;
+        for(i = 0; i < Block.workbench.getNumSubBlocks(); ++i) {
+            Material tool_material = BlockWorkbench.getToolMaterial(i);
+            if (tool_material == Material.flint) {
+                ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Block.workbench, 1, i), true, new Object[]{"K", "#", 'K', Item.knifeFlint, '#', Constant.getBlockComponentWithNewWood(i)});
+                ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Block.workbench, 1, i), true, new Object[]{"FS", "s#", 'F', Item.flint, 'S', Item.silk, 's', Item.stick, '#', Constant.getBlockComponentWithNewWood(i)});
+                ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Block.workbench, 1, i), true, new Object[]{"FS", "s#", 'F', Item.flint, 'S', Item.sinew, 's', Item.stick, '#', Constant.getBlockComponentWithNewWood(i)});
+                ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.knifeFlint, 1), false, new Object[]{"#", '#', new ItemStack(Block.workbench, 1, i)}).setDifficulty(25.0F);
+            } else if (tool_material == Material.obsidian) {
+                ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Block.workbench, 1, i), true, new Object[]{"K", "#", 'K', Item.knifeObsidian, '#', Constant.getBlockComponentWithNewWood(i)});
+                ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Block.workbench, 1, i), true, new Object[]{"OS", "s#", 'O', Block.obsidian, 'S', Item.silk, 's', Item.stick, '#', Constant.getBlockComponentWithNewWood(i)});
+                ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Block.workbench, 1, i), true, new Object[]{"OS", "s#", 'O', Block.obsidian, 'S', Item.sinew, 's', Item.stick, '#', Constant.getBlockComponentWithNewWood(i)});
+                ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.knifeObsidian, 1), false, new Object[]{"#", '#', new ItemStack(Block.workbench, 1, i)}).setDifficulty(25.0F);
+            } else {
+                for(plank_subtype = 4; plank_subtype < 8; ++plank_subtype) {
+                    ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Block.workbench, 1, i), true, new Object[]{"IL", "s#", 'I', ItemIngot.getMatchingItem(ItemIngot.class, tool_material), 'L', Item.leather, 's', Item.stick, '#', new ItemStack(Block.planks, 1, plank_subtype)});
+                }
+            }
+        }
+
         ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.bootsAncientMetal),true,
                 "ABA",
                 "A A",
