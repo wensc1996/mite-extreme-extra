@@ -43,7 +43,7 @@ public class Constant {
 
     public static int getFoliageColorCherry()
     {
-        return 15438529;
+        return 16570847;
     }
 
     public static ItemStack getBlockComponentWithNewWood(int metadata) {
