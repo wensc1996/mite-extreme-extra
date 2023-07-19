@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.io.PrintStream;
 import java.util.*;
 
 @Mixin(Item.class)
@@ -63,6 +64,11 @@ public abstract class ItemTrans {
    @Inject(method = "<init>(ILjava/lang/String;I)V",at = @At("RETURN"))
    private void injectCtor(int par1, String texture, int num_subtypes, CallbackInfo callbackInfo) {
       ReflectHelper.dyCast(Item.class, this).recipes = new aah[500];
+   }
+
+   @Redirect(method = "<init>(ILjava/lang/String;I)V", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
+   public void removePrint(PrintStream printStream, String messsage) {
+
    }
 
    // 向源类进行注入

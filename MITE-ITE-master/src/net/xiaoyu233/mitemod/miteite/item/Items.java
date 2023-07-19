@@ -176,11 +176,11 @@ public class Items extends Item{
         register.registerShapedRecipe(new ItemStack(clubAdamantium, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.adamantiumNugget , '*', Items.ingotAdamantium});
         register.registerShapedRecipe(new ItemStack(clubVibranium, 1), true, new Object[]{"###", "#*#"," A ", '#', Items.VIBRANIUM_NUGGET , '*', Items.VIBRANIUM_INGOT, 'A', Items.voucherClubCore});
 
-        register.registerShapedRecipe(new ItemStack(itemDynamicCoreIron, 1), true, new Object[]{"ABA", "BCB","DBD", 'A', Items.ingotIron, 'D', Blocks.blockIron , 'B', Blocks.glass, 'C', Blocks.blockRedstone});
-        register.registerShapedRecipe(new ItemStack(itemDynamicCoreAncient_metal, 1), true, new Object[]{"ABA", "BCB","DBD",'A', Items.ingotAncientMetal, 'D', Blocks.blockAncientMetal , 'B', Blocks.glass, 'C', Items.itemDynamicCoreIron});
-        register.registerShapedRecipe(new ItemStack(itemDynamicCoreMithril, 1), true, new Object[]{"ABA", "BCB","DBD",'A', Items.ingotMithril, 'D', Blocks.blockMithril , 'B', Blocks.glass, 'C', Items.itemDynamicCoreAncient_metal});
-        register.registerShapedRecipe(new ItemStack(itemDynamicCoreAdamantium, 1), true, new Object[]{"ABA", "BCB","DBD", 'A', Items.ingotAdamantium, 'D', Blocks.blockAdamantium , 'B', Blocks.glass, 'C', Items.itemDynamicCoreMithril});
-        register.registerShapedRecipe(new ItemStack(itemDynamicCoreVibranium, 1), true, new Object[]{"ABA", "BCB","DBD", 'A', Items.VIBRANIUM_INGOT, 'D', Blocks.blockVibranium , 'B', Blocks.glass, 'C', Items.itemDynamicCoreAdamantium});
+        register.registerShapedRecipe(new ItemStack(itemDynamicCoreIron, 1), true, new Object[]{"ABA", "BCB","ABA", 'A', Items.ingotIron, 'B', Blocks.glass, 'C', Blocks.blockRedstone});
+        register.registerShapedRecipe(new ItemStack(itemDynamicCoreAncient_metal, 1), true, new Object[]{"ABA", "BCB","ABA",'A', Items.ingotAncientMetal , 'B', Blocks.glass, 'C', Items.itemDynamicCoreIron});
+        register.registerShapedRecipe(new ItemStack(itemDynamicCoreMithril, 1), true, new Object[]{"ABA", "BCB","ABA",'A', Items.ingotMithril, 'B', Blocks.glass, 'C', Items.itemDynamicCoreAncient_metal});
+        register.registerShapedRecipe(new ItemStack(itemDynamicCoreAdamantium, 1), true, new Object[]{"ABA", "BCB","ABA", 'A', Items.ingotAdamantium, 'B', Blocks.glass, 'C', Items.itemDynamicCoreMithril});
+        register.registerShapedRecipe(new ItemStack(itemDynamicCoreVibranium, 1), true, new Object[]{"ABA", "BCB","ABA", 'A', Items.VIBRANIUM_INGOT, 'B', Blocks.glass, 'C', Items.itemDynamicCoreAdamantium});
 
         register.registerShapelessRecipe(new ItemStack(Items.voucherClubCore, 1), true, Items.voucherFishing, Items.voucherVillager, Items.voucherPlanting);
 
@@ -214,11 +214,11 @@ public class Items extends Item{
         }
 
         for(int i =0; i < GemModifierTypes.values().length; i++) {
-            register.registerShapedRecipe(new ItemStack(itemEnhanceGem2, 1, i), true, new Object[]{" # ", "#*#"," # ", '#', new ItemStack(Items.itemGemShard, 1, 0), '*', new ItemStack(itemEnhanceGem, 1, i)});
-            register.registerShapedRecipe(new ItemStack(itemEnhanceGem3, 1, i), true, new Object[]{" # ", "#*#"," # ", '#', new ItemStack(Items.itemGemShard, 1, 1), '*', new ItemStack(itemEnhanceGem2, 1, i)});
-            register.registerShapedRecipe(new ItemStack(itemEnhanceGem4, 1, i), true, new Object[]{" # ", "#*#"," # ", '#', new ItemStack(Items.itemGemShard, 1, 2), '*', new ItemStack(itemEnhanceGem3, 1, i)});
-            register.registerShapedRecipe(new ItemStack(itemEnhanceGem5, 1, i), true, new Object[]{" # ", "#*#"," # ", '#', new ItemStack(Items.itemGemShard, 1, 3), '*', new ItemStack(itemEnhanceGem4, 1, i)});
-            register.registerShapedRecipe(new ItemStack(itemEnhanceGem6, 1, i), true, new Object[]{" # ", "#*#"," # ", '#', new ItemStack(Items.itemGemShard, 1, 4), '*', new ItemStack(itemEnhanceGem5, 1, i)});
+            register.registerShapelessRecipe(new ItemStack(itemEnhanceGem2, 1, i), true, new Object[]{new ItemStack(Items.itemGemShard, 2, 0), new ItemStack(itemEnhanceGem, 1, i)});
+            register.registerShapelessRecipe(new ItemStack(itemEnhanceGem3, 1, i), true, new Object[]{new ItemStack(Items.itemGemShard, 2, 1), new ItemStack(itemEnhanceGem2, 1, i)});
+            register.registerShapelessRecipe(new ItemStack(itemEnhanceGem4, 1, i), true, new Object[]{new ItemStack(Items.itemGemShard, 2, 2), new ItemStack(itemEnhanceGem3, 1, i)});
+            register.registerShapelessRecipe(new ItemStack(itemEnhanceGem5, 1, i), true, new Object[]{new ItemStack(Items.itemGemShard, 2, 3), new ItemStack(itemEnhanceGem4, 1, i)});
+            register.registerShapelessRecipe(new ItemStack(itemEnhanceGem6, 1, i), true, new Object[]{new ItemStack(Items.itemGemShard, 2, 4), new ItemStack(itemEnhanceGem5, 1, i)});
         }
 
         register.registerShapedRecipe(new ItemStack(OBSIDIAN_STICK), true, "#", "#", '#', Block.obsidian);

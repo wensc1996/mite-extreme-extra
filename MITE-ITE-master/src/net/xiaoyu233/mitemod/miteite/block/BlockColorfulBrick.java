@@ -10,8 +10,7 @@ public class BlockColorfulBrick extends Blocks implements IBlockWithSubtypes {
         this.setMaxStackSize(64);
         this.setBlockHardness(2.0F);
         this.setCushioning(1000.0F);
-        this.setResistance(1000F);
-        this.setMinHarvestLevel(0);
+        this.setResistance(10F);
         this.setCreativeTab(CreativeModeTab.tabBlock);
         this.setStepSound(Block.soundStoneFootstep);
         this.setLightValue(0.7F);
