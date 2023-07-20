@@ -2,12 +2,18 @@ package net.xiaoyu233.mitemod.miteite.trans.network;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerForgingTable;
+import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerShop;
 import net.xiaoyu233.mitemod.miteite.network.CPacketStartForging;
 import net.xiaoyu233.mitemod.miteite.network.CPacketSyncItems;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.SoftOverride;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.util.ArrayList;
 
 @Mixin(PlayerConnection.class)
@@ -41,6 +47,25 @@ public class ServerNetworkManagerTrans extends NetworkManagerTrans {
       if (this.playerEntity.openContainer instanceof ContainerForgingTable) {
          ((ContainerForgingTable)this.playerEntity.openContainer).startForging();
       }
+   }
 
+   @Inject(method = "handleCustomPayload", at = @At("HEAD"))
+   public void handleCustomPayload(Packet250CustomPayload par1Packet250CustomPayload, CallbackInfo callbackInfo) {
+      DataInputStream var2;
+      int var14;
+      if ("MC|ShopPageIndex".equals(par1Packet250CustomPayload.channel)) {
+         try {
+            var2 = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));
+            var14 = var2.readInt();
+            Container var16 = this.playerEntity.openContainer;
+            if (var16 instanceof ContainerShop) {
+               System.out.println("PAGE:" + var14);
+               ((ContainerShop)var16).inventory.pageIndex = var14;
+               ((ContainerShop)var16).inventory.initItemList();
+            }
+         } catch (Exception var12) {
+            var12.printStackTrace();
+         }
+      }
    }
 }

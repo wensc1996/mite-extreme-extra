@@ -714,6 +714,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    public void displayGUIGemSetting(TileEntityGemSetting par1TileEntityFurnace) {}
 
+   public void displayGUIShop() {}
+
    @Shadow
    protected abstract void fall(float par1);
    

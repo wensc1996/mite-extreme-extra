@@ -4,6 +4,7 @@ import net.minecraft.*;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.gui.GuiForgingTable;
 import net.xiaoyu233.mitemod.miteite.gui.GuiGemSetting;
+import net.xiaoyu233.mitemod.miteite.gui.GuiShop;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
 import net.xiaoyu233.mitemod.miteite.item.Materials;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
@@ -49,6 +50,11 @@ public abstract class ClientPlayerTrans extends beu {
    public void displayGUIGemSetting(TileEntityGemSetting tileEntityGemSetting)
    {
       this.d.a(new GuiGemSetting(this, tileEntityGemSetting));
+   }
+
+   public void displayGUIShop()
+   {
+      this.d.a(new GuiShop(this));
    }
 
    @Overwrite

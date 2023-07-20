@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.util;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
+import net.xiaoyu233.mitemod.miteite.item.EnumPriceItem;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 
 import javax.swing.*;
@@ -374,12 +375,26 @@ public class Configs {
         if(itemPrice != null) {
             String [] soldPriceAndBuyPrice = itemPrice.split(",");
             if(soldPriceAndBuyPrice.length == 2) {
-                item.soldPriceArray.put(sub, Double.parseDouble(soldPriceAndBuyPrice[0]));
-                item.buyPriceArray.put(sub, Double.parseDouble(soldPriceAndBuyPrice[1]));
+                double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
+                double buyPrice = Double.parseDouble(soldPriceAndBuyPrice[1]);
+                if(soldPrice > 0d || buyPrice > 0d) {
+                    Items.priceStackList.add(itemStack);
+                }
+                item.soldPriceArray.put(sub, soldPrice);
+                item.buyPriceArray.put(sub, buyPrice);
             } else {
-                item.soldPriceArray.put(sub, Double.parseDouble(soldPriceAndBuyPrice[0]));
+                double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
+                if(soldPrice > 0d) {
+                    Items.priceStackList.add(itemStack);
+                }
+                item.soldPriceArray.put(sub, soldPrice);
             }
         } else {
+            double soldPrice = (double)item.soldPriceArray.get(sub);
+            double buyPrice = (double)item.buyPriceArray.get(sub);
+            if(soldPrice > 0d || buyPrice > 0d) {
+                Items.priceStackList.add(itemStack);
+            }
             if(item.getHasSubtypes()) {
                 fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ sub + "\n");
                 fileWriter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.soldPriceArray.get(sub) +","+ item.buyPriceArray.get(sub)+ "\n\n");
@@ -399,6 +414,7 @@ public class Configs {
     }
 
     public static void  readShopConfigFromFile(File file_mite, Properties properties) {
+        Items.priceStackList = new ArrayList<>();
         try{
             FileWriter fileWriter = new FileWriter(file_mite.getName(), true);
             for (Item item : Item.itemsList) {

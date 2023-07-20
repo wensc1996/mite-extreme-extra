@@ -77,11 +77,12 @@ public class BlockGemSetting extends Block implements IContainer {
     {
         if (player.onServer() && world.isAirOrPassableBlock(x, y + 1, z, false))
         {
-            TileEntityGemSetting tile_entity = (TileEntityGemSetting) world.getBlockTileEntity(x, y, z);
-            if(tile_entity != null && !tile_entity.isUsing) {
-                tile_entity.isUsing = true;
-                player.displayGUIGemSetting(tile_entity);
-            }
+//            TileEntityGemSetting tile_entity = (TileEntityGemSetting) world.getBlockTileEntity(x, y, z);
+//            if(tile_entity != null && !tile_entity.isUsing) {
+//                tile_entity.isUsing = true;
+//                player.displayGUIGemSetting(tile_entity);
+//            }
+            player.displayGUIShop();
         }
         return true;
     }

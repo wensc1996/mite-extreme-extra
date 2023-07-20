@@ -7,11 +7,13 @@ import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.RecipeRegister;
 import org.spongepowered.asm.mixin.Overwrite;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static net.xiaoyu233.mitemod.miteite.util.ReflectHelper.createInstance;
 
 public class Items extends Item{
+    public static List<ItemStack> priceStackList = new ArrayList();
     public static final Item BLAZE_COAL_POWDER = new ItemBlazeCoalPowder(Constant.getNextItemID());
     public static final Item DIAMOND_CHUNK = createInstance(Item.class,new Class[]{int.class,Material.class,String.class},Constant.getNextItemID(),Material.diamond,"diamond_chunk").setCraftingDifficultyAsComponent(ItemRock.getCraftingDifficultyAsComponent(Material.diamond) /(float)4);
     public static final Item OBSIDIAN_STICK = createInstance(Item.class,new Class[]{int.class,Material.class,String.class},Constant.getNextItemID(),Material.obsidian,"obsidian_stick");

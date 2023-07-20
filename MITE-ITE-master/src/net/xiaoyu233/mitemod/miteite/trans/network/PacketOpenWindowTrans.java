@@ -143,7 +143,10 @@ public class PacketOpenWindowTrans {
 
             player.displayGUIGemSetting(var3x);
             player.openContainer.windowId = this.windowId;
-         } else {
+         } else if (this.inventoryType == 16) {
+            player.displayGUIShop();
+            player.openContainer.windowId = this.windowId;
+         }else {
             Minecraft.setErrorMessage("handleOpenWindow: type not handled " + this.inventoryType);
          }
       }

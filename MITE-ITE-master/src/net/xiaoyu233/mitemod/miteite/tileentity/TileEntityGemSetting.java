@@ -62,6 +62,7 @@ public class TileEntityGemSetting extends TileEntity implements IWorldInventory 
         }
     }
 
+
     /**
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.

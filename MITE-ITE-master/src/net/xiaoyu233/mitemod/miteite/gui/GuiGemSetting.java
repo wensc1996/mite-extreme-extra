@@ -47,42 +47,5 @@ public class GuiGemSetting extends awy {
      */
     public void a(int mouse_x, int mouse_y, float par3) {
         super.a(mouse_x, mouse_y, par3);
-
-//        if (this.inventorySlots.slot_that_did_not_accept_item != null)
-//        {
-//            ItemStack mouse_item_stack = this.mc.thePlayer.inventory.getItemStack();
-//
-//            if (mouse_item_stack != null)
-//            {
-//                Slot slot = this.getSlotThatMouseIsOver(mouse_x, mouse_y);
-//
-//                if (slot == null)
-//                {
-//                    this.inventorySlots.slot_that_did_not_accept_item = null;
-//                }
-//                else if (slot != null && !slot.isItemValid(mouse_item_stack))
-//                {
-//                    if (!slot.accepts_large_items && Slot.isLargeItem(mouse_item_stack.getItem()))
-//                    {
-//                        this.drawCreativeTabHoveringText(EnumChatFormatting.GOLD + Translator.get("container.furnace.wontFit"), mouse_x, mouse_y);
-//                    }
-//                    else
-//                    {
-//                        if (slot == this.inventorySlots.getSlot(0))
-//                        {
-//                            if (!FurnaceRecipes.smelting().doesSmeltingRecipeExistFor(mouse_item_stack))
-//                            {
-//                                this.drawCreativeTabHoveringText(EnumChatFormatting.GOLD + Translator.get("container.furnace.cantSmelt"), mouse_x, mouse_y);
-//                                return;
-//                            }
-//                        }
-//                        else if (slot == this.inventorySlots.getSlot(1))
-//                        {
-//
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
 }

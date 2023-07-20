@@ -3,10 +3,7 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
 import net.xiaoyu233.fml.util.ReflectHelper;
-import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerChestMinecart;
-import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerForgingTable;
-import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerGemSetting;
-import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
+import net.xiaoyu233.mitemod.miteite.inventory.container.*;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -97,6 +94,15 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
       this.openContainer.windowId = this.currentWindowId;
       this.openContainer.onCraftGuiOpened(this);
    }
+
+    public void displayGUIShop()
+    {
+        this.getNextWindowId();
+        this.playerNetServerHandler.sendPacket((new Packet100OpenWindow(this.currentWindowId, 16, "shop", 45, false)));
+        this.openContainer = new ContainerShop(this);
+        this.openContainer.windowId = this.currentWindowId;
+        this.openContainer.onCraftGuiOpened(this);
+    }
 
    @Override
    @Shadow
