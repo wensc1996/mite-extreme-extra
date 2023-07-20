@@ -28,6 +28,8 @@ public class SPacketUpdateHealthTrans extends Packet {
    @Shadow
    public float vision_dimming;
 
+   public double money;
+
    public SPacketUpdateHealthTrans() {
    }
 
@@ -53,6 +55,7 @@ public class SPacketUpdateHealthTrans extends Packet {
    private void injectReadPacketData(DataInput par1DataInput,CallbackInfo c) throws IOException {
       this.protein = par1DataInput.readInt();
       this.phytonutrients = par1DataInput.readInt();
+      this.money = par1DataInput.readDouble();
    }
 
    @Inject(method = "writePacketData",
@@ -60,6 +63,7 @@ public class SPacketUpdateHealthTrans extends Packet {
    private void injectWritePacketData(DataOutput par1DataOutput, CallbackInfo c) throws IOException {
       par1DataOutput.writeInt(this.protein);
       par1DataOutput.writeInt(this.phytonutrients);
+      par1DataOutput.writeDouble(this.money);
    }
 
    @Shadow
@@ -84,6 +88,10 @@ public class SPacketUpdateHealthTrans extends Packet {
 
    public void setProtein(int protein) {
       this.protein = protein;
+   }
+
+   public void setMoney(double money) {
+      this.money = money;
    }
 
    @Override

@@ -41,6 +41,8 @@ public class ContainerShop extends Container {
 
     }
 
+
+
     /**
      * Looks for changes made in the container, sends them to every listener.
      */
@@ -63,14 +65,40 @@ public class ContainerShop extends Container {
         ItemStack var3 = null;
         Slot var4 = (Slot)this.inventorySlots.get(par2);
 
-        System.out.println(par2);
         if (var4 != null && var4.getHasStack())
         {
-            ItemStack var5 = var4.getStack();
+            ItemStack var5 = var4.getStack().copy();
+            if(var5.getPrice().buyPrice > 0) {
+                double totalMoney = var5.getMaxStackSize() * var5.getPrice().buyPrice;
+                if(par1EntityPlayer.money >= totalMoney) {
+                    var3 = var5.setStackSize(var5.getMaxStackSize());
+                    if (par2 >= 0 && par2 < 45 && !mergeItemStack(var3, 45, 81, false))
+                    {
+                        par1EntityPlayer.addChatMessage("包裹已满");
+                        return null;
+                    } else {
+                        par1EntityPlayer.money -= totalMoney;
+                        return var3;
+                    }
+                } else {
+                    int maxStackSize = (int) Math.floor(par1EntityPlayer.money / var5.getPrice().buyPrice);
+                    if(maxStackSize > 0) {
+                        var3 = var5.setStackSize(maxStackSize);
+                        if (par2 >= 0 && par2 < 45 && !mergeItemStack(var3, 45, 81, false))
+                        {
+                            par1EntityPlayer.addChatMessage("包裹已满");
+                            return null;
+                        } else {
+                            par1EntityPlayer.money -= maxStackSize * var3.getPrice().buyPrice;
+                            return var3;
+                        }
+                    } else {
+                        par1EntityPlayer.addChatMessage("余额不足");
+                    }
+                }
 
-            if (par2 >= 0 && par2 < 45 && !mergeItemStack(var5.copy().setStackSize(var5.getMaxStackSize()), 45, 81, false))
-            {
-                return null;
+            } else {
+                par1EntityPlayer.addChatMessage("无法购买");
             }
         }
         return var3;

@@ -380,6 +380,7 @@ public class Configs {
             if(soldPriceAndBuyPrice.length == 2) {
                 double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
                 double buyPrice = Double.parseDouble(soldPriceAndBuyPrice[1]);
+                itemStack.setPrice(soldPrice, buyPrice);
                 if(soldPrice > 0d || buyPrice > 0d) {
                     Items.priceStackList.add(itemStack);
                 }
@@ -387,6 +388,7 @@ public class Configs {
                 item.buyPriceArray.put(sub, buyPrice);
             } else {
                 double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
+                itemStack.setPrice(soldPrice, 0d);
                 if(soldPrice > 0d) {
                     Items.priceStackList.add(itemStack);
                 }
@@ -395,6 +397,7 @@ public class Configs {
         } else {
             double soldPrice = (double)item.soldPriceArray.get(sub);
             double buyPrice = (double)item.buyPriceArray.get(sub);
+            itemStack.setPrice(soldPrice, buyPrice);
             if(soldPrice > 0d || buyPrice > 0d) {
                 Items.priceStackList.add(itemStack);
             }

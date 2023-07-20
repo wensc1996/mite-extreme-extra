@@ -144,10 +144,10 @@ public class ClientNetworkManagerTrans extends NetworkManagerTrans{
       this.h.h.getFoodStats().setNutrition(par1Packet8UpdateHealth.nutrition, false);
       this.h.h.setPhytonutrients(par1Packet8UpdateHealth.phytonutrients);
       this.h.h.setProtein(par1Packet8UpdateHealth.protein);
+      this.h.h.money = par1Packet8UpdateHealth.money;
       if (this.h.h.vision_dimming < par1Packet8UpdateHealth.vision_dimming) {
          this.h.h.vision_dimming = par1Packet8UpdateHealth.vision_dimming;
       }
-
    }
 
    public void handleWindowItems(Packet104WindowItems par1Packet104WindowItems) {

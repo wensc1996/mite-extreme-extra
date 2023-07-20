@@ -59,7 +59,6 @@ public class ServerNetworkManagerTrans extends NetworkManagerTrans {
             var14 = var2.readInt();
             Container var16 = this.playerEntity.openContainer;
             if (var16 instanceof ContainerShop) {
-               System.out.println("PAGE:" + var14);
                ((ContainerShop)var16).inventory.pageIndex = var14;
                ((ContainerShop)var16).inventory.initItemList();
             }

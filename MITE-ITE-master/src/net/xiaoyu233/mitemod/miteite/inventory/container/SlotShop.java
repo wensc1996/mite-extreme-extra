@@ -24,9 +24,4 @@ public class SlotShop extends Slot {
         super.onPickupFromSlot(par1EntityPlayer, par2ItemStack);
     }
 
-    @Override
-    public ItemStack decrStackSize(int par1) {
-        return this.getStack().copy();
-    }
-
 }

@@ -47,6 +47,8 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
    private int last_nutrition;
    private int last_phytonutrients;
    private int last_protein;
+
+   private double last_money;
    @Shadow
    private int last_satiation;
    @Shadow
@@ -139,10 +141,12 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
          float health = this.getHealth();
          int satiation = this.getSatiation();
          int nutrition = this.getNutrition();
-         if (health != this.lastHealth || satiation != this.last_satiation || nutrition != this.last_nutrition || this.vision_dimming > 0.0F || this.phytonutrients != this.last_phytonutrients || this.protein != this.last_protein) {
+         if (health != this.lastHealth || satiation != this.last_satiation || nutrition != this.last_nutrition
+                 || this.vision_dimming > 0.0F || this.phytonutrients != this.last_phytonutrients || this.protein != this.last_protein || this.money != this.last_money) {
             Packet8UpdateHealth par1Packet = new Packet8UpdateHealth(health, satiation, nutrition, this.vision_dimming);
             par1Packet.setPhytonutrients(this.phytonutrients);
             par1Packet.setProtein(this.protein);
+            par1Packet.setMoney(this.money);
             this.playerNetServerHandler.sendPacket(par1Packet);
             this.lastHealth = health;
             this.last_satiation = satiation;
@@ -150,6 +154,7 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
             this.vision_dimming = 0.0F;
             this.last_phytonutrients = phytonutrients;
             this.last_protein = protein;
+            this.last_money = money;
          }
 
          if (this.getHealth() + this.getAbsorptionAmount() != this.field_130068_bO) {

@@ -15,6 +15,23 @@ public class InventoryShop extends InventorySubcontainer {
         this.containerShop = containerShop;
     }
 
+    @Override
+    public ItemStack decrStackSize(int par1, int par2) {
+        double buyPrice = this.getStackInSlot(par1).getPrice().buyPrice;
+        if(buyPrice > 0d) {
+            if(containerShop.player.money - buyPrice > 0d) {
+                containerShop.player.money -= buyPrice;
+                return this.getStackInSlot(par1).copy();
+            } else {
+                containerShop.player.addChatMessage("余额不足");
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+
     public void initItemList() {
         if(pageIndex * pageSize < Items.priceStackList.size()) {
             List<ItemStack> currentPageList = Items.priceStackList.subList(pageIndex * pageSize, Math.min(pageIndex * pageSize + pageSize, Items.priceStackList.size()));
@@ -22,9 +39,6 @@ public class InventoryShop extends InventorySubcontainer {
                 for (int i = 0; i < 45; i++) {
                     if(i < currentPageList.size()) {
                         this.setInventorySlotContents(i, currentPageList.get(i).copy());
-                        if(i == 0) {
-                            System.out.println(this.containerShop.inventory.getStackInSlot(0).getDisplayName());
-                        }
                     } else {
                         this.setInventorySlotContents(i, null);
                     }

@@ -3,8 +3,10 @@ package net.xiaoyu233.mitemod.miteite.trans.item;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.inventory.container.SlotShop;
 import net.xiaoyu233.mitemod.miteite.item.*;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
+import net.xiaoyu233.mitemod.miteite.util.PriceItem;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -67,6 +69,19 @@ public class ItemStackTrans {
       //Do nothing to remove
       list.remove(list.size() - 1);
    }
+
+   @Inject(method = "getTooltip", at = @At("RETURN"))
+   public void InjectGetTooltip(EntityPlayer par1EntityPlayer, boolean par2, Slot slot, CallbackInfoReturnable<ArrayList> callbackInfoReturnable) {
+      List list = callbackInfoReturnable.getReturnValue();
+      if(par2 && slot instanceof SlotShop) {
+         if(slot.getHasStack()) {
+            ItemStack itemStack = slot.getStack();
+            list.add(EnumChatFormat.AQUA +"售出价格:"+ EnumChatFormat.WHITE + itemStack.getPrice().soldPrice);
+            list.add(EnumChatFormat.AQUA +"购买价格:"+ EnumChatFormat.WHITE + itemStack.getPrice().buyPrice);
+         }
+      }
+   }
+
    @Shadow
    public int getMaxStackSize() {
       return this.getItem().getItemStackLimit(this.subtype, this.damage);
@@ -223,6 +238,33 @@ public class ItemStackTrans {
 
    public float getGemMaxNumeric(GemModifierTypes gemModifierTypes) {
       return (float) this.getGemMaxLevel(gemModifierTypes) * gemModifierTypes.getRate();
+   }
+
+   public void setPrice(double soldPrice, double buyPrice)
+   {
+      if (this.stackTagCompound == null)
+      {
+         this.setTagCompound(new NBTTagCompound());
+      }
+      if(!this.stackTagCompound.hasKey("price")){
+         NBTTagCompound nbtTagCompound = new NBTTagCompound();
+         nbtTagCompound.setDouble("soldPrice", soldPrice);
+         nbtTagCompound.setDouble("buyPrice", buyPrice);
+         this.stackTagCompound.setTag("price", nbtTagCompound);
+      } else {
+         NBTTagCompound nbtTagCompound = (NBTTagCompound) this.stackTagCompound.getTag("price");
+         nbtTagCompound.setDouble("soldPrice", soldPrice);
+         nbtTagCompound.setDouble("buyPrice", buyPrice);
+      }
+   }
+
+   public PriceItem getPrice() {
+      if(this.stackTagCompound != null && this.stackTagCompound.hasKey("price")) {
+         NBTTagCompound nbtTagCompound = (NBTTagCompound) this.stackTagCompound.getTag("price");
+         return new PriceItem(nbtTagCompound.getDouble("soldPrice"), nbtTagCompound.getDouble("buyPrice"));
+      } else {
+         return new PriceItem(0d, 0d);
+      }
    }
 
    public void setGem(ItemStack gemStack, int index)
