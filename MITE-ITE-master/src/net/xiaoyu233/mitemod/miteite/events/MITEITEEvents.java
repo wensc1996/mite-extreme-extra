@@ -220,15 +220,10 @@ public class MITEITEEvents {
                 event.setExecuteSuccess(true);
             }
 
-            if (par2Str.startsWith("plusMoney")) {
-                double money = Double.parseDouble(par2Str.substring(10));
-                player.addChatMessage("现有余额：" + player.plusMoney(money));
-                event.setExecuteSuccess(true);
-            }
-
-            if (par2Str.startsWith("subMoney")) {
+            if (par2Str.startsWith("setMoney ")) {
                 double money = Double.parseDouble(par2Str.substring(9));
-                player.addChatMessage("现有余额：" + player.subMoney(money));
+                player.money = money;
+                player.addChatMessage("现有余额：" + player.money);
                 event.setExecuteSuccess(true);
             }
 

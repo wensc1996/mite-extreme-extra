@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.inventory.container;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class ContainerShop extends Container {
@@ -41,8 +42,6 @@ public class ContainerShop extends Container {
 
     }
 
-
-
     /**
      * Looks for changes made in the container, sends them to every listener.
      */
@@ -68,44 +67,15 @@ public class ContainerShop extends Container {
         if (var4 != null && var4.getHasStack())
         {
             if (par2 >= 0 && par2 < 45){
-                ItemStack var5 = var4.getStack().copy();
-                if(var5.getPrice().buyPrice > 0) {
-                    double totalMoney = var5.getMaxStackSize() * var5.getPrice().buyPrice;
-                    if(par1EntityPlayer.money >= totalMoney) {
-                        var3 = var5.setStackSize(var5.getMaxStackSize());
-                        if (!mergeItemStack(var3, 45, 81, false))
-                        {
-                            par1EntityPlayer.addChatMessage("包裹已满");
-                            return null;
-                        } else {
-                            par1EntityPlayer.money -= totalMoney;
-                            return var3;
-                        }
-                    } else {
-                        int maxStackSize = (int) Math.floor(par1EntityPlayer.money / var5.getPrice().buyPrice);
-                        if(maxStackSize > 0) {
-                            var3 = var5.setStackSize(maxStackSize);
-                            if (par2 >= 0 && par2 < 45 && !mergeItemStack(var3, 45, 81, false))
-                            {
-                                par1EntityPlayer.addChatMessage("包裹已满");
-                                return null;
-                            } else {
-                                par1EntityPlayer.money -= maxStackSize * var3.getPrice().buyPrice;
-                                return var3;
-                            }
-                        } else {
-                            par1EntityPlayer.addChatMessage("余额不足");
-                        }
-                    }
 
-                } else {
-                    par1EntityPlayer.addChatMessage("无法购买");
-                }
             } else {
                 ItemStack var5 = var4.getStack();
                 double soldPrice = (double) var5.getItem().soldPriceArray.get(var5.getItemSubtype());
                 if(soldPrice > 0d) {
-                    player.money += var5.stackSize * soldPrice;
+                    double totalMoney = var5.stackSize * soldPrice;
+                    player.money += totalMoney;
+                    BigDecimal two = new BigDecimal(player.money);
+                    player.money = two.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
                 }
                 var4.putStack(null);
             }
