@@ -5,6 +5,7 @@ import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerForgingTable;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerShop;
 import net.xiaoyu233.mitemod.miteite.network.CPacketStartForging;
 import net.xiaoyu233.mitemod.miteite.network.CPacketSyncItems;
+import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.SoftOverride;
@@ -53,6 +54,17 @@ public class ServerNetworkManagerTrans extends NetworkManagerTrans {
    public void handleCustomPayload(Packet250CustomPayload par1Packet250CustomPayload, CallbackInfo callbackInfo) {
       DataInputStream var2;
       int var14;
+      if ("MC|OpenShopGUI".equals(par1Packet250CustomPayload.channel)) {
+         try {
+            var2 = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));
+            boolean isOpen = var2.readBoolean();
+            if(!Configs.wenscConfig.isCloseShop.ConfigValue) {
+               this.playerEntity.displayGUIShop();
+            }
+         } catch (Exception var12) {
+            var12.printStackTrace();
+         }
+      }
       if ("MC|ShopPageIndex".equals(par1Packet250CustomPayload.channel)) {
          try {
             var2 = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));

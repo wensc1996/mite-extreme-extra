@@ -440,9 +440,20 @@ public class Configs {
                     }
                 }
             }
+
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            Collections.sort(Items.priceStackList, (o1, o2) -> {
+                double offset;
+                if(o2.getPrice().buyPrice > 0d && o1.getPrice().buyPrice > 0d) {
+                    offset = o1.getPrice().buyPrice - o2.getPrice().buyPrice;
+                } else {
+                    offset = o2.getPrice().buyPrice - o1.getPrice().buyPrice;
+                }
+                return  offset > 0 ? 1 : offset == 0 ? 0 : -1;
+            });
         }
     }
 

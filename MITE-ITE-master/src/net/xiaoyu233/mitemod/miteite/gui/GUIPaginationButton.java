@@ -7,7 +7,7 @@ import net.minecraft.bjo;
 import org.lwjgl.opengl.GL11;
 
 public class GUIPaginationButton extends aut {
-    private static final bjo t = new bjo("textures/gui/container/villager.png");
+    private static final bjo t = new bjo("textures/gui/container/gui_shop.png");
     private final boolean o;
 
     public GUIPaginationButton(int var1, int var2, int var3, boolean var4) {

@@ -21,15 +21,15 @@ public class GuiShop extends awy {
     {
         super(new ContainerShop(player));
         this.c = 176;
-        this.d = 209;
+        this.d = 222;
     }
 
     @Override
     public void A_() {
         super.A_();
         this.i.clear();
-        this.i.add(this.v = new GUIPaginationButton(1, this.g / 2 - 82, this.h / 2 -9, false));
-        this.i.add(this.w = new GUIPaginationButton(2, this.g / 2 + 68, this.h / 2-9, true));
+        this.i.add(this.v = new GUIPaginationButton(1, this.g / 2 - 82, this.h / 2 -4, false));
+        this.i.add(this.w = new GUIPaginationButton(2, this.g / 2 + 69, this.h / 2-4, true));
         this.v.h = false;
 
         ByteArrayOutputStream var3 = new ByteArrayOutputStream();
@@ -52,24 +52,17 @@ public class GuiShop extends awy {
                     var1.h = false;
                 }
                 this.w.h = true;
-//                e1.inventory.initItemList();
                 break;
             case 2:
                 this.v.h = true;
-                if((this.pageIndex + 1) * pageSize > Items.priceStackList.size()) {
+                this.pageIndex++;
+                if((this.pageIndex) == Math.floor(Items.shopSize / pageSize)) {
                     var1.h = false;
-                } else {
-                    this.pageIndex++;
-//                    e1.inventory.initItemList();
                 }
-
-//                this.f.a((awe)null);
-//                this.f.g();
                 break;
         }
         ByteArrayOutputStream var3 = new ByteArrayOutputStream();
         DataOutputStream var4 = new DataOutputStream(var3);
-
 
         try {
             var4.writeInt(this.pageIndex);
@@ -84,10 +77,11 @@ public class GuiShop extends awy {
      */
     public void b(int par1, int par2)
     {
-        String var3 = "shop";
-        this.o.b(var3, this.c / 2 - this.o.a(var3) / 2, 6, 4210752);
+        String shopContainerName = bkb.a("container.shop");
+        this.o.b(shopContainerName, this.c / 2 - this.o.a(shopContainerName) / 2, 6, 4210752);
         this.o.b(bkb.a("container.inventory"), 8, this.d - 96 + 2, 4210752);
-        this.o.b(bkb.a("金额" + this.e.player.money), 80, this.d - 110, 4210752);
+        String moneyText = bkb.a("container.shop.money",String.format("%.2f",this.e.player.money));
+        this.o.b(moneyText, this.c / 2 - this.o.a(moneyText) / 2, this.d - 110, 4210752);
     }
 
     /**

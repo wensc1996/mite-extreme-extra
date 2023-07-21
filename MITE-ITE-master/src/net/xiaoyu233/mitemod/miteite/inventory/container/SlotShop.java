@@ -24,4 +24,13 @@ public class SlotShop extends Slot {
         super.onPickupFromSlot(par1EntityPlayer, par2ItemStack);
     }
 
+    @Override
+    public boolean isItemValid(ItemStack par1ItemStack) {
+        return false;
+    }
+
+    //    @Override
+//    public boolean canTakeStack(EntityPlayer par1EntityPlayer) {
+//        return false;
+//    }
 }

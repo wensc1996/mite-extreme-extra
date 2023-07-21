@@ -15,7 +15,7 @@ public class ContainerShop extends Container {
         {
             for (col = 0; col < 9; ++col)
             {
-                this.addSlotToContainer(new SlotShop(this, inventory, col + row * 9, 8 + col * 18,  6 + row * 18));
+                this.addSlotToContainer(new SlotShop(this, inventory, col + row * 9, 8 + col * 18,  18 + row * 18));
             }
         }
         // 玩家包裹
@@ -24,14 +24,14 @@ public class ContainerShop extends Container {
         {
             for (col = 0; col < 9; ++col)
             {
-                this.addSlotToContainer(new Slot(player.inventory, col + row * 9 + 9, 8 + col * 18, 121 + row * 18));
+                this.addSlotToContainer(new Slot(player.inventory, col + row * 9 + 9, 8 + col * 18, 140 + row * 18));
             }
         }
 
         // 玩家快捷栏
         for (col = 0; col < 9; ++col)
         {
-            this.addSlotToContainer(new Slot(player.inventory, col, 8 + col * 18, 179));
+            this.addSlotToContainer(new Slot(player.inventory, col, 8 + col * 18, 198));
         }
     }
 
@@ -67,38 +67,47 @@ public class ContainerShop extends Container {
 
         if (var4 != null && var4.getHasStack())
         {
-            ItemStack var5 = var4.getStack().copy();
-            if(var5.getPrice().buyPrice > 0) {
-                double totalMoney = var5.getMaxStackSize() * var5.getPrice().buyPrice;
-                if(par1EntityPlayer.money >= totalMoney) {
-                    var3 = var5.setStackSize(var5.getMaxStackSize());
-                    if (par2 >= 0 && par2 < 45 && !mergeItemStack(var3, 45, 81, false))
-                    {
-                        par1EntityPlayer.addChatMessage("包裹已满");
-                        return null;
-                    } else {
-                        par1EntityPlayer.money -= totalMoney;
-                        return var3;
-                    }
-                } else {
-                    int maxStackSize = (int) Math.floor(par1EntityPlayer.money / var5.getPrice().buyPrice);
-                    if(maxStackSize > 0) {
-                        var3 = var5.setStackSize(maxStackSize);
-                        if (par2 >= 0 && par2 < 45 && !mergeItemStack(var3, 45, 81, false))
+            if (par2 >= 0 && par2 < 45){
+                ItemStack var5 = var4.getStack().copy();
+                if(var5.getPrice().buyPrice > 0) {
+                    double totalMoney = var5.getMaxStackSize() * var5.getPrice().buyPrice;
+                    if(par1EntityPlayer.money >= totalMoney) {
+                        var3 = var5.setStackSize(var5.getMaxStackSize());
+                        if (!mergeItemStack(var3, 45, 81, false))
                         {
                             par1EntityPlayer.addChatMessage("包裹已满");
                             return null;
                         } else {
-                            par1EntityPlayer.money -= maxStackSize * var3.getPrice().buyPrice;
+                            par1EntityPlayer.money -= totalMoney;
                             return var3;
                         }
                     } else {
-                        par1EntityPlayer.addChatMessage("余额不足");
+                        int maxStackSize = (int) Math.floor(par1EntityPlayer.money / var5.getPrice().buyPrice);
+                        if(maxStackSize > 0) {
+                            var3 = var5.setStackSize(maxStackSize);
+                            if (par2 >= 0 && par2 < 45 && !mergeItemStack(var3, 45, 81, false))
+                            {
+                                par1EntityPlayer.addChatMessage("包裹已满");
+                                return null;
+                            } else {
+                                par1EntityPlayer.money -= maxStackSize * var3.getPrice().buyPrice;
+                                return var3;
+                            }
+                        } else {
+                            par1EntityPlayer.addChatMessage("余额不足");
+                        }
                     }
-                }
 
+                } else {
+                    par1EntityPlayer.addChatMessage("无法购买");
+                }
             } else {
-                par1EntityPlayer.addChatMessage("无法购买");
+                ItemStack var5 = var4.getStack();
+                double soldPrice = (double) var5.getItem().soldPriceArray.get(var5.getItemSubtype());
+                if(soldPrice > 0d) {
+                    player.money += var5.stackSize * soldPrice;
+                }
+                var4.putStack(null);
             }
         }
         return var3;

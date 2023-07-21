@@ -19,7 +19,7 @@ public class InventoryShop extends InventorySubcontainer {
     public ItemStack decrStackSize(int par1, int par2) {
         double buyPrice = this.getStackInSlot(par1).getPrice().buyPrice;
         if(buyPrice > 0d) {
-            if(containerShop.player.money - buyPrice > 0d) {
+            if(containerShop.player.money - buyPrice >= 0d) {
                 containerShop.player.money -= buyPrice;
                 return this.getStackInSlot(par1).copy();
             } else {

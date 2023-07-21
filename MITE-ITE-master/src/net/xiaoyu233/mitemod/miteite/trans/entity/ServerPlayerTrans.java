@@ -4,6 +4,7 @@ import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.inventory.container.*;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,6 +14,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -104,6 +108,17 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
         this.openContainer = new ContainerShop(this);
         this.openContainer.windowId = this.currentWindowId;
         this.openContainer.onCraftGuiOpened(this);
+        try
+        {
+            ByteArrayOutputStream var5 = new ByteArrayOutputStream();
+            DataOutputStream var6 = new DataOutputStream(var5);
+            var6.writeInt(Items.priceStackList.size());
+            this.playerNetServerHandler.sendPacket(new Packet250CustomPayload("MC|ShopSize", var5.toByteArray()));
+        }
+        catch (IOException var7)
+        {
+            var7.printStackTrace();
+        }
     }
 
    @Override

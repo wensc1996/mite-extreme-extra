@@ -1,7 +1,9 @@
 package net.xiaoyu233.mitemod.miteite.trans.network;
 
+import com.google.common.base.Charsets;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.gui.GuiForgingTable;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.network.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -90,6 +92,37 @@ public class ClientNetworkManagerTrans extends NetworkManagerTrans{
       delay = (int)(System.nanoTime() - before) / 10000000;
       if (delay > 0) {
          Minecraft.MITE_log.logInfo("Long time processing handleMultiBlockChange97 (delay=" + delay + ") #Blocks=" + packet.num_blocks);
+      }
+
+   }
+
+   @Overwrite
+   public void handleCustomPayload(Packet250CustomPayload par1Packet250CustomPayload) {
+      if ("MC|ShopSize".equals(par1Packet250CustomPayload.channel)){
+         DataInputStream var2 = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));
+
+         try {
+            int shopSize = var2.readInt();
+            Items.shopSize = shopSize;
+         } catch (IOException var7) {
+            var7.printStackTrace();
+         }
+      } else if ("MC|TrList".equals(par1Packet250CustomPayload.channel)) {
+         DataInputStream var2 = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));
+
+         try {
+            int var3 = var2.readInt();
+            awe var4 = this.h.n;
+            if (var4 != null && var4 instanceof axw && var3 == this.h.h.openContainer.windowId) {
+               IMerchant var5 = ((axw)var4).g();
+               MerchantRecipeList var6 = MerchantRecipeList.a(var2);
+               var5.a(var6);
+            }
+         } catch (IOException var7) {
+            var7.printStackTrace();
+         }
+      } else if ("MC|Brand".equals(par1Packet250CustomPayload.channel)) {
+         this.h.h.c(new String(par1Packet250CustomPayload.data, Charsets.UTF_8));
       }
 
    }

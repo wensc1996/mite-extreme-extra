@@ -221,3 +221,7 @@ tile.sapling1.cherry.name=樱花树树苗
 tile.wood.cherry.name=樱花树木板
 tile.slab.group2.cherry.name=樱花树木台阶
 tile.stairsCherry.name=樱花树木楼梯
+
+container.shop=商店
+container.shop.money=余额:%s
+key.openShop=打开商店
