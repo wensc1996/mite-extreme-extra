@@ -19,50 +19,52 @@ public class SlotShop extends Slot {
 
     @Override
     public void onSlotClicked(EntityPlayer entity_player, int button, Container container) {
-        System.out.println(button + " " + container);
         super.onSlotClicked(entity_player, button, container);
-        if(button == 1) {
-            ItemStack var5 = this.getStack().copy();
-            if(var5.getPrice().buyPrice > 0) {
-                double totalMoney = var5.getMaxStackSize() * var5.getPrice().buyPrice;
+        if(this.getStack() != null) {
+            if(button == 1) {
+                ItemStack var5 = this.getStack().copy();
+                if(var5.getPrice().buyPrice > 0) {
+                    double totalMoney = var5.getMaxStackSize() * var5.getPrice().buyPrice;
 
-                if(entity_player.money >= totalMoney) {
-                    var5.setStackSize(var5.getMaxStackSize());
-                    entity_player.inventory.addItemStackToInventoryOrDropIt(var5);
-                    entity_player.money -= totalMoney ;
+                    if(entity_player.money >= totalMoney) {
+                        entity_player.inventory.addItemStackToInventoryOrDropIt(new ItemStack(var5.itemID, var5.getMaxStackSize(), var5.getItemSubtype()));
+                        entity_player.money -= totalMoney ;
 
-                    BigDecimal two = new BigDecimal(entity_player.money);
-                    entity_player.money = two.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
-                } else {
-                    int maxStackSize = (int) Math.floor(entity_player.money / var5.getPrice().buyPrice);
-                    if(maxStackSize > 0) {
-                        totalMoney = maxStackSize * var5.getPrice().buyPrice;
-                        entity_player.money -= totalMoney;
                         BigDecimal two = new BigDecimal(entity_player.money);
                         entity_player.money = two.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
-
-                        var5.setStackSize(maxStackSize);
-                        entity_player.inventory.addItemStackToInventoryOrDropIt(var5);
                     } else {
-                        entity_player.addChatMessage("余额不足");
+                        int maxStackSize = (int) Math.floor(entity_player.money / var5.getPrice().buyPrice);
+                        if(maxStackSize > 0) {
+                            totalMoney = maxStackSize * var5.getPrice().buyPrice;
+                            entity_player.money -= totalMoney;
+                            BigDecimal two = new BigDecimal(entity_player.money);
+                            entity_player.money = two.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+
+                            var5.setStackSize(maxStackSize);
+                            entity_player.inventory.addItemStackToInventoryOrDropIt(var5);
+                        } else {
+                            entity_player.addChatMessage("余额不足");
+                        }
                     }
-                }
-            } else {
-                entity_player.addChatMessage("商店不支持购买此商品");
-            }
-        } else if(button == 0) {
-            double buyPrice = this.getStack().getPrice().buyPrice;
-            if(buyPrice > 0d) {
-                if(containerShop.player.money - buyPrice >= 0d) {
-                    containerShop.player.money -= buyPrice;
-                    entity_player.inventory.addItemStackToInventoryOrDropIt(this.getStack().copy());
                 } else {
-                    containerShop.player.addChatMessage("余额不足");
+                    entity_player.addChatMessage("商店不支持购买此商品");
                 }
-            } else {
-                containerShop.player.addChatMessage("商店不支持购买此商品");
+            } else if(button == 0) {
+                ItemStack var5 = this.getStack().copy();
+                double buyPrice = var5.getPrice().buyPrice;
+                if(buyPrice > 0d) {
+                    if(containerShop.player.money - buyPrice >= 0d) {
+                        containerShop.player.money -= buyPrice;
+                        entity_player.inventory.addItemStackToInventoryOrDropIt(new ItemStack(var5.itemID, 1, var5.getItemSubtype()));
+                    } else {
+                        containerShop.player.addChatMessage("余额不足");
+                    }
+                } else {
+                    containerShop.player.addChatMessage("商店不支持购买此商品");
+                }
             }
         }
+
     }
 
     @Override

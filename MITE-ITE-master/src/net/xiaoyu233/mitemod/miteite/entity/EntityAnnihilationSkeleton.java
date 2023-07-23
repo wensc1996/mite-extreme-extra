@@ -155,7 +155,7 @@ public class EntityAnnihilationSkeleton extends EntitySkeleton {
         this.setEntityAttribute(GenericAttributes.followRange, 48.0D);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.30000001192092896D);
         this.setEntityAttribute(GenericAttributes.attackDamage, (boneLordTweak ? 13D + (double)day / 5D : 16.0D) * 3D);
-        this.setEntityAttribute(GenericAttributes.maxHealth, (boneLordTweak ? 40D + (double)day / 3D : 25.0D) * 3D);
+        this.setEntityAttribute(GenericAttributes.maxHealth,30);
     }
 
     @Override

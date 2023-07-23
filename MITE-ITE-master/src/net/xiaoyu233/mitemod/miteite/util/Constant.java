@@ -9,8 +9,8 @@ import java.util.Random;
 public class Constant {
     public static final double[] ENHANCE_FACTORS;
     public static final bjo icons_ite = new bjo("textures/gui/icons_ite.png");
-    public static final String MITE_ITE_VERSION = "v0.1.5.1";
-    public static final int MITE_ITE_VER_NUM = 67;
+    public static final String MITE_ITE_VERSION = "v0.1.5.2";
+    public static final int MITE_ITE_VER_NUM = 68;
     public static final bjo RES_VIBRANIUM_SINGLE = new bjo("textures/entity/chest/vibranium_single.png");
     public static int nextItemID = 2024;
     public static int nextBlockID = 160;
