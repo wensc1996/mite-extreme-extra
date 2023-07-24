@@ -33,6 +33,13 @@ public class ChunkTrans {
     }
 
     @Overwrite
+    public final int getBlockIDOptimized(int xz_index, int y) {
+        int local_x = xz_index % 16;
+        int local_z = xz_index / 16;
+        return this.getBlockID(local_x, y, local_z);
+    }
+
+    @Overwrite
     public final int getBlockID(int par1, int par2, int par3) {
         if (this.is_empty) {
             return 0;
