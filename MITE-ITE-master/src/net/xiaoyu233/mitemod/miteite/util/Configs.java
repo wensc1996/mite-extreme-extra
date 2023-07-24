@@ -1,8 +1,6 @@
 package net.xiaoyu233.mitemod.miteite.util;
 
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.block.Blocks;
-import net.xiaoyu233.mitemod.miteite.item.EnumPriceItem;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 
 import javax.swing.*;

@@ -6,9 +6,6 @@ import net.minecraft.*;
 import java.util.List;
 
 public class ItemEnhanceGem extends Item {
-    //   "BlueGreen", "LemonGreen", "Navy", "Orange"
-    // 攻击     功力     暴击       暴击伤害       格挡      穿刺      闪避    命中
-//    public static final String[] gemTypes = new String[] {"White", "Red", "Purple", "Aquamarine", "Green", "Yellow", "Pink", "Blue"};
     private IIcon[] field_94586_c;
     public int gemLevel;
     public ItemEnhanceGem(int id, int level)
@@ -99,7 +96,6 @@ public class ItemEnhanceGem extends Item {
         if (extended_info)
         {
             info.add("");
-//            info.add(EnumChatFormat.BLUE + Translator.getFormatted("item.tooltip.attributeGem.ctrl"));
             if(item_stack != null) {
                 int subtype = item_stack.getItemSubtype();
                 if(subtype < GemModifierTypes.values().length) {
