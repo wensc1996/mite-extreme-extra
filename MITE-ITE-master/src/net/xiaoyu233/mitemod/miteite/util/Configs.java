@@ -389,19 +389,7 @@ public class Configs {
                 item.soldPriceArray.put(sub, soldPrice);
             }
         } else {
-            double soldPrice = (double)item.soldPriceArray.get(sub);
-            double buyPrice = (double)item.buyPriceArray.get(sub);
-            itemStack.setPrice(soldPrice, buyPrice);
-            if(soldPrice > 0d || buyPrice > 0d) {
-                Items.priceStackList.add(itemStack);
-            }
-            if(item.getHasSubtypes()) {
-                fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ sub + "\n");
-                fileWriter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.soldPriceArray.get(sub) +","+ item.buyPriceArray.get(sub)+ "\n\n");
-            } else {
-                fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + item.itemID + "\n");
-                fileWriter.write(itemStack.getUnlocalizedName() + "=" + item.soldPriceArray.get(0) +","+ item.buyPriceArray.get(0) + "\n\n");
-            }
+            writeShopConfigFormatter(fileWriter, item, itemStack);
         }
     }
 
@@ -484,16 +472,16 @@ public class Configs {
 
     public static void packConfigFile(File file,Properties properties) {
         try{
-            FileWriter fileWritter = new FileWriter(file.getName(), true);
+            FileWriter fileWriter = new FileWriter(file.getName(), true);
             for (Map.Entry<String, ConfigItem> entry: wenscMap.entrySet()) {
                 ConfigItem value = entry.getValue();
                 String localValue = properties.getProperty(value.ConfigKey);
                 if(localValue == null) {
-                    fileWritter.write("// " + value.ConfigComment + "\n");
-                    fileWritter.write(value.ConfigKey + "=" + value.ConfigValue + "\n\n");
+                    fileWriter.write("// " + value.ConfigComment + "\n");
+                    fileWriter.write(value.ConfigKey + "=" + value.ConfigValue + "\n\n");
                 }
             }
-            fileWritter.close();
+            fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -501,23 +489,40 @@ public class Configs {
 
     public static void generateConfigFile(File file) {
         try{
-            FileWriter fileWritter = new FileWriter(file.getName());
-            fileWritter.write("// MITE-Extreme配置文件，说明：【布尔类型：true为开启，false关闭】，在【名称=值】之间/之后不要存在空格或者其他无关字符，【tick：20tick=1秒】\n");
+            FileWriter fileWriter = new FileWriter(file.getName());
+            fileWriter.write("// MITE-Extreme配置文件，说明：【布尔类型：true为开启，false关闭】，在【名称=值】之间/之后不要存在空格或者其他无关字符，【tick：20tick=1秒】\n");
             for (Map.Entry<String, ConfigItem> entry: wenscMap.entrySet()) {
                 ConfigItem value = entry.getValue();
-                fileWritter.write("// " + value.ConfigComment + "\n");
-                fileWritter.write(value.ConfigKey + "=" + value.ConfigValue + "\n\n");
+                fileWriter.write("// " + value.ConfigComment + "\n");
+                fileWriter.write(value.ConfigKey + "=" + value.ConfigValue + "\n\n");
             }
-            fileWritter.close();
+            fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public static void writeShopConfigFormatter(FileWriter fileWriter, Item item, ItemStack itemStack) throws IOException {
+        int sub = itemStack.getItemSubtype();
+        double soldPrice = (double)item.soldPriceArray.get(sub);
+        double buyPrice = (double)item.buyPriceArray.get(sub);
+        itemStack.setPrice(soldPrice, buyPrice);
+        if(soldPrice > 0d || buyPrice > 0d) {
+            Items.priceStackList.add(itemStack);
+        }
+        if(item.getHasSubtypes()) {
+            fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ sub + "\n");
+            fileWriter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.soldPriceArray.get(sub) +","+ item.buyPriceArray.get(sub)+ "\n\n");
+        } else {
+            fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + item.itemID + "\n");
+            fileWriter.write(itemStack.getUnlocalizedName() + "=" + item.soldPriceArray.get(0) +","+ item.buyPriceArray.get(0) + "\n\n");
+        }
+    }
+
     public static void generateShopConfigFile(File file) {
         try{
-            FileWriter fileWritter = new FileWriter(file.getName());
-            fileWritter.write("// MITE-Extreme商店配置文件，说明：参数之间使用英文逗号分隔，请严格遵循格式（商品英文名=售出价格,购买价格），价格小于等于0代表不可出售或者不可购买，价格可以为小数，乱改造成无法启动概不负责\n");
+            FileWriter fileWriter = new FileWriter(file.getName());
+            fileWriter.write("// MITE-Extreme商店配置文件，说明：参数之间使用英文逗号分隔，请严格遵循格式（商品英文名=售出价格,购买价格），价格小于等于0代表不可出售或者不可购买，价格可以为小数，乱改造成无法启动概不负责\n");
             for (Item item : Item.itemsList) {
                 if(item != null) {
                     if(item instanceof ItemBlock) {
@@ -532,20 +537,27 @@ public class Configs {
                         List subs = item.getSubItems();
                         for (int i = 0; i < subs.size(); i++) {
                             ItemStack itemStack = (ItemStack)subs.get(i);
-                            int sub = itemStack.getItemSubtype();
-                            fileWritter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ sub + "\n");
-                            fileWritter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.soldPriceArray.get(sub) +","+ item.buyPriceArray.get(sub)+ "\n\n");
+                            writeShopConfigFormatter(fileWriter, item, itemStack);
                         }
                     } else {
                         ItemStack itemStack = new ItemStack(item, 1, 0);
-                        fileWritter.write("// " + itemStack.getDisplayName() + " ID: " + item.itemID + "\n");
-                        fileWritter.write(itemStack.getUnlocalizedName() + "=" + item.soldPriceArray.get(0) +","+ item.buyPriceArray.get(0)+ "\n\n");
+                        writeShopConfigFormatter(fileWriter, item, itemStack);
                     }
                 }
             }
-            fileWritter.close();
+            fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            Collections.sort(Items.priceStackList, (o1, o2) -> {
+                double offset;
+                if(o2.getPrice().buyPrice > 0d && o1.getPrice().buyPrice > 0d) {
+                    offset = o1.getPrice().buyPrice - o2.getPrice().buyPrice;
+                } else {
+                    offset = o2.getPrice().buyPrice - o1.getPrice().buyPrice;
+                }
+                return  offset > 0 ? 1 : offset == 0 ? 0 : -1;
+            });
         }
     }
 }
