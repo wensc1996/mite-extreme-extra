@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.network;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.achievement.Achievements;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerForgingTable;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerShop;
 import net.xiaoyu233.mitemod.miteite.network.CPacketStartForging;
@@ -60,6 +61,7 @@ public class ServerNetworkManagerTrans extends NetworkManagerTrans {
             boolean isOpen = var2.readBoolean();
             if(!Configs.wenscConfig.isCloseShop.ConfigValue) {
                this.playerEntity.displayGUIShop();
+               this.playerEntity.triggerAchievement(Achievements.openShop);
             }
          } catch (Exception var12) {
             var12.printStackTrace();

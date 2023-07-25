@@ -96,6 +96,14 @@ public class SlotResultTrans {
                      this.thePlayer.triggerAchievement(Achievements.vibraniumIngot);
                   } else if (block == Blocks.anvilVibranium) {
                      this.thePlayer.triggerAchievement(Achievements.vibraniumAnvil);
+                  } else if (block == Blocks.blockSpawn) {
+                     this.thePlayer.triggerAchievement(Achievements.spawnBlock);
+                  } else if (item == Items.ringKillerCopper) {
+                     this.thePlayer.triggerAchievement(Achievements.ringKillerCopper);
+                  } else if (block == Blocks.gemSetting) {
+                     this.thePlayer.triggerAchievement(Achievements.gemSettingBlock);
+                  } else if (item == Items.itemDynamicCoreIron) {
+                     this.thePlayer.triggerAchievement(Achievements.itemDynamicCoreIron);
                   }
                } else {
                   this.thePlayer.addStat(AchievementList.enchantments, 1);

@@ -73,6 +73,23 @@ achievement.vibraniumArmor=那我岂不是无敌了?
 achievement.vibraniumArmor.desc=穿上全套振金装备
 achievement.vibraniumFurnace="原子再构机"
 achievement.vibraniumFurnace.desc=制作一个振金熔炉(它可以把煤炭变成钻石!)
+achievement.openShop=打开商店
+achievement.openShop.desc=按V可以打开商店出售或购买物品
+achievement.rideBat=我会飞了
+achievement.rideBat.desc=空手对蝙蝠右键可以骑乘
+achievement.fishFortune=摸鱼开始
+achievement.fishFortune.desc=钓鱼可以获得各种种植物以及金属粒
+achievement.spawnBlock=杀不死的小强
+achievement.spawnBlock.desc=无论以何种死法，都会带你复活重生
+achievement.gemSettingBlock=宝石之路
+achievement.gemSettingBlock.desc=可以给装备或者工具镶嵌对应宝石
+achievement.ringKillerCopper=刮痧之刃
+achievement.ringKillerCopper.desc=会自动帮你攻击周边怪物，但是伤害不高
+achievement.itemDynamicCoreIron=不再恐惧黑暗
+achievement.itemDynamicCoreIron.desc=随着品质升级，提供不同亮度的夜视效果
+achievement.killZombieBoss=立于不败之地
+achievement.killZombieBoss.desc=BOSS会掉落各种附魔书以及钻石
+
 commands.version.playing=你现在正在游玩
 commands.day.msg=今天是这个世界的第 %s 天
 

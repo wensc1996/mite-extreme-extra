@@ -179,7 +179,7 @@ public final class BlockLeaves1 extends BlockTransparant {
 
                 Item item = Item.stick;
                 subtype = this.getBlockSubtype(var6);
-                if (subtype == 0) {
+                if (subtype == 0 || subtype == 1) {
                     if (par5Random.nextInt(3) > 0) {
                         item = par1World.getBiomeGenForCoords(par2, par4).isJungleBiome() ? Item.orange : Item.appleRed;
                     }

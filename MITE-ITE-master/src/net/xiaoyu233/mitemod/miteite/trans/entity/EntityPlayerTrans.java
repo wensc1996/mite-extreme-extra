@@ -175,6 +175,13 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    @Shadow
    protected void resetHeight() {}
 
+   public float getBrightness(float par1) {
+      return 1f;
+   }
+   public int c(float par1) {
+      return 15728880;
+   }
+
    @Overwrite
    public void getOutOfBed(Entity entity_to_look_at) {
       this.setSizeNormal();

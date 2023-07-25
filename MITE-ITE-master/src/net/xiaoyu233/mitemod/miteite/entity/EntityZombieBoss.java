@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.entity;
 import javafx.beans.binding.MapExpression;
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
+import net.xiaoyu233.mitemod.miteite.achievement.Achievements;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
@@ -64,7 +65,8 @@ public class EntityZombieBoss extends EntityZombie {
             while (var4.hasNext()) {
                 Object o = var4.next();
                 EntityPlayer player = (EntityPlayer)o;
-                if(attackDamageMap.containsKey(player.getEntityName())) {
+                if(attackDamageMap.containsKey(player.getEntityName()) && player != null) {
+                    player.triggerAchievement(Achievements.killZombieBoss);
                     float damage = attackDamageMap.get(player.getEntityName());
                     int nums = Math.round(damage) / 20;
                     int damageWithEnchantBookRate = Math.round(damage) / 50;

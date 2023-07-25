@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.achievement.Achievements;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
@@ -64,18 +65,22 @@ public abstract class EntityFishingHookTrans extends Entity {
 
       if (this.rand.nextInt(3) == 0) {
          if (this.rand.nextInt(16) == 0) {
+            angler.triggerAchievement(Achievements.fishFortune);
             return Items.voucherFishing;
          }
 
          if(this.rand.nextInt(2) == 0) {
+            angler.triggerAchievement(Achievements.fishFortune);
             return fishTypeListStage0[this.rand.nextInt(8)];
          }
 
          if (this.rand.nextInt(2) == 0) {
+            angler.triggerAchievement(Achievements.fishFortune);
             return fishTypeListStage1[this.rand.nextInt(4)];
          }
 
          if (this.rand.nextInt(2) == 0) {
+            angler.triggerAchievement(Achievements.fishFortune);
             return fishTypeListStage2[this.rand.nextInt(4)];
          }
       }
