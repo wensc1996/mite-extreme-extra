@@ -77,6 +77,7 @@ public abstract class EntityTrans {
 
    }
 
+   @Overwrite
    protected int pushOutOfBlocks() {
       if (!this.worldObj.isRemote && this.ticksExisted >= 2) {
          double original_center_y = (this.boundingBox.minY + this.boundingBox.maxY) / 2.0;
@@ -93,15 +94,16 @@ public abstract class EntityTrans {
             }
          }
 
-         if (ReflectHelper.dyCast(Entity.class,this) instanceof EntityItem && (this.worldObj.getBlock(x, y, z) instanceof BlockLeaves || this.worldObj.getBlock(x, y, z) instanceof BlockLeaves1)) {
+         if (ReflectHelper.dyCast(EntityItem.class,this) instanceof EntityItem
+                 && (this.worldObj.getBlock(x, y, z) instanceof BlockLeaves || this.worldObj.getBlock(x, y, z) instanceof BlockLeaves1)) {
             collisions = this.worldObj.getCollidingBlockBounds(this.boundingBox, ReflectHelper.dyCast(Entity.class,this));
             if (collisions.isEmpty()) {
                return 0;
             }
          }
 
-         int max_escape_range = ReflectHelper.dyCast(Entity.class,this) instanceof EntityExperienceOrb ? 2 : 1;
-         if (ReflectHelper.dyCast(Entity.class,this) instanceof EntityLivestock || this.isEntityPlayer()) {
+         int max_escape_range = ReflectHelper.dyCast(EntityExperienceOrb.class,this) instanceof EntityExperienceOrb ? 2 : 1;
+         if (ReflectHelper.dyCast(EntityLivestock.class,this) instanceof EntityLivestock || this.isEntityPlayer()) {
             max_escape_range = 3;
          }
 
