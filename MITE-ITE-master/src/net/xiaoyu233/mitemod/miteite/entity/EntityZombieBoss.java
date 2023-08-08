@@ -83,9 +83,9 @@ public class EntityZombieBoss extends EntityZombie {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        int rate = Math.min(200, worldObj.getDayOfOverworld()) / 20;
-        this.setEntityAttribute(GenericAttributes.attackDamage, 6 + rate * 2);
-        this.setEntityAttribute(GenericAttributes.maxHealth, 20 + rate * 100);
+        int rate = Math.min(200, worldObj.getDayOfOverworld()) / 10;
+        this.setEntityAttribute(GenericAttributes.attackDamage, 6 + rate);
+        this.setEntityAttribute(GenericAttributes.maxHealth, 20 + rate * 30);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3D);
     }
 

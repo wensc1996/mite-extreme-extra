@@ -145,9 +145,9 @@ public abstract class EntityTrans {
                int trial_y = center_y < 0.0 ? (int)center_y - 1 : (int)center_y;
                int trial_z = center_z < 0.0 ? (int)center_z - 1 : (int)center_z;
                int dx = trial_x - x;
-               dy = trial_y - y;
+               int var0 = trial_y - y;
                int dz = trial_z - z;
-               if (dx >= -max_escape_range && dx <= max_escape_range && dy >= -max_escape_range && dy <= max_escape_range && dz >= -max_escape_range && dz <= max_escape_range && is_candidate_block[dx + max_escape_range + (dy + max_escape_range) * matrix_size + (dz + max_escape_range) * matrix_size_sq]) {
+               if (dx >= -max_escape_range && dx <= max_escape_range && var0 >= -max_escape_range && var0 <= max_escape_range && dz >= -max_escape_range && dz <= max_escape_range && is_candidate_block[dx + max_escape_range + (var0 + max_escape_range) * matrix_size + (dz + max_escape_range) * matrix_size_sq]) {
                   trial_bounding_box.setBounds(this.boundingBox.minX + dPosX, this.boundingBox.minY + dPosY, this.boundingBox.minZ + dPosZ, this.boundingBox.maxX + dPosX, this.boundingBox.maxY + dPosY, this.boundingBox.maxZ + dPosZ);
                   collisions = this.worldObj.getCollidingBlockBounds(trial_bounding_box, ReflectHelper.dyCast(Entity.class,this));
                   if (collisions.isEmpty()) {

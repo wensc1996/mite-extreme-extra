@@ -364,9 +364,9 @@ public class Configs {
         int sub = itemStack.getItemSubtype();
         String name = "";
         if(item.getHasSubtypes()) {
-            name = itemStack.getUnlocalizedName() + "§" + sub;
+            name = itemStack.getUnlocalizedName() + "$" + itemStack.itemID + "$" + sub;
         } else {
-            name = itemStack.getUnlocalizedName();
+            name = itemStack.getUnlocalizedName() + "$" + itemStack.itemID;
         }
         String itemPrice =  (String) properties.get(name);
         if(itemPrice != null) {
@@ -419,6 +419,7 @@ public class Configs {
                         readOrWritePriceLine(properties, fileWriter, item);
                     } catch (Exception e) {
                         Minecraft.setErrorMessage("配置项：" + item.getItemDisplayName() + " ID: " + item.itemID + " 错误！！！");
+                        throw(e);
                     }
                 }
             }
@@ -512,10 +513,10 @@ public class Configs {
         }
         if(item.getHasSubtypes()) {
             fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ sub + "\n");
-            fileWriter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.soldPriceArray.get(sub) +","+ item.buyPriceArray.get(sub)+ "\n\n");
+            fileWriter.write(itemStack.getUnlocalizedName() + "$" + item.itemID +"$" + sub + "=" + item.soldPriceArray.get(sub) +","+ item.buyPriceArray.get(sub)+ "\n\n");
         } else {
             fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + item.itemID + "\n");
-            fileWriter.write(itemStack.getUnlocalizedName() + "=" + item.soldPriceArray.get(0) +","+ item.buyPriceArray.get(0) + "\n\n");
+            fileWriter.write(itemStack.getUnlocalizedName() + "$" + item.itemID + "=" + item.soldPriceArray.get(0) +","+ item.buyPriceArray.get(0) + "\n\n");
         }
     }
 

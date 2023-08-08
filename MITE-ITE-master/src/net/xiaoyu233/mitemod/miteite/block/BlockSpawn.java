@@ -112,6 +112,7 @@ public class BlockSpawn extends Block {
                     entityPlayer.addChatMessage("复活传送阵已生效");
                 } else {
                     entityPlayer.addChatMessage("已经放置复活传送阵，请勿重复放置");
+                    world.setBlockToAir(x, y ,z);
                     return false;
                 }
             }

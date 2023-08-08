@@ -18,9 +18,7 @@ public class ItemEnhanceGemBox extends Item {
         {
             player.causeBreakingItemEffect(player.getHeldItem(), player.inventory.currentItem);
             player.convertOneOfHeldItem((ItemStack) null);
-            if(player.worldObj.rand.nextInt(2) == 0) {
-                player.inventory.addItemStackToInventoryOrDropIt(new ItemStack(Items.itemEnhanceGem,1, player.worldObj.rand.nextInt(GemModifierTypes.values().length)));
-            }
+            player.inventory.addItemStackToInventoryOrDropIt(new ItemStack(Items.itemEnhanceGem,1, player.worldObj.rand.nextInt(GemModifierTypes.values().length)));
         }
         else
         {
@@ -34,7 +32,7 @@ public class ItemEnhanceGemBox extends Item {
         if (extended_info)
         {
             info.add("");
-            info.add("1/2概率获得三角宝石其中之一");
+            info.add("概率获得三角宝石其中之一");
         }
         super.addInformation(item_stack, player, info, extended_info, slot);
     }
