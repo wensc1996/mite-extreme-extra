@@ -6,11 +6,15 @@ import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(RaycastPolicies.class)
-public class RaycastPoliciesTrans {
-    @Shadow
-    public static final RaycastPolicies for_third_person_view = null;
+public abstract class RaycastPoliciesTrans {
+    @Accessor("for_third_person_view")
+    public static RaycastPolicies getThirdPersonView() {
+        throw new AssertionError();
+    }
+
     @Shadow
     private int glass_and_ice_policy = -1;
     @Shadow
@@ -36,12 +40,10 @@ public class RaycastPoliciesTrans {
     @Shadow
     private int uncovered_cauldron_policy = -1;
 
-
-
     @Overwrite
     public boolean ignoreBlock(Block block, World world, int x, int y, int z, Raycast raycast) {
         if (this.glass_and_ice_policy != -1 && (block.blockMaterial == Material.glass || block.blockMaterial == Material.ice) && !raycast.isFullyImpeded(this.glass_and_ice_policy)) {
-            return ReflectHelper.dyCast(RaycastPolicies.class,this) != for_third_person_view || block.blockMaterial != Material.ice;
+            return ReflectHelper.dyCast(RaycastPolicies.class,this) != getThirdPersonView() || block.blockMaterial != Material.ice;
         } else {
             if (block.isPortal()) {
                 if (this.open_gates_policy != -1 && block instanceof BlockFenceGate && BlockFenceGate.isFenceGateOpen(world.getBlockMetadata(x, y, z)) && !raycast.isFullyImpeded(this.open_gates_policy)) {
