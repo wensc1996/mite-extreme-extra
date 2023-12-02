@@ -51,7 +51,8 @@ public class TileEntityFurnaceTrans extends TileEntity {
 
    @Overwrite
    public int d(int par1) {
-      return this.furnaceItemStacks[0] == null ? this.furnaceCookTime * par1 / 200 : this.furnaceCookTime * par1 / (this.furnaceItemStacks[0].getItem().getCookTime() / Math.max(this.heat_level, 1));
+      return this.furnaceItemStacks[0] == null ? this.furnaceCookTime * par1 / 200
+              : this.furnaceCookTime * par1 / (this.furnaceItemStacks[0].getItem().getCookTime() / Math.max(this.heat_level, 1));
    }
 
    @Shadow
