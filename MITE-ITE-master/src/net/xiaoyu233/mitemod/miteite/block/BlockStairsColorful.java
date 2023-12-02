@@ -11,4 +11,8 @@ public class BlockStairsColorful extends BlockStairs {
         this.setResistance(1000F);
         this.setLightValue(0.7F);
     }
+
+    public int dropBlockAsEntityItem(BlockBreakInfo info) {
+        return this.dropBlockAsEntityItem(info, this.createStackedBlock(info.getMetadata()));
+    }
 }

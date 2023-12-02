@@ -16,6 +16,10 @@ public class BlockColorfulBrick extends Blocks implements IBlockWithSubtypes {
         this.setLightValue(0.7F);
     }
 
+    public int dropBlockAsEntityItem(BlockBreakInfo info) {
+        return this.dropBlockAsEntityItem(info, this.createStackedBlock(info.getMetadata()));
+    }
+
     public boolean isAlwaysReplaceable() {
         return false;
     }
