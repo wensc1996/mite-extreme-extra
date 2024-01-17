@@ -9,6 +9,9 @@ import java.text.DecimalFormat;
 public class SlotShop extends Slot {
     int slotIndex;
     ContainerShop containerShop;
+    public boolean canTakeStack(EntityPlayer par1EntityPlayer) {
+        return false;
+    }
     public SlotShop(ContainerShop containerShop,IInventory inventory, int slot_index, int display_x, int display_y)
     {
         super(inventory, slot_index, display_x, display_y, false);
