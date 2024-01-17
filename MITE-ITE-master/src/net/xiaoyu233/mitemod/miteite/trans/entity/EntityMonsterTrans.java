@@ -85,16 +85,15 @@ public abstract class EntityMonsterTrans extends EntityInsentient implements IMo
       }
    }
 
-   protected void dropEquipment(boolean recently_hit_by_player, int par2) {
-      for(int var3 = 0; var3 < this.getInventory().length; ++var3) {
-         ItemStack var4 = this.getEquipmentInSlot(var3);
-         if (var4 != null && (!var4.isItemStackDamageable() || this.picked_up_a_held_item_array[var3] && var4.getRemainingDurability() > var4.getMaxDamage() / 4)) {
-            this.dropItemStack(var4, 0.0F);
-            this.getInventory()[var3]=null;
-         }
-      }
-
-   }
+//   protected void dropEquipment(boolean recently_hit_by_player, int par2) {
+//      for(int var3 = 0; var3 < this.getInventory().length; ++var3) {
+//         ItemStack var4 = this.getEquipmentInSlot(var3);
+//         if (var4 != null && (!var4.isItemStackDamageable() || this.picked_up_a_held_item_array[var3] && var4.getRemainingDurability() > var4.getMaxDamage() / 4)) {
+//            this.dropItemStack(var4, 0.0F);
+//            this.getInventory()[var3]=null;
+//         }
+//      }
+//   }
 
    protected void addRandomArmor() {
       int hour = this.getWorld().getHourOfDay();
@@ -110,9 +109,9 @@ public abstract class EntityMonsterTrans extends EntityInsentient implements IMo
          MonsterUtil.addDefaultArmor(day, this, false);
       } else if (day > 128) {
          rand = this.getRNG();
-         if (rand.nextInt(4) < (day - 96) / 32) {
-            this.addPotionEffect(new MobEffect(MobEffectList.moveSpeed.id, 999999, Math.min(this.getRNG().nextInt(Math.max((day - 32) / 96, 1)),4), true));
-         }
+//         if (rand.nextInt(4) < (day - 96) / 32) {
+//            this.addPotionEffect(new MobEffect(MobEffectList.moveSpeed.id, 999999, Math.min(this.getRNG().nextInt(Math.max((day - 32) / 96, 1)),4), true));
+//         }
 
          if (rand.nextInt(5) < (day - 96) / 32) {
             this.addPotionEffect(new MobEffect(MobEffectList.damageBoost.id, 999999, Math.min(this.getRNG().nextInt(Math.max((day - 32) / 128, 1)),3), true));
@@ -207,8 +206,8 @@ public abstract class EntityMonsterTrans extends EntityInsentient implements IMo
       return false;
    }
 
-   public void dropContainedItems() {
-   }
+//   public void dropContainedItems() {
+//   }
 
    @Inject(method = "onUpdate",at = @At("RETURN"))
    private void injectUpdate(CallbackInfo callback) {

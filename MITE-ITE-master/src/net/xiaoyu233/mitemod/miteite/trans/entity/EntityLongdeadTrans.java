@@ -23,14 +23,15 @@ public class EntityLongdeadTrans extends EntitySkeletonTrans {
    protected void addRandomEquipment() {
       this.addRandomWeapon();
       int day = this.getWorld() != null ? Math.max(this.getWorld().getDayOfOverworld(), 0) : 0;
-      if (day < 96) {
-         this.setBoots((new ItemStack(Item.bootsIron)).randomizeForMob(this, true));
-         this.setLeggings((new ItemStack(Item.legsIron)).randomizeForMob(this, true));
-         this.setCuirass((new ItemStack(Item.plateIron)).randomizeForMob(this, true));
-         this.setHelmet((new ItemStack(Item.helmetIron)).randomizeForMob(this, true));
-      } else {
-         MonsterUtil.addDefaultArmor(day, this, true);
-      }
+//      if (day < 96) {
+//         this.setBoots((new ItemStack(Item.bootsIron)).randomizeForMob(this, true));
+//         this.setLeggings((new ItemStack(Item.legsIron)).randomizeForMob(this, true));
+//         this.setCuirass((new ItemStack(Item.plateIron)).randomizeForMob(this, true));
+//         this.setHelmet((new ItemStack(Item.helmetIron)).randomizeForMob(this, true));
+//      } else {
+//         MonsterUtil.addDefaultArmor(day, this, true);
+//      }
+      MonsterUtil.addDefaultArmor(day, this, true);
       this.initStockedWeapon();
 
    }

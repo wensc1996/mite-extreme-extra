@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
+import net.minecraft.server.MinecraftServer;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.MonsterUtil;
 import org.spongepowered.asm.mixin.Final;
@@ -25,9 +26,23 @@ class EntityZombieTrans extends EntityAnimalWatcher {
    @Override
    protected void addRandomArmor() {
       super.addRandomArmor();
-      if (this.worldObj.isUnderworld() && this.worldObj.getDayOfOverworld() < 64) {
-         MonsterUtil.addDefaultArmor(64, this, true);
-      }
+//      if (this.worldObj.isUnderworld() && this.worldObj.getDayOfOverworld() < 64) {
+//
+//      }
+      MonsterUtil.addDefaultArmor(this.worldObj.getDayOfOverworld(), this, true);
+   }
+
+   public void addRandomWeapon() {
+      int day_of_world = MinecraftServer.F().getOverworld().getDayOfOverworld();
+      super.setCurrentItemOrArmor(0, (new ItemStack(this.getWeapon(day_of_world))).randomizeForMob(this, day_of_world >= 32));
+   }
+
+   private Item getWeapon(int day){
+      day += this.worldObj.isUnderworld() ? 32 : 0;
+      int weight = day / 32 + rand.nextInt(3) - 1;
+      int weaponIndex = Math.max(Math.min(weight, Constant.SWORDS.length - 1),0);
+      return Constant.SWORDS[weaponIndex][rand.nextInt(Constant.SWORDS[weaponIndex].length)];
+//      return Constant.SWORDS[Math.max(Math.min(day / 64,Constant.SWORDS.length - 1),0)];
    }
 
    @Overwrite

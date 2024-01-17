@@ -174,10 +174,10 @@ public class Items extends Item{
 
         register.registerShapelessRecipe(new ItemStack(Blocks.blockLantern, 1), true,Blocks.torchWood, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget);
         register.registerShapelessRecipe(new ItemStack(Items.voucherCore, 1), true, Items.voucherAnnihilationSkeleton, Items.voucherDoor, Items.voucherExchanger, Items.voucherPigman, Items.voucherZombieLord, Items.voucherWitch);
-        register.registerShapedRecipe(new ItemStack(clubIron, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.ironNugget , '*', Items.ingotIron});
-        register.registerShapedRecipe(new ItemStack(clubMithril, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.mithrilNugget , '*', Items.ingotMithril});
-        register.registerShapedRecipe(new ItemStack(clubAdamantium, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.adamantiumNugget , '*', Items.ingotAdamantium});
-        register.registerShapedRecipe(new ItemStack(clubVibranium, 1), true, new Object[]{"###", "#*#"," A ", '#', Items.VIBRANIUM_NUGGET , '*', Items.VIBRANIUM_INGOT, 'A', Items.voucherClubCore});
+//        register.registerShapedRecipe(new ItemStack(clubIron, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.ironNugget , '*', Items.ingotIron});
+//        register.registerShapedRecipe(new ItemStack(clubMithril, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.mithrilNugget , '*', Items.ingotMithril});
+//        register.registerShapedRecipe(new ItemStack(clubAdamantium, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.adamantiumNugget , '*', Items.ingotAdamantium});
+//        register.registerShapedRecipe(new ItemStack(clubVibranium, 1), true, new Object[]{"###", "#*#"," A ", '#', Items.VIBRANIUM_NUGGET , '*', Items.VIBRANIUM_INGOT, 'A', Items.voucherClubCore});
 
         register.registerShapedRecipe(new ItemStack(itemDynamicCoreIron, 1), true, new Object[]{"ABA", "BCB","ABA", 'A', Items.ingotIron, 'B', Blocks.glass, 'C', Blocks.blockRedstone});
         register.registerShapedRecipe(new ItemStack(itemDynamicCoreAncient_metal, 1), true, new Object[]{"ABA", "BCB","ABA",'A', Items.ingotAncientMetal , 'B', Blocks.glass, 'C', Items.itemDynamicCoreIron});
@@ -248,86 +248,86 @@ public class Items extends Item{
                 VIBRANIUM_NUGGET,
                 VIBRANIUM_NUGGET,
                 VIBRANIUM_NUGGET);
-        register.registerShapedRecipe(new ItemStack(VIBRANIUM_HELMET),
-                true,
-                "#A#",
-                "# #",
-                '#', VIBRANIUM_INGOT,
-                'A', Item.helmetAdamantium).extendsNBT();
-        register.registerShapedRecipe(new ItemStack(VIBRANIUM_CHESTPLATE),
-                true,
-                "# #",
-                "#A#",
-                "###",
-                '#', VIBRANIUM_INGOT,
-                'A', Item.plateAdamantium).extendsNBT();
-        register.registerShapedRecipe(new ItemStack(VIBRANIUM_LEGGINGS),
-                true,
-                "#A#",
-                "# #",
-                "# #",
-                '#', VIBRANIUM_INGOT,
-                'A', Item.legsAdamantium).extendsNBT();
-        register.registerShapedRecipe(new ItemStack(VIBRANIUM_BOOTS),
-                true,
-                "A #",
-                "# #",
-                '#', VIBRANIUM_INGOT,
-                'A', Item.bootsAdamantium).extendsNBT();
-        register.registerShapedRecipe(new ItemStack(VIBRANIUM_PICKAXE),
-                true,
-                "###",
-                " A ",
-                " S ",
-                '#', VIBRANIUM_INGOT,
-                'S', OBSIDIAN_STICK,
-                'A', pickaxeAncientMetal);
-        register.registerShapedRecipe(new ItemStack(VIBRANIUM_SHOVEL),
-                true,
-                "#",
-                "A",
-                "S",
-                '#', VIBRANIUM_INGOT,
-                'S', OBSIDIAN_STICK,
-                'A', shovelAncientMetal);
-        register.registerShapedRecipe(new ItemStack(VIBRANIUM_SWORD),
-                true,
-                " # ",
-                " # ",
-                " A ",
-                '#', VIBRANIUM_INGOT,
-                'S', OBSIDIAN_STICK,
-                'A', swordAncientMetal);
-        register.registerShapedRecipe(new ItemStack(VIBRANIUM_AXE),
-                true,
-                "##",
-                "A#",
-                "S ",
-                '#', VIBRANIUM_INGOT,
-                'S', OBSIDIAN_STICK,
-                'A', axeAncientMetal);
-        register.registerShapedRecipe(new ItemStack(VIBRANIUM_DAGGER),
-                true,
-                "I",
-                "A",
-                'I', VIBRANIUM_INGOT,
-                'A', daggerAncientMetal);
-        register.registerShapedRecipe(new ItemStack(VIBRANIUM_WAR_HAMMER),
-                true,
-                "III",
-                "IAI",
-                " S ",
-                'I', VIBRANIUM_INGOT,
-                'S', OBSIDIAN_STICK,
-                'A', warHammerAncientMetal);
-        register.registerShapedRecipe(new ItemStack(VIBRANIUM_BATTLE_AXE),
-                true,
-                "I I",
-                "IAI",
-                " S ",
-                'I', VIBRANIUM_INGOT,
-                'S', OBSIDIAN_STICK,
-                'A', battleAxeAncientMetal);
+//        register.registerShapedRecipe(new ItemStack(VIBRANIUM_HELMET),
+//                true,
+//                "#A#",
+//                "# #",
+//                '#', VIBRANIUM_INGOT,
+//                'A', Item.helmetAdamantium).extendsNBT();
+//        register.registerShapedRecipe(new ItemStack(VIBRANIUM_CHESTPLATE),
+//                true,
+//                "# #",
+//                "#A#",
+//                "###",
+//                '#', VIBRANIUM_INGOT,
+//                'A', Item.plateAdamantium).extendsNBT();
+//        register.registerShapedRecipe(new ItemStack(VIBRANIUM_LEGGINGS),
+//                true,
+//                "#A#",
+//                "# #",
+//                "# #",
+//                '#', VIBRANIUM_INGOT,
+//                'A', Item.legsAdamantium).extendsNBT();
+//        register.registerShapedRecipe(new ItemStack(VIBRANIUM_BOOTS),
+//                true,
+//                "A #",
+//                "# #",
+//                '#', VIBRANIUM_INGOT,
+//                'A', Item.bootsAdamantium).extendsNBT();
+//        register.registerShapedRecipe(new ItemStack(VIBRANIUM_PICKAXE),
+//                true,
+//                "###",
+//                " A ",
+//                " S ",
+//                '#', VIBRANIUM_INGOT,
+//                'S', OBSIDIAN_STICK,
+//                'A', pickaxeAncientMetal);
+//        register.registerShapedRecipe(new ItemStack(VIBRANIUM_SHOVEL),
+//                true,
+//                "#",
+//                "A",
+//                "S",
+//                '#', VIBRANIUM_INGOT,
+//                'S', OBSIDIAN_STICK,
+//                'A', shovelAncientMetal);
+//        register.registerShapedRecipe(new ItemStack(VIBRANIUM_SWORD),
+//                true,
+//                " # ",
+//                " # ",
+//                " A ",
+//                '#', VIBRANIUM_INGOT,
+//                'S', OBSIDIAN_STICK,
+//                'A', swordAncientMetal);
+//        register.registerShapedRecipe(new ItemStack(VIBRANIUM_AXE),
+//                true,
+//                "##",
+//                "A#",
+//                "S ",
+//                '#', VIBRANIUM_INGOT,
+//                'S', OBSIDIAN_STICK,
+//                'A', axeAncientMetal);
+//        register.registerShapedRecipe(new ItemStack(VIBRANIUM_DAGGER),
+//                true,
+//                "I",
+//                "A",
+//                'I', VIBRANIUM_INGOT,
+//                'A', daggerAncientMetal);
+//        register.registerShapedRecipe(new ItemStack(VIBRANIUM_WAR_HAMMER),
+//                true,
+//                "III",
+//                "IAI",
+//                " S ",
+//                'I', VIBRANIUM_INGOT,
+//                'S', OBSIDIAN_STICK,
+//                'A', warHammerAncientMetal);
+//        register.registerShapedRecipe(new ItemStack(VIBRANIUM_BATTLE_AXE),
+//                true,
+//                "I I",
+//                "IAI",
+//                " S ",
+//                'I', VIBRANIUM_INGOT,
+//                'S', OBSIDIAN_STICK,
+//                'A', battleAxeAncientMetal);
         register.registerShapelessRecipe(new ItemStack(VIBRANIUM_INGOT, 9), true, Blocks.blockVibranium);
         register.registerShapelessRecipe(new ItemStack(Item.diamond),
                 false,

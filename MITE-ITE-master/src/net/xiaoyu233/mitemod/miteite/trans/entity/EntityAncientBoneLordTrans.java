@@ -17,14 +17,15 @@ public class EntityAncientBoneLordTrans extends EntityBoneLordTrans {
    protected void addRandomEquipment() {
       this.addRandomWeapon();
       int day = this.getWorld() != null ? Math.max(this.getWorld().getDayOfOverworld() - 16, 0) : 0;
-      if (day < 96) {
-         this.setBoots((new ItemStack(Item.bootsAncientMetal)).randomizeForMob(this, true));
-         this.setLeggings((new ItemStack(Item.legsAncientMetal)).randomizeForMob(this, true));
-         this.setCuirass((new ItemStack(Item.plateAncientMetal)).randomizeForMob(this, true));
-         this.setHelmet((new ItemStack(Item.helmetAncientMetal)).randomizeForMob(this, true));
-      } else {
-         MonsterUtil.addDefaultArmor(day, this, true);
-      }
+//      if (day < 96) {
+//         this.setBoots((new ItemStack(Item.bootsAncientMetal)).randomizeForMob(this, true));
+//         this.setLeggings((new ItemStack(Item.legsAncientMetal)).randomizeForMob(this, true));
+//         this.setCuirass((new ItemStack(Item.plateAncientMetal)).randomizeForMob(this, true));
+//         this.setHelmet((new ItemStack(Item.helmetAncientMetal)).randomizeForMob(this, true));
+//      } else {
+//         MonsterUtil.addDefaultArmor(day, this, true);
+//      }
+      MonsterUtil.addDefaultArmor(day, this, true);
       this.initStockedWeapon();
    }
 

@@ -17,7 +17,7 @@ import java.io.File;
 
 @Mod
 public class MITEITEMod extends AbstractMod {
-    // jar -cvf mite-extreme-v0.0.4.jar .
+    // jar -cvf MITE-Extreme-2024-Spring-v0.0.4.jar .
     private static final int MOD_LOADER_MIN_VER_NUM = 100;
     private static final String MOD_LOADER_MIN_VER_STRING = "v1.0.0";
     @Override
@@ -28,7 +28,7 @@ public class MITEITEMod extends AbstractMod {
     @Nonnull
     @Override
     public InjectionConfig getInjectionConfig() {
-        return InjectionConfig.Builder.of("MITE-Extreme", MinecraftTrans.class.getPackage(), MixinEnvironment.Phase.INIT).setRequired().build();
+        return InjectionConfig.Builder.of("MITE-Extreme-2024-Spring", MinecraftTrans.class.getPackage(), MixinEnvironment.Phase.INIT).setRequired().build();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class MITEITEMod extends AbstractMod {
         if (modLoaderNum < MOD_LOADER_MIN_VER_NUM){
             JFrame diaFrame = new JFrame();
             diaFrame.setAlwaysOnTop(true);
-            JOptionPane.showMessageDialog(diaFrame,"MITE-Extreme加载错误: 模组加载器版本过低\nFishModLoader模组加载器需要至少" + MOD_LOADER_MIN_VER_STRING + "版本 \n当前版本:" + modLoader.getModVerStr(),"错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(diaFrame,"MITE-Extreme-2024-Spring加载错误: 模组加载器版本过低\nFishModLoader模组加载器需要至少" + MOD_LOADER_MIN_VER_STRING + "版本 \n当前版本:" + modLoader.getModVerStr(),"错误", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
         EventListeners.registerAllEvents();
@@ -47,7 +47,7 @@ public class MITEITEMod extends AbstractMod {
 
     @Override
     public String modId() {
-        return "MITE-Extreme";
+        return "MITE-Extreme-2024-Spring";
     }
 
     @Override

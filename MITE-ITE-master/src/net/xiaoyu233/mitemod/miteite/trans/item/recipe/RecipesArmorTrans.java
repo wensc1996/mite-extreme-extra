@@ -8,22 +8,27 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(RecipesArmor.class)
-public abstract class RecipesArmorTrans {
+public class RecipesArmorTrans {
     @Shadow
     private CraftingManager crafting_manager;
 
-    @Shadow
-    protected abstract void addBootsRecipe(Item boots, Item component);
 
-    @Shadow
-    protected abstract void addCuirassRecipe(Item cuirass, Item component);
+    private void addCuirassRecipe(Item cuirass, Item component){};
 
-    @Shadow
-    protected abstract void addHelmetRecipe(Item helmet, Item component);
 
-    @Shadow
-    protected abstract void addLeggingsRecipe(Item leggings, Item component);
+    private void addHelmetRecipe(Item helmet, Item component){};
 
+
+    private void addBootsRecipe(Item boots, Item component) {};
+
+    private void addLeggingsRecipe(Item leggings, Item component) {
+
+    }
+
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public void addRecipes(CraftingManager par1CraftingManager) {
         this.crafting_manager = par1CraftingManager;
@@ -40,76 +45,76 @@ public abstract class RecipesArmorTrans {
         }
 
         //Mithril -> Adamantium
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.helmetAdamantium),true,
-                "AHA",
-                "A A",
-                'A',Item.ingotAdamantium,
-                'H',Item.helmetMithril).func_92100_c();
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.plateAdamantium),true,
-                "A A",
-                "APA",
-                "AAA",
-                'A',Item.ingotAdamantium,
-                'P',Item.plateMithril).func_92100_c();
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.legsAdamantium),true,
-                "ALA",
-                "A A",
-                "A A",
-                'A',Item.ingotAdamantium,
-                'L',Item.legsMithril).func_92100_c();
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.bootsAdamantium),true,
-                "B A",
-                "A A",
-                'A',Item.ingotAdamantium,
-                'B',Item.bootsMithril).func_92100_c();
-
-        //Ancient -> Mithril
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.helmetMithril),true,
-                "AAA",
-                "AHA",
-                'A',Item.ingotMithril,
-                'H',Item.helmetAncientMetal).func_92100_c();
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.plateMithril),true,
-                "APA",
-                "AAA",
-                "AAA",
-                'A',Item.ingotMithril,
-                'P',Item.plateAncientMetal).func_92100_c();
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.legsMithril),true,
-                "AAA",
-                "ALA",
-                "A A",
-                'A',Item.ingotMithril,
-                'L',Item.legsAncientMetal).func_92100_c();
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.bootsMithril),true,
-                "ABA",
-                "A A",
-                'A',Item.ingotMithril,
-                'B',Item.bootsAncientMetal).func_92100_c();
-
-        //Iron -> Ancient
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.helmetAncientMetal),true,
-                "AAA",
-                "AHA",
-                'A',Item.ingotAncientMetal,
-                'H',Item.helmetIron).func_92100_c();
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.plateAncientMetal),true,
-                "APA",
-                "AAA",
-                "AAA",
-                'A',Item.ingotAncientMetal,
-                'P',Item.plateIron).func_92100_c();
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.legsAncientMetal),true,
-                "AAA",
-                "ALA",
-                "A A",
-                'A',Item.ingotAncientMetal,
-                'L',Item.legsIron).func_92100_c();
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.bootsAncientMetal),true,
-                "ABA",
-                "A A",
-                'A',Item.ingotAncientMetal,
-                'B',Item.bootsIron).func_92100_c();
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.helmetAdamantium),true,
+//                "AHA",
+//                "A A",
+//                'A',Item.ingotAdamantium,
+//                'H',Item.helmetMithril).func_92100_c();
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.plateAdamantium),true,
+//                "A A",
+//                "APA",
+//                "AAA",
+//                'A',Item.ingotAdamantium,
+//                'P',Item.plateMithril).func_92100_c();
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.legsAdamantium),true,
+//                "ALA",
+//                "A A",
+//                "A A",
+//                'A',Item.ingotAdamantium,
+//                'L',Item.legsMithril).func_92100_c();
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.bootsAdamantium),true,
+//                "B A",
+//                "A A",
+//                'A',Item.ingotAdamantium,
+//                'B',Item.bootsMithril).func_92100_c();
+//
+//        //Ancient -> Mithril
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.helmetMithril),true,
+//                "AAA",
+//                "AHA",
+//                'A',Item.ingotMithril,
+//                'H',Item.helmetAncientMetal).func_92100_c();
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.plateMithril),true,
+//                "APA",
+//                "AAA",
+//                "AAA",
+//                'A',Item.ingotMithril,
+//                'P',Item.plateAncientMetal).func_92100_c();
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.legsMithril),true,
+//                "AAA",
+//                "ALA",
+//                "A A",
+//                'A',Item.ingotMithril,
+//                'L',Item.legsAncientMetal).func_92100_c();
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.bootsMithril),true,
+//                "ABA",
+//                "A A",
+//                'A',Item.ingotMithril,
+//                'B',Item.bootsAncientMetal).func_92100_c();
+//
+//        //Iron -> Ancient
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.helmetAncientMetal),true,
+//                "AAA",
+//                "AHA",
+//                'A',Item.ingotAncientMetal,
+//                'H',Item.helmetIron).func_92100_c();
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.plateAncientMetal),true,
+//                "APA",
+//                "AAA",
+//                "AAA",
+//                'A',Item.ingotAncientMetal,
+//                'P',Item.plateIron).func_92100_c();
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.legsAncientMetal),true,
+//                "AAA",
+//                "ALA",
+//                "A A",
+//                'A',Item.ingotAncientMetal,
+//                'L',Item.legsIron).func_92100_c();
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.bootsAncientMetal),true,
+//                "ABA",
+//                "A A",
+//                'A',Item.ingotAncientMetal,
+//                'B',Item.bootsIron).func_92100_c();
 
         int plank_subtype, i;
         for(i = 0; i < Block.workbench.getNumSubBlocks(); ++i) {
@@ -131,10 +136,10 @@ public abstract class RecipesArmorTrans {
             }
         }
 
-        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.bootsAncientMetal),true,
-                "ABA",
-                "A A",
-                'A',Item.ingotAncientMetal,
-                'B',Item.bootsIron).func_92100_c();
+//        ((CraftingManagerInvoker)this.crafting_manager).addRecipeP(new ItemStack(Item.bootsAncientMetal),true,
+//                "ABA",
+//                "A A",
+//                'A',Item.ingotAncientMetal,
+//                'B',Item.bootsIron).func_92100_c();
     }
 }

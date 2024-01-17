@@ -52,38 +52,44 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
    @Override
    protected void addRandomArmor() {
       super.addRandomArmor();
-      if (this.worldObj.isUnderworld() && this.worldObj.getDayOfOverworld() < 64) {
-         MonsterUtil.addDefaultArmor(64, this, true);
-      }
+      MonsterUtil.addDefaultArmor(this.worldObj.getDayOfOverworld(), this, true);
+//      if (this.worldObj.isUnderworld() && this.worldObj.getDayOfOverworld() < 64) {
+//         MonsterUtil.addDefaultArmor(64, this, true);
+//      }
    }
 
    @Overwrite
    public void addRandomWeapon() {
       int day_of_world = MinecraftServer.F().getOverworld().getDayOfOverworld();
-      if (this.getSkeletonType() == 2 && day_of_world >= 64) {
-         if (this.getRNG().nextInt(Math.max(2, 20 - day_of_world / 48)) == 1) {
-            super.setCurrentItemOrArmor(0, (new ItemStack(this.getWeapon(day_of_world))).randomizeForMob(this, day_of_world >= 96));
-         } else if (!this.getRNG().nextBoolean()) {
-            super.setCurrentItemOrArmor(0, (new ItemStack(Item.daggerIron)).randomizeForMob(this, day_of_world >= 128));
-         } else {
-            super.setCurrentItemOrArmor(0, (new ItemStack(Item.daggerRustedIron)).randomizeForMob(this, day_of_world >= 96));
-         }
-
-      } else if (this.getSkeletonType() == 2 && this.getRNG().nextInt(20) == 0 && day_of_world >= 10) {
-         if (!this.getRNG().nextBoolean()) {
-            if (day_of_world >= 20) {
-               super.setCurrentItemOrArmor(0, (new ItemStack(this.getWeapon(day_of_world))).randomizeForMob(this, false));
-            } else {
-               super.setCurrentItemOrArmor(0, (new ItemStack(Item.daggerRustedIron)).randomizeForMob(this, false));
-            }
-         } else {
-            super.setCurrentItemOrArmor(0, (new ItemStack(Item.daggerRustedIron)).randomizeForMob(this, false));
-         }
-
+      if(this.getSkeletonType() == 2) {
+         super.setCurrentItemOrArmor(0, (new ItemStack(this.getWeapon(day_of_world))).randomizeForMob(this, day_of_world >= 32));
       } else {
-         this.setCombatTask();
-         super.setCurrentItemOrArmor(0, (new ItemStack(this.getSkeletonType() == 2 ? (this.getRNG().nextInt(2) == 0 ? Item.clubWood : Items.clubIron) : Item.bow)).randomizeForMob(this, true));
+         super.setCurrentItemOrArmor(0, (new ItemStack(Item.bow)).randomizeForMob(this, true));
       }
+//      if (this.getSkeletonType() == 2 && day_of_world >= 64) {
+//         if (this.getRNG().nextInt(Math.max(2, 20 - day_of_world / 48)) == 1) {
+//            super.setCurrentItemOrArmor(0, (new ItemStack(this.getWeapon(day_of_world))).randomizeForMob(this, day_of_world >= 96));
+//         } else if (!this.getRNG().nextBoolean()) {
+//            super.setCurrentItemOrArmor(0, (new ItemStack(Item.daggerIron)).randomizeForMob(this, day_of_world >= 128));
+//         } else {
+//            super.setCurrentItemOrArmor(0, (new ItemStack(Item.daggerRustedIron)).randomizeForMob(this, day_of_world >= 96));
+//         }
+//
+//      } else if (this.getSkeletonType() == 2 && this.getRNG().nextInt(20) == 0 && day_of_world >= 10) {
+//         if (!this.getRNG().nextBoolean()) {
+//            if (day_of_world >= 20) {
+//               super.setCurrentItemOrArmor(0, (new ItemStack(this.getWeapon(day_of_world))).randomizeForMob(this, false));
+//            } else {
+//               super.setCurrentItemOrArmor(0, (new ItemStack(Item.daggerRustedIron)).randomizeForMob(this, false));
+//            }
+//         } else {
+//            super.setCurrentItemOrArmor(0, (new ItemStack(Item.daggerRustedIron)).randomizeForMob(this, false));
+//         }
+//
+//      } else {
+//         this.setCombatTask();
+//         super.setCurrentItemOrArmor(0, (new ItemStack(this.getSkeletonType() == 2 ? (this.getRNG().nextInt(2) == 0 ? Item.clubWood : Items.clubIron) : Item.bow)).randomizeForMob(this, true));
+//      }
    }
 
    @Overwrite
@@ -124,7 +130,11 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
    }
 
    private Item getWeapon(int day){
-      return Constant.SWORDS[Math.max(Math.min(day / 64,Constant.SWORDS.length - 1),0)];
+      day += this.worldObj.isUnderworld() ? 32 : 0;
+      int weight = day / 32 + rand.nextInt(3) - 1;
+      int weaponIndex = Math.max(Math.min(weight, Constant.SWORDS.length - 1),0);
+      return Constant.SWORDS[weaponIndex][rand.nextInt(Constant.SWORDS[weaponIndex].length)];
+//      return Constant.SWORDS[Math.max(Math.min(day / 64,Constant.SWORDS.length - 1),0)];
    }
 
    @Override

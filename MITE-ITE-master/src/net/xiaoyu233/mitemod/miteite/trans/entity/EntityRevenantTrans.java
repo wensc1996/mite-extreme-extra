@@ -25,14 +25,15 @@ public class EntityRevenantTrans extends EntityZombie {
    protected void addRandomEquipment() {
       this.addRandomWeapon();
       int day = this.getWorld().getDayOfOverworld();
-      if (day < 128) {
-         this.setBoots((new ItemStack(Item.bootsRustedIron)).randomizeForMob(this, true));
-         this.setLeggings((new ItemStack(Item.legsRustedIron)).randomizeForMob(this, true));
-         this.setCuirass((new ItemStack(Item.plateRustedIron)).randomizeForMob(this, true));
-         this.setHelmet((new ItemStack(Item.helmetRustedIron)).randomizeForMob(this, true));
-      } else {
-         MonsterUtil.addDefaultArmor(day, this, true);
-      }
+      MonsterUtil.addDefaultArmor(day, this, true);
+//      if (day < 128) {
+//         this.setBoots((new ItemStack(Item.bootsRustedIron)).randomizeForMob(this, true));
+//         this.setLeggings((new ItemStack(Item.legsRustedIron)).randomizeForMob(this, true));
+//         this.setCuirass((new ItemStack(Item.plateRustedIron)).randomizeForMob(this, true));
+//         this.setHelmet((new ItemStack(Item.helmetRustedIron)).randomizeForMob(this, true));
+//      } else {
+//         MonsterUtil.addDefaultArmor(day, this, true);
+//      }
    }
 
    @Overwrite

@@ -9,8 +9,8 @@ import java.util.Random;
 public class Constant {
     public static final double[] ENHANCE_FACTORS;
     public static final bjo icons_ite = new bjo("textures/gui/icons_ite.png");
-    public static final String MITE_ITE_VERSION = "v0.1.5.11";
-    public static final int MITE_ITE_VER_NUM = 77;
+    public static final String MITE_ITE_VERSION = "v0.0.2";
+    public static final int MITE_ITE_VER_NUM = 2;
     public static final bjo RES_VIBRANIUM_SINGLE = new bjo("textures/entity/chest/vibranium_single.png");
     public static int nextItemID = 2024;
     public static int nextBlockID = 160;
@@ -20,7 +20,7 @@ public class Constant {
     public static ItemArmor[] CHESTPLATES = null;
     public static ItemArmor[] LEGGINGS = null;
     public static ItemArmor[] BOOTS = null;
-    public static Item[] SWORDS = null;
+    public static Item[][] SWORDS = null;
     public static ItemArmor[][] ARMORS = null;
     public static BlockBed [] bedBlockTypes= null;
     public static Random GARandom = new Random();
@@ -63,7 +63,21 @@ public class Constant {
         LEGGINGS = new ItemArmor[]{Item.legsLeather, Item.legsChainCopper, Item.legsCopper, Item.legsRustedIron, Item.legsChainIron, Item.legsIron, Item.legsChainAncientMetal, Item.legsAncientMetal, Item.legsChainMithril, Item.legsMithril, Item.legsAdamantium, Items.VIBRANIUM_LEGGINGS};
         BOOTS = new ItemArmor[]{Item.bootsLeather, Item.bootsChainCopper, Item.bootsCopper, Item.bootsRustedIron, Item.bootsChainIron, Item.bootsIron, Item.bootsChainAncientMetal, Item.bootsAncientMetal, Item.bootsChainMithril, Item.bootsMithril, Item.bootsAdamantium, Items.VIBRANIUM_BOOTS};
         ARMORS = new ItemArmor[][]{HELMETS, CHESTPLATES, LEGGINGS, BOOTS};
-        SWORDS = new Item[]{Item.swordRustedIron, Item.swordIron, Items.clubIron, Item.swordAncientMetal,Item.swordMithril,Item.swordAdamantium,Items.VIBRANIUM_SWORD};
+        SWORDS = new Item[][]{
+                {Items.swordCopper, Items.swordSilver, Items.swordGold, Item.pickaxeCopper, Item.pickaxeSilver, Item.pickaxeGold, Item.shovelCopper, Item.shovelSilver, Item.shovelGold,
+                        Item.axeCopper, Item.axeSilver, Item.axeGold,Item.hoeCopper, Item.hoeSilver, Item.hoeGold, Item.mattockCopper, Item.mattockSilver, Item.mattockGold, Item.battleAxeCopper,
+                        Item.battleAxeSilver, Item.battleAxeGold, Item.warHammerCopper, Item.warHammerSilver, Item.warHammerGold, Item.scytheCopper, Item.scytheSilver, Item.scytheGold,
+                        Item.hatchetCopper, Item.hatchetSilver, Item.hatchetGold, Item.shearsCopper, Item.shearsSilver, Item.shearsGold},
+                {Item.swordRustedIron, Item.swordIron, Items.clubIron, Item.pickaxeIron, Item.pickaxeRustedIron, Item.shovelIron, Item.shovelRustedIron, Item.axeIron,
+                        Item.axeRustedIron, Item.hoeIron, Item.hoeRustedIron, Item.mattockIron, Item.mattockRustedIron, Item.battleAxeIron, Item.battleAxeRustedIron,
+                        Item.warHammerIron, Item.warHammerRustedIron, Item.scytheIron, Item.scytheRustedIron, Item.hatchetIron, Item.hatchetRustedIron},
+                {Item.swordAncientMetal, Item.pickaxeAncientMetal, Item.shearsAncientMetal, Item.axeAncientMetal, Item.hoeAncientMetal, Item.mattockAncientMetal, Item.battleAxeAncientMetal,
+                        Item.warHammerAncientMetal, Item.scytheAncientMetal, Item.hatchetAncientMetal, Item.hatchetAncientMetal},
+                {Item.swordMithril, Items.clubMithril, Item.pickaxeMithril, Item.shovelMithril, Item.axeMithril, Item.hoeMithril, Item.mattockMithril,
+                        Item.battleAxeMithril, Item.warHammerMithril, Item.scytheMithril, Item.hatchetMithril, Item.hatchetMithril},
+                {Item.swordAdamantium, Items.clubAdamantium, Item.pickaxeAdamantium, Item.shovelAdamantium, Item.axeAdamantium, Item.hoeAdamantium,
+                        Item.mattockAdamantium, Item.battleAxeAdamantium, Item.scytheAdamantium, Item.hatchetAdamantium},
+                {Items.VIBRANIUM_SWORD, Items.clubVibranium, Items.VIBRANIUM_PICKAXE, Items.VIBRANIUM_SHOVEL, Items.VIBRANIUM_AXE, Items.VIBRANIUM_BATTLE_AXE}};
         bedBlockTypes = new BlockBed[] {Blocks.blackBed,
                 Blocks.redBed,Blocks.greenBed,Blocks.brownBed,Blocks.blueBed,Blocks.purpleBed,Blocks.cyanBed,Blocks.silverBed,Blocks.grayBed,Blocks.pinkBed,Blocks.limeBed,Blocks.yellowBed
                 ,Blocks.lightBlueBed,Blocks.magentaBed,Blocks.orangeBed, Blocks.bed};

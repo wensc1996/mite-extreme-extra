@@ -48,27 +48,17 @@ public class RegisterHelper {
         Items.silk.setSoldPrice(0.1D);
         Items.feather.setSoldPrice(0.1D);
         Items.flint.setSoldPrice(0.1D);
-        Items.redstone.setSoldPrice(1D);
-        Items.coal.setSoldPrice(1D);
         Items.bone.setSoldPrice(1D);
         Items.gunpowder.setSoldPrice(1D);
         Items.rottenFlesh.setSoldPrice(1D);
         Items.spiderEye.setSoldPrice(1D);
-        Items.doorWood.setSoldPrice(1.5D);
-        Items.doorCopper.setSoldPrice(30D);
-        Items.doorSilver.setSoldPrice(30D);
-        Items.doorGold.setSoldPrice(30D);
-        Items.doorIron.setSoldPrice(60D);
-        Items.doorMithril.setSoldPrice(120D);
-        Items.doorAdamantium.setSoldPrice(180D);
-        Items.ingotCopper.setSoldPrice(10D);
-        Items.ingotSilver.setSoldPrice(10D);
-        Items.ingotGold.setSoldPrice(10D);
-        Items.ingotIron.setSoldPrice(20D);
-        Items.ingotAncientMetal.setSoldPrice(30D);
-        Items.ingotMithril.setSoldPrice(40D);
-        Items.ingotAdamantium.setSoldPrice(60D);
-        VIBRANIUM_INGOT.setSoldPrice(100D);
+        Items.doorWood.setSoldPrice(1D);
+        Items.doorCopper.setSoldPrice(15D);
+        Items.doorSilver.setSoldPrice(15D);
+        Items.doorGold.setSoldPrice(15D);
+        Items.doorIron.setSoldPrice(30D);
+        Items.doorMithril.setSoldPrice(60D);
+        Items.doorAdamantium.setSoldPrice(90D);
         Items.copperNugget.setSoldPrice(1D);
         Items.silverNugget.setSoldPrice(1D);
         Items.goldNugget.setSoldPrice(1D);
@@ -77,8 +67,22 @@ public class RegisterHelper {
         Items.mithrilNugget.setSoldPrice(4D);
         Items.adamantiumNugget.setSoldPrice(6D);
         VIBRANIUM_NUGGET.setSoldPrice(10D);
-        Items.bread.setBuyPrice(0.2D).setSoldPrice(0.2D);
 
+        Item.clubWood.setBuyPrice(1D);
+
+//        Items.redstone.setSoldPrice(1D);
+//        Items.coal.setSoldPrice(1D);
+//        Items.ingotCopper.setSoldPrice(10D);
+//        Items.ingotSilver.setSoldPrice(10D);
+//        Items.ingotGold.setSoldPrice(10D);
+//        Items.ingotIron.setSoldPrice(20D);
+//        Items.ingotAncientMetal.setSoldPrice(30D);
+//        Items.ingotMithril.setSoldPrice(40D);
+//        Items.ingotAdamantium.setSoldPrice(60D);
+//        VIBRANIUM_INGOT.setSoldPrice(100D);
+
+
+        Items.bread.setBuyPrice(0.2D).setSoldPrice(0.2D);
         Items.getItem(Blocks.blockStairsColorful0.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
         Items.getItem(Blocks.blockStairsColorful1.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
         Items.getItem(Blocks.blockStairsColorful2.blockID).setBuyPrice(0.5D).setSoldPrice(0.5D);
