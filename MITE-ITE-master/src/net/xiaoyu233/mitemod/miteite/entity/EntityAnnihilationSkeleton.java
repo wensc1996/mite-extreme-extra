@@ -13,7 +13,7 @@ public class EntityAnnihilationSkeleton extends EntitySkeleton {
         ItemStack itemStack = new ItemStack(Items.VIBRANIUM_DAGGER);
         itemStack.addEnchantment(Enchantment.knockback,5);
         return itemStack;
-    }, null);
+    }, null).randomizeForMob(this, true);
     private int particleCount;
     public EntityAnnihilationSkeleton(World par1World) {
         super(par1World);
@@ -175,6 +175,9 @@ public class EntityAnnihilationSkeleton extends EntitySkeleton {
     @Override
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
+            if(rand.nextInt(2) == 0) {
+                this.dropItemStack(new ItemStack(Items.redEnvelope, 1));
+            }
             this.dropItem(Items.voucherAnnihilationSkeleton);
             this.dropItemStack(new ItemStack(Items.VIBRANIUM_NUGGET,2));
             this.dropItemStack(new ItemStack(Item.diamond,2));

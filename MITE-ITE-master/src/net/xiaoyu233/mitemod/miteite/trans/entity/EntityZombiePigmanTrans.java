@@ -59,6 +59,11 @@ public abstract class EntityZombiePigmanTrans extends EntityZombie implements IR
     @Overwrite
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         this.dropItem(Items.voucherPigman);
+        if(recently_hit_by_player) {
+            if(rand.nextInt(2) == 0) {
+                this.dropItemStack(new ItemStack(Items.redEnvelope, 1));
+            }
+        }
         if (this.rand.nextFloat() < (recently_hit_by_player ? 0.5F : 0.25F)) {
             this.dropItem(Item.rottenFlesh);
         }

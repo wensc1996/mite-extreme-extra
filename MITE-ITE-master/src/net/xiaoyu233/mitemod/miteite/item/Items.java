@@ -82,6 +82,8 @@ public class Items extends Item{
     public static ItemEnhanceGemBox itemEnhanceGemBox = (ItemEnhanceGemBox)(new ItemEnhanceGemBox(Constant.getNextItemID())).setUnlocalizedName("enhance_gem_box_phase1");
     public static ItemGemShard itemGemShard = (ItemGemShard)(new ItemGemShard(Constant.getNextItemID())).setUnlocalizedName("gem_shard");
 
+    public static ItemRedEnvelope redEnvelope = (ItemRedEnvelope)(new ItemRedEnvelope(Constant.getNextItemID())).setUnlocalizedName("red_envelope");
+
     private static Item register(String resourceLocation, Item item, CreativeModeTab tab) {
         item.setResourceLocation(item.getResourceLocationPrefix() + resourceLocation);
         item.setUnlocalizedName(resourceLocation);

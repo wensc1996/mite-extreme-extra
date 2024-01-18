@@ -46,6 +46,9 @@ public class EntityZombieLord extends EntityZombie {
     @Override
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
+            if(rand.nextInt(2) == 0) {
+                this.dropItemStack(new ItemStack(Items.redEnvelope, 1));
+            }
             this.dropItem(Items.voucherZombieLord);
             int day = this.getWorld().getDayOfOverworld();
             int diamond_count = (day / 32) >= 3 ? 3 : ((day / 32) + 1);

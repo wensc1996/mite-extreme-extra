@@ -31,6 +31,7 @@ item.ring_killer_ancient.name=远古魔灵刃
 item.ring_killer_mithril.name=秘银魔灵刃
 item.ring_killer_adamantium.name=艾德曼魔灵刃
 item.ring_killer_vibranium.name=振金魔灵刃
+item.red_envelope.name=红包
 
 item.bed.red.name=红色的床
 item.bed.green.name=绿色的床
@@ -221,6 +222,7 @@ item.tooltip.gem_shard_usage_1=用于合成五宝石
 item.tooltip.gem_shard_usage_2=用于合成六角宝石
 item.tooltip.gem_shard_usage_3=用于合成七角宝石
 item.tooltip.gem_shard_usage_4=用于合成八角宝石
+item.tooltip.red_envelope=随机获得1-5游戏币
 
 tile.gem_setting.name=宝石镶嵌台
 container.crafting.needsRemoveGems=请先移除宝石

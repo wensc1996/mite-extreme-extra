@@ -10,6 +10,9 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.item.Items;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Arrays;
 
@@ -38,11 +41,10 @@ class EntityZombieTrans extends EntityAnimalWatcher {
    }
 
    private Item getWeapon(int day){
-      day += this.worldObj.isUnderworld() ? 32 : 0;
-      int weight = day / 32 + rand.nextInt(3) - 1;
+      day += this.worldObj.isUnderworld() ? 16 : 0;
+      int weight = Math.max(day, 16) / 16 + rand.nextInt(3) - 1;
       int weaponIndex = Math.max(Math.min(weight, Constant.SWORDS.length - 1),0);
       return Constant.SWORDS[weaponIndex][rand.nextInt(Constant.SWORDS[weaponIndex].length)];
-//      return Constant.SWORDS[Math.max(Math.min(day / 64,Constant.SWORDS.length - 1),0)];
    }
 
    @Overwrite
@@ -68,6 +70,15 @@ class EntityZombieTrans extends EntityAnimalWatcher {
       }
 
       return var1;
+   }
+
+   @Inject(method = "dropFewItems", at = @At("HEAD"))
+   public void InjectThrowRedEnvelope(boolean recently_hit_by_player, DamageSource damage_source, CallbackInfo ci) {
+      if(recently_hit_by_player) {
+         if(rand.nextInt(2) == 0) {
+            this.dropItemStack(new ItemStack(Items.redEnvelope, 1));
+         }
+      }
    }
 
    @Overwrite

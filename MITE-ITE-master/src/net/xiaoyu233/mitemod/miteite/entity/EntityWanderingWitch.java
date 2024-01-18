@@ -204,9 +204,14 @@ public class EntityWanderingWitch extends EntityWitch {
     @Override
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         super.dropFewItems(recently_hit_by_player, damage_source);
-        this.dropItem(Items.voucherWitch);
-        this.dropItemStack(new ItemStack(Item.adamantiumNugget,rand.nextInt(3) + 1));
-        this.dropItemStack(new ItemStack(Item.netherStalkSeeds,4));
+        if(recently_hit_by_player) {
+            if(rand.nextInt(2) == 0) {
+                this.dropItemStack(new ItemStack(Items.redEnvelope, 1));
+            }
+            this.dropItem(Items.voucherWitch);
+            this.dropItemStack(new ItemStack(Item.adamantiumNugget,rand.nextInt(3) + 1));
+            this.dropItemStack(new ItemStack(Item.netherStalkSeeds,4));
+        }
     }
 
     @Override

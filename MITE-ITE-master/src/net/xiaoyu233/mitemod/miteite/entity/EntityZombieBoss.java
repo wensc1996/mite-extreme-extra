@@ -58,6 +58,9 @@ public class EntityZombieBoss extends EntityZombie {
 
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
+            if(rand.nextInt(2) == 0) {
+                this.dropItemStack(new ItemStack(Items.redEnvelope, 1));
+            }
             this.broadcastDamage("僵尸BOSS挑战成功");
             MinecraftServer server = MinecraftServer.F();
             Iterator var4 = server.getConfigurationManager().playerEntityList.iterator();

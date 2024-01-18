@@ -130,11 +130,10 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
    }
 
    private Item getWeapon(int day){
-      day += this.worldObj.isUnderworld() ? 32 : 0;
-      int weight = day / 32 + rand.nextInt(3) - 1;
+      day += this.worldObj.isUnderworld() ? 16 : 0;
+      int weight = Math.max(day, 16) / 16 + rand.nextInt(3) - 1;
       int weaponIndex = Math.max(Math.min(weight, Constant.SWORDS.length - 1),0);
       return Constant.SWORDS[weaponIndex][rand.nextInt(Constant.SWORDS[weaponIndex].length)];
-//      return Constant.SWORDS[Math.max(Math.min(day / 64,Constant.SWORDS.length - 1),0)];
    }
 
    @Override
@@ -227,6 +226,11 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
 
    @Overwrite
    protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
+      if(recently_hit_by_player) {
+         if(rand.nextInt(2) == 0) {
+            this.dropItemStack(new ItemStack(Items.redEnvelope, 1));
+         }
+      }
       int looting = damage_source.getLootingModifier();
       int num_drops;
       int i;

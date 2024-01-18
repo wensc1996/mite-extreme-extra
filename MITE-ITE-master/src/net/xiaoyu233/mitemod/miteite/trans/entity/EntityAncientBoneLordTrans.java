@@ -33,6 +33,9 @@ public class EntityAncientBoneLordTrans extends EntityBoneLordTrans {
    protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
       super.dropFewItems(recently_hit_by_player, damage_source);
       if (recently_hit_by_player){
+         if(rand.nextInt(2) == 0) {
+            this.dropItemStack(new ItemStack(Items.redEnvelope, 1));
+         }
          this.dropItem(Items.voucherAnnihilationSkeleton);
       }
    }

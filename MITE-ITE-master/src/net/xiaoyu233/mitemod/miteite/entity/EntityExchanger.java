@@ -36,6 +36,9 @@ public class EntityExchanger extends EntitySkeleton {
     @Override
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
+            if(rand.nextInt(2) == 0) {
+                this.dropItemStack(new ItemStack(Items.redEnvelope, 1));
+            }
             this.dropItem(Items.voucherExchanger);
             int count = 3;
             for (int i1 = 0; i1 < count; i1++) {

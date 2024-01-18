@@ -9,8 +9,8 @@ import java.util.Random;
 public class Constant {
     public static final double[] ENHANCE_FACTORS;
     public static final bjo icons_ite = new bjo("textures/gui/icons_ite.png");
-    public static final String MITE_ITE_VERSION = "v0.0.2";
-    public static final int MITE_ITE_VER_NUM = 2;
+    public static final String MITE_ITE_VERSION = "v0.0.3";
+    public static final int MITE_ITE_VER_NUM = 3;
     public static final bjo RES_VIBRANIUM_SINGLE = new bjo("textures/entity/chest/vibranium_single.png");
     public static int nextItemID = 2024;
     public static int nextBlockID = 160;
@@ -58,12 +58,13 @@ public class Constant {
     }
 
     public static void initItemArray() {
-        HELMETS = new ItemArmor[]{Item.helmetLeather, Item.helmetChainCopper, Item.helmetCopper, Item.helmetRustedIron, Item.helmetChainIron, Item.helmetIron, Item.helmetChainAncientMetal, Item.helmetAncientMetal, Item.helmetChainMithril, Item.helmetMithril, Item.helmetAdamantium, Items.VIBRANIUM_HELMET};
-        CHESTPLATES = new ItemArmor[]{Item.plateLeather, Item.plateChainCopper, Item.plateCopper, Item.plateRustedIron, Item.plateChainIron, Item.plateIron, Item.plateChainAncientMetal, Item.plateAncientMetal, Item.plateChainMithril, Item.plateMithril, Item.plateAdamantium, Items.VIBRANIUM_CHESTPLATE};
-        LEGGINGS = new ItemArmor[]{Item.legsLeather, Item.legsChainCopper, Item.legsCopper, Item.legsRustedIron, Item.legsChainIron, Item.legsIron, Item.legsChainAncientMetal, Item.legsAncientMetal, Item.legsChainMithril, Item.legsMithril, Item.legsAdamantium, Items.VIBRANIUM_LEGGINGS};
-        BOOTS = new ItemArmor[]{Item.bootsLeather, Item.bootsChainCopper, Item.bootsCopper, Item.bootsRustedIron, Item.bootsChainIron, Item.bootsIron, Item.bootsChainAncientMetal, Item.bootsAncientMetal, Item.bootsChainMithril, Item.bootsMithril, Item.bootsAdamantium, Items.VIBRANIUM_BOOTS};
+        HELMETS = new ItemArmor[]{Item.helmetLeather, Item.helmetChainCopper, Item.helmetCopper, Item.helmetRustedIron, Item.helmetChainIron, Item.helmetIron, Item.helmetChainAncientMetal, Item.helmetAncientMetal, Item.helmetChainMithril, Item.helmetMithril, Item.helmetChainAdamantium, Item.helmetAdamantium, Items.VIBRANIUM_HELMET};
+        CHESTPLATES = new ItemArmor[]{Item.plateLeather, Item.plateChainCopper, Item.plateCopper, Item.plateRustedIron, Item.plateChainIron, Item.plateIron, Item.plateChainAncientMetal, Item.plateAncientMetal, Item.plateChainMithril, Item.plateMithril, Item.plateChainAdamantium, Item.plateAdamantium, Items.VIBRANIUM_CHESTPLATE};
+        LEGGINGS = new ItemArmor[]{Item.legsLeather, Item.legsChainCopper, Item.legsCopper, Item.legsRustedIron, Item.legsChainIron, Item.legsIron, Item.legsChainAncientMetal, Item.legsAncientMetal, Item.legsChainMithril, Item.legsMithril, Item.legsChainAdamantium, Item.legsAdamantium, Items.VIBRANIUM_LEGGINGS};
+        BOOTS = new ItemArmor[]{Item.bootsLeather, Item.bootsChainCopper, Item.bootsCopper, Item.bootsRustedIron, Item.bootsChainIron, Item.bootsIron, Item.bootsChainAncientMetal, Item.bootsAncientMetal, Item.bootsChainMithril, Item.bootsMithril, Item.bootsChainAdamantium, Item.bootsAdamantium, Items.VIBRANIUM_BOOTS};
         ARMORS = new ItemArmor[][]{HELMETS, CHESTPLATES, LEGGINGS, BOOTS};
         SWORDS = new Item[][]{
+                {Items.clubWood, Items.cudgelWood, Items.shovelWood},
                 {Items.swordCopper, Items.swordSilver, Items.swordGold, Item.pickaxeCopper, Item.pickaxeSilver, Item.pickaxeGold, Item.shovelCopper, Item.shovelSilver, Item.shovelGold,
                         Item.axeCopper, Item.axeSilver, Item.axeGold,Item.hoeCopper, Item.hoeSilver, Item.hoeGold, Item.mattockCopper, Item.mattockSilver, Item.mattockGold, Item.battleAxeCopper,
                         Item.battleAxeSilver, Item.battleAxeGold, Item.warHammerCopper, Item.warHammerSilver, Item.warHammerGold, Item.scytheCopper, Item.scytheSilver, Item.scytheGold,
