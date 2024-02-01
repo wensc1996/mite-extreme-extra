@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
+import net.xiaoyu233.mitemod.miteite.util.MonsterUtil;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -55,6 +56,13 @@ public abstract class EntityZombiePigmanTrans extends EntityZombie implements IR
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.5D);
         this.setEntityAttribute(EntityZombie.field_110186_bp, this.rand.nextDouble() * 0.10000000149011612D);
    }
+
+   @Overwrite
+    public void addRandomEquipment() {
+       super.addRandomEquipment();
+       int day = this.getWorld().getDayOfOverworld();
+       MonsterUtil.addDefaultArmor(day, this, true);
+    }
 
     @Overwrite
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {

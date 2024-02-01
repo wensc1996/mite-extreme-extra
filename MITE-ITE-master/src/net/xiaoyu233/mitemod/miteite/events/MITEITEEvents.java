@@ -389,7 +389,7 @@ public class MITEITEEvents {
         player.sendChatToPlayer(ChatMessage.createFromTranslationKey("[Server] ").appendComponent(ChatMessage.createFromTranslationKey("MITE-Extreme-2024-Spring模组已加载,当前版本:").setColor(EnumChatFormat.DARK_GREEN)).appendComponent(ChatMessage.createFromText(Constant.MITE_ITE_VERSION).setColor(EnumChatFormat.DARK_RED)));
         player.sendChatToPlayer(ChatMessage.createFromTranslationKey("[MITE-Extreme-2024-Spring]:").setColor(EnumChatFormat.WHITE)
                 .appendComponent(ChatMessage.createFromTranslationKey("MITE-Extreme-2024-Spring由 ").setColor(EnumChatFormat.DARK_AQUA))
-                .appendComponent(ChatMessage.createFromTranslationKey("wensc,洛小雨").setColor(EnumChatFormat.WHITE))
+                .appendComponent(ChatMessage.createFromTranslationKey("wensc").setColor(EnumChatFormat.WHITE))
                 .appendComponent(ChatMessage.createFromTranslationKey(" 重写,").setColor(EnumChatFormat.DARK_AQUA))
                 .appendComponent(ChatMessage.createFromTranslationKey(" 下载地址：wensc.cn").setColor(EnumChatFormat.DARK_GREEN)));
         if (player.isFirstLogin == true) {

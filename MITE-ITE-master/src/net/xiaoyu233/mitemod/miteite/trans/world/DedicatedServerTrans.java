@@ -25,7 +25,7 @@ public class DedicatedServerTrans {
     public void playerLoggedIn(ServerPlayer par1EntityPlayerMP, CallbackInfo callbackInfo) {
         par1EntityPlayerMP.sendChatToPlayer(ChatMessage.createFromTranslationKey("[MITE-Extreme-2024-Spring]:").setColor(EnumChatFormat.WHITE)
                 .appendComponent(ChatMessage.createFromTranslationKey("MITE-Extreme-2024-Spring-" + Constant.MITE_ITE_VERSION +" 由 ")
-                        .appendComponent(ChatMessage.createFromTranslationKey("wensc,洛小雨").setColor(EnumChatFormat.WHITE)))
+                        .appendComponent(ChatMessage.createFromTranslationKey("wensc").setColor(EnumChatFormat.WHITE)))
                 .addText(" 重写,").setColor(EnumChatFormat.DARK_AQUA)
                 .appendComponent(ChatMessage.createFromTranslationKey(" 下载地址：wensc.cn").setColor(EnumChatFormat.DARK_GREEN)));
         if (par1EntityPlayerMP.isFirstLogin == true) {

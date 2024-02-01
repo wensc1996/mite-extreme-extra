@@ -25,7 +25,5 @@ public class ShapelessRecipeTrans {
         if (currentItem.getItem() instanceof IUpgradableItem && currentItem.getItem().isDamageable()){
             output.setItemDamage(currentItem.getItemDamage());
         }
-//        // 这里在nbt有可能残留存储有宝石 强制去除
-//        output.GemsList = new ItemStack[8];
     }
 }

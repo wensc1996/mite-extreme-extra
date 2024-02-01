@@ -33,7 +33,6 @@ public class EntityLongdeadTrans extends EntitySkeletonTrans {
 //      }
       MonsterUtil.addDefaultArmor(day, this, true);
       this.initStockedWeapon();
-
    }
 
    @Override

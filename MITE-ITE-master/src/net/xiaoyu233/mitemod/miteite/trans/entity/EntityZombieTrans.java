@@ -29,9 +29,6 @@ class EntityZombieTrans extends EntityAnimalWatcher {
    @Override
    protected void addRandomArmor() {
       super.addRandomArmor();
-//      if (this.worldObj.isUnderworld() && this.worldObj.getDayOfOverworld() < 64) {
-//
-//      }
       MonsterUtil.addDefaultArmor(this.worldObj.getDayOfOverworld(), this, true);
    }
 
@@ -41,7 +38,7 @@ class EntityZombieTrans extends EntityAnimalWatcher {
    }
 
    private Item getWeapon(int day){
-      day += this.worldObj.isUnderworld() ? 16 : 0;
+      day += this.worldObj.isTheNether() ? 32 : this.worldObj.isUnderworld() ? 16 : 0;
       int weight = Math.max(day, 16) / 16 + rand.nextInt(3) - 1;
       int weaponIndex = Math.max(Math.min(weight, Constant.SWORDS.length - 1),0);
       return Constant.SWORDS[weaponIndex][rand.nextInt(Constant.SWORDS[weaponIndex].length)];

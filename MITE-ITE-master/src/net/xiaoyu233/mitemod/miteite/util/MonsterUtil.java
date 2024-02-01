@@ -12,7 +12,7 @@ import static net.minecraft.EnchantmentManager.getEnchantmentLevelsAlteredByItem
 public class MonsterUtil {
     public static void addDefaultArmor(int day_count, EntityInsentient monster, boolean haveAll) {
        Random rand = monster.getRNG();
-        day_count += monster.worldObj.isUnderworld() ? 8 : 0;
+        day_count += monster.worldObj.isTheNether() ? 16 : monster.worldObj.isUnderworld() ? 8 : 0;
         for(int index = 4; index > 0; --index) {
             int weight = day_count / 8 + rand.nextInt(7) - 3;
             int armorIndex = Math.max(Math.min(weight, Constant.ARMORS[index - 1].length - 1),0);
@@ -29,7 +29,6 @@ public class MonsterUtil {
                     itemStack.addEnchantment(enchantment.enchantmentobj, enchantment.enchantmentLevel);
                 }
             }
-
         }
         return itemStack;
     }

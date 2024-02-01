@@ -7,10 +7,7 @@ import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.MonsterUtil;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -35,6 +32,7 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
    @Shadow
    private int data_object_id_is_frenzied_by_bone_lord;
    protected ItemStack stowed_item_stack;
+   @Mutable
    @Final
    private boolean forceMeleeAttack;
    private boolean willChangeWeapon;
@@ -130,7 +128,7 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
    }
 
    private Item getWeapon(int day){
-      day += this.worldObj.isUnderworld() ? 16 : 0;
+      day += this.worldObj.isTheNether() ? 32 : this.worldObj.isUnderworld() ? 16 : 0;
       int weight = Math.max(day, 16) / 16 + rand.nextInt(3) - 1;
       int weaponIndex = Math.max(Math.min(weight, Constant.SWORDS.length - 1),0);
       return Constant.SWORDS[weaponIndex][rand.nextInt(Constant.SWORDS[weaponIndex].length)];
